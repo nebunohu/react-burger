@@ -1,0 +1,49 @@
+header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0;
+  padding: 0 320px;
+  height: 88px;
+  min-width: 960px;
+  background-color: #1C1C21;
+}
+
+nav {
+  height: 100%;
+  width: 100%;
+}
+
+ul {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-items: flex-start;
+}
+
+li{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  list-style-type: none;
+  padding: 0 20px;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  /*right: auto;*/
+}
+
+.profile {
+  position: absolute;
+  right: 0;
+}
