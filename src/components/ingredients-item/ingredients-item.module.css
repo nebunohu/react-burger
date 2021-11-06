@@ -1,0 +1,15 @@
+.itemWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  text-align: center;
+  width: 272px;
+  height: 208px;
+}
+
+.price {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}

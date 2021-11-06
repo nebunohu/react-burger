@@ -1,0 +1,10 @@
+.typeWrapper {
+  width: 100%;
+}
+
+.itemsWrapper {
+  display: flex;
+  flex-flow: row wrap;
+
+}
+
