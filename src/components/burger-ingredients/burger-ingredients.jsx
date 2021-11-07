@@ -21,7 +21,7 @@ function BurgerIngredients(props) {
       <>
         <div className={ingredientsStyles.burgerIngredientsWrapper+' pt-10'}>
           <span className='text text_type_main-large'>Соберите бургер</span>
-          <div className={ingredientsStyles.table+'mt-5'}>
+          <div className={ingredientsStyles.table+' mt-5'}>
             <Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>
               Булки
             </Tab>
@@ -38,16 +38,7 @@ function BurgerIngredients(props) {
             <IngredientsType type='sauce' typeRus='Соусы' />
             <IngredientsType type='main' typeRus='Начинки' />
           </div>
-          
-            
-            
-          
         </div>
-          
-            
-        
-        
-
       </>
     );
   

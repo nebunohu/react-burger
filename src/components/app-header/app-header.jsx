@@ -17,17 +17,17 @@ class AppHeader extends React.Component {
       <header>
         <nav>
           <ul>
-            <li>
-              <BurgerIcon /> Конструктор
+            <li className={headerStyles.active}>
+              <BurgerIcon type='primary' /> <span className='ml-2'>Конструктор</span>
             </li>
             <li>
-              <ListIcon /> Лента заказов
+              <ListIcon type='secondary'/> <span className='ml-2'>Лента заказов</span>
             </li>
             <li className={headerStyles.logo}>
               <Logo />
             </li>
             <li className={headerStyles.profile}>
-              <ProfileIcon /> Личный кабинет     
+              <ProfileIcon type='secondary'/> <span className='ml-2'>Личный кабинет</span>    
             </li>
           </ul>
         </nav>

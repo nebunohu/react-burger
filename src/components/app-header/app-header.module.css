@@ -4,10 +4,10 @@ header {
   right: 0;
   top: 0;
   margin: 0;
-  padding: 0 320px;
   height: 88px;
   min-width: 960px;
   background-color: #1C1C21;
+  color: #8585AD;
 }
 
 nav {
@@ -20,6 +20,7 @@ ul {
   height: 100%;
   width: 100%;
   margin: 0;
+  padding: 0;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -32,6 +33,10 @@ li{
   align-items: center;
   list-style-type: none;
   padding: 0 20px;
+}
+
+.active {
+  color: #F2F2F3;
 }
 
 .logo {

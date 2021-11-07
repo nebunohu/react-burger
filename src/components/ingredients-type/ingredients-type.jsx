@@ -17,8 +17,8 @@ class IngredientsType extends React.Component {
         arrayOfElements.push(el);
     });
     return (
-      <div className={typeStyles.typeWrapper+' mt-10'}>
-        <span className='text text_type_main-medium'>{this.props.typeRus}</span>
+      <div className={typeStyles.typeWrapper}>
+        <div className='text text_type_main-medium mt-10 mb-6'>{this.props.typeRus}</div>
         <div className={typeStyles.itemsWrapper}>
           {arrayOfElements.map(item => {
               return <IngredientsItem item={item} key={item._id} />

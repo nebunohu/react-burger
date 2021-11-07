@@ -15,8 +15,8 @@ import constructorStyles from './burger-constructor.module.css';
 class BurgerConstructor extends React.Component {
   render() {
     return (
-      <div className={constructorStyles.burgerConstructorWrapper}>
-        <div><ConstructorElement
+      <div className={constructorStyles.burgerConstructorWrapper+' ml-10 pt-25'}>
+        <div className='pl-8 pr-4'><ConstructorElement
           type="top"
           isLocked={true}
           text={this.props.burger.bun.name+' (верх)'}
@@ -27,7 +27,7 @@ class BurgerConstructor extends React.Component {
         {
           this.props.burger.ingredients.map((el) => {
             return (
-              <div className={constructorStyles.constructorElementWrapper}>
+              <div className={constructorStyles.constructorElementWrapper} key={el._id}>
                 <DragIcon />
                 <ConstructorElement
                   text={el.name}
@@ -40,16 +40,20 @@ class BurgerConstructor extends React.Component {
         }
         </div>
         
-        <div><ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={this.props.burger.bun.name+' (низ)'}
-          price={this.props.burger.bun.price}
-          thumbnail={this.props.burger.bun.image}
-        /></div>
-        <div className={constructorStyles.totalWrapper}>
-          <div className={constructorStyles.total + ' text text_type_digits-medium'}>
-            {this.props.burger.bun.price*2+this.props.burger.ingredients.reduce((previousItem, currentItem) => {return previousItem.price + currentItem.price})}
+        <div className='pl-8 pr-4'>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={this.props.burger.bun.name+' (низ)'}
+            price={this.props.burger.bun.price}
+            thumbnail={this.props.burger.bun.image}
+          />
+        </div>
+        <div className={constructorStyles.totalWrapper+' mt-10'}>
+          <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
+            <span className='mr-2'>
+              {this.props.burger.bun.price*2+this.props.burger.ingredients.reduce((previousValue, currentItem) => {return previousValue + currentItem.price}, 0)}
+              </span>
             <CurrencyIcon />
           </div>
           <Button type="primary" size="medium">

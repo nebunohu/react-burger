@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
+  height: calc(100vh - 244px);
 }
 
 .constructorElementWrapper {
@@ -10,11 +11,19 @@
   flex-flow: row nowrap;
   justify-content: center; 
   align-items: center;
+  width: 100%;
 }
 
 .totalWrapper {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+}
+
+.total {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .innerWrapper{
