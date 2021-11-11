@@ -7,33 +7,28 @@ import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon , ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-class AppHeader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function AppHeader(props) {
+  return (
+    <header>
+      <nav>
+        <ul>
+          <li className={headerStyles.active}>
+            <BurgerIcon type='primary' /> <span className='ml-2'>Конструктор</span>
+          </li>
+          <li>
+            <ListIcon type='secondary'/> <span className='ml-2'>Лента заказов</span>
+          </li>
+          <li className={headerStyles.logo}>
+            <Logo />
+          </li>
+          <li className={headerStyles.profile}>
+            <ProfileIcon type='secondary'/> <span className='ml-2'>Личный кабинет</span>    
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 
-  render() {
-    return (
-      <header>
-        <nav>
-          <ul>
-            <li className={headerStyles.active}>
-              <BurgerIcon type='primary' /> <span className='ml-2'>Конструктор</span>
-            </li>
-            <li>
-              <ListIcon type='secondary'/> <span className='ml-2'>Лента заказов</span>
-            </li>
-            <li className={headerStyles.logo}>
-              <Logo />
-            </li>
-            <li className={headerStyles.profile}>
-              <ProfileIcon type='secondary'/> <span className='ml-2'>Личный кабинет</span>    
-            </li>
-          </ul>
-        </nav>
-      </header>
-    );
-  }
 }
 
 export default AppHeader;
