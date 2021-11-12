@@ -27,10 +27,13 @@ const DATA_TYPE =  {
 
 function IngredientsType(props) {
   const arrayOfElements = [];
-  props.data.forEach(el => {
-    if(el.type === props.type)
-      arrayOfElements.push(el);
-  });
+  if(props.data) {
+    props.data.forEach(el => {
+      if(el.type === props.type)
+        arrayOfElements.push(el);
+    });
+  }
+  
   return (
     <div className={typeStyles.typeWrapper}>
       <div className='text text_type_main-medium mt-10 mb-6'>{props.typeRus}</div>
@@ -44,7 +47,7 @@ function IngredientsType(props) {
 }
 
 IngredientsType.propTypes = {
-  data: PropTypes.shape(DATA_TYPE),
+  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
   type: PropTypes.string.isRequired, 
   typeRus: PropTypes.string.isRequired
 }

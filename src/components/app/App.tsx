@@ -34,6 +34,10 @@ function App() {
           setState({
             ...state,
             data: data.data,
+            burger: {
+              bun: data.data[0],
+              ingredients: data.data
+            }
           });
         } else {
           throw new Error('Fetch error'); 

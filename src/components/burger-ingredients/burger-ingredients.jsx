@@ -59,7 +59,7 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.shape(DATA_TYPE)
+  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE))
 };
 
 export default BurgerIngredients;
