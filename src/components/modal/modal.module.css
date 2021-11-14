@@ -1,0 +1,25 @@
+.modalWrapper {
+  position: relative;
+  /*left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;*/
+  width: 720px;
+
+  /* interface/modal-bg */
+
+  background: #1C1C21;
+  /* /interface/modal edge */
+
+  border: 1px solid rgba(76, 76, 255, 0.2);
+  box-sizing: border-box;
+  /* card/x-large */
+
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+}
+
+.modalHeader {
+  width: 640px;
+  height: 64px;
+}

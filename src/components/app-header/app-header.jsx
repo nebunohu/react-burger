@@ -11,17 +11,17 @@ function AppHeader(props) {
   return (
     <header>
       <nav>
-        <ul>
-          <li className={headerStyles.active}>
+        <ul className={headerStyles.headerUl}>
+          <li className={`${headerStyles.active} ${headerStyles.listElement}`}>
             <BurgerIcon type='primary' /> <span className='ml-2'>Конструктор</span>
           </li>
-          <li>
+          <li className={`${headerStyles.listElement} ${headerStyles.listElement}`}>
             <ListIcon type='secondary'/> <span className='ml-2'>Лента заказов</span>
           </li>
-          <li className={headerStyles.logo}>
+          <li className={`${headerStyles.logo} ${headerStyles.listElement}`}>
             <Logo />
           </li>
-          <li className={headerStyles.profile}>
+          <li className={`${headerStyles.profile} ${headerStyles.listElement}`}>
             <ProfileIcon type='secondary'/> <span className='ml-2'>Личный кабинет</span>    
           </li>
         </ul>

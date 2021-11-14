@@ -1,9 +1,10 @@
 .burgerConstructorWrapper {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  /*align-items: flex-end;*/
   gap: 10px;
   height: calc(100vh - 244px);
+  width: 512px;
 }
 
 .constructorElementWrapper {
@@ -14,16 +15,25 @@
   width: 100%;
 }
 
+.bunConstructor {
+  display: flex;
+  flex-direction: row; 
+  flex: 1 1 100%; 
+  max-height: 80px;
+}
+
 .totalWrapper {
   display: flex;
   flex-flow: row nowrap;
+  max-height: 64px;
 }
 
 .total {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
+  width: 100%;
 }
 
 .innerWrapper{

@@ -49,9 +49,9 @@ function BurgerIngredients(props) {
           
         </div>
         <div className={ingredientsStyles.scrolledWindow}>
-          <IngredientsType data={props.data} type='bun' typeRus='Булки' />
-          <IngredientsType data={props.data} type='sauce' typeRus='Соусы' />
-          <IngredientsType data={props.data} type='main' typeRus='Начинки' />
+          <IngredientsType data={props.data} type='bun' typeRus='Булки' openModal={props.openModal} />
+          <IngredientsType data={props.data} type='sauce' typeRus='Соусы' openModal={props.openModal} />
+          <IngredientsType data={props.data} type='main' typeRus='Начинки' openModal={props.openModal} />
         </div>
       </div>
     </>
@@ -59,7 +59,8 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE))
+  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
+  openModal: PropTypes.func
 };
 
 export default BurgerIngredients;

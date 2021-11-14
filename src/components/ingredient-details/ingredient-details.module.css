@@ -1,0 +1,24 @@
+.modalHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 516px;
+}
+
+.proteinWrapper {
+  width: 120px;
+  color: #8585AD;
+}
+
+.li {
+  list-style-type: none;
+  display: flex;
+  flex-flow: column nowrap;
+}

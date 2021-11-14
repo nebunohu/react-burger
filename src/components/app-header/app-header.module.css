@@ -15,21 +15,21 @@ nav {
   width: 100%;
 }
 
-ul {
+.headerUl {
   position: relative;
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: center;
   justify-items: flex-start;
 }
 
-li{
+.listElement{
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: center;
   list-style-type: none;
   padding: 0 20px;

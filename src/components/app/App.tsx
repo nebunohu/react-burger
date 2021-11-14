@@ -4,6 +4,7 @@ import React from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import Modal from '../modal/modal';
 
 // Styles
 import AppStyles from './App.module.css';
@@ -19,10 +20,14 @@ function App() {
       burger: {
         bun: {},
         ingredients: [],
-      }, 
-      data: []
+      },
+      isModalOpen: false,
+      isIngredModal: false,
+      isOrderModal: false,
+      modalIngredientId: '',
     }
   );
+  const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
     const getIngredientsData = async () => {
@@ -31,14 +36,14 @@ function App() {
         const res = await fetch(dataURL, { method: "GET", mode: "cors", headers});
         if(res.ok) {
           const data = await res.json();
-          setState({
+          setData(data.data);
+          /*setState({
             ...state,
-            data: data.data,
             burger: {
-              bun: data.data[0],
-              ingredients: data.data
+              bun: data[0],
+              ingredients: data
             }
-          });
+          })*/
         } else {
           throw new Error('Fetch error'); 
         }
@@ -50,15 +55,57 @@ function App() {
     }
 
     getIngredientsData();
-});
+}, [data]);
+
+function openModal(e: any) {
+    if(e.currentTarget.className.match(/ingredients-item/i)) {
+      setState({
+        ...state,
+        isIngredModal: true,
+        isModalOpen: true,
+        modalIngredientId: e.currentTarget.dataset.id,
+      });
+    } else if(e.currentTarget.className.match(/button/i)) {
+      setState({
+        ...state,
+        isOrderModal: true,
+        isModalOpen: true,
+        
+      });
+    }
+    
+}
+
+function closeModal(e : any) {
+  if(e.target === e.currentTarget) {
+    setState({
+      ...state,
+      isIngredModal: false,
+      isOrderModal: false,
+      isModalOpen: false,
+    });
+  }
+}
+
 
   return (
     <>
       <AppHeader />
       <div className={AppStyles.BurgerWrapper}>
-        <BurgerIngredients data={state.data} />
-        <BurgerConstructor burger={state.burger} /> 
+        <BurgerIngredients data={data} openModal={openModal} />
+        <BurgerConstructor burger={state.burger} openModal={openModal} /> 
       </div>
+      {state.isModalOpen && 
+        <Modal 
+          closeModal={closeModal} 
+            modalState={{
+              isIngredModal: state.isIngredModal,
+              isOrderModal: state.isOrderModal,
+              modalIngredientId: state.modalIngredientId,
+            }}
+            data={data}
+        />
+      }
     </>
   );
 }

@@ -39,7 +39,7 @@ function IngredientsType(props) {
       <div className='text text_type_main-medium mt-10 mb-6'>{props.typeRus}</div>
       <div className={typeStyles.itemsWrapper}>
         {arrayOfElements.map(item => {
-            return <IngredientsItem item={item} count={0} key={item._id} />
+            return <IngredientsItem item={item} count={0} openModal={props.openModal} key={item._id} />
         })}
       </div>
     </div>
