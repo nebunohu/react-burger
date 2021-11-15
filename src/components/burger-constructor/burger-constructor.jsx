@@ -60,8 +60,8 @@ function BurgerConstructor(props) {
         (<div className={constructorStyles.innerWrapper}>
            {props.burger.ingredients.map((el, index) => {
             return (
-              <div className={constructorStyles.constructorElementWrapper} key={index}>
-                <DragIcon />
+              <div className={`${constructorStyles.constructorElementWrapper} pr-2`} key={index}>
+                <div className='pr-2'><DragIcon /></div>
                 <ConstructorElement
                   text={el.name }
                   price={el.price}

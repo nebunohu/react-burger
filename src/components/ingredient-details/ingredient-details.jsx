@@ -11,7 +11,7 @@ export default function IngredientDetails(props) {
     <>
       <div className={`${ingredientdDetailsStyles.modalHeader} mt-10 mr-10 ml-10`}>
         <span className="text text_type_main-large">Детали ингредиента</span>
-        <div style={{cursor: 'pointer'}} >
+        <div className='close-button' style={{cursor: 'pointer'}} onClick={props.closeModal} >
           <CloseIcon type="primary" onClick={props.closeModal} />
         </div>
       </div>

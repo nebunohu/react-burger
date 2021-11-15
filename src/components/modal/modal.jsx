@@ -6,7 +6,7 @@ import modalStyles from './modal.module.css';
 
 // Components
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import ModalHeader from "../modal-header/modal-header";
+//import ModalHeader from "../modal-header/modal-header";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 

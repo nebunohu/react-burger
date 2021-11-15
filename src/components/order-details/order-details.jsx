@@ -13,7 +13,7 @@ export default function OrderDetails(props) {
   return (
     <>
       <div className='mt-15 mr-10' style={{position: 'absolute', top: 0, right: 0}}>
-        <div style={{cursor: 'pointer'}} ><CloseIcon onClick={props.closeModal} /></div>
+        <div className='close-button' onClick={props.closeModal} style={{cursor: 'pointer'}} ><CloseIcon onClick={props.closeModal} /></div>
       </div>
       <div className={orderDetailsStyles.number+' text text_type_digits-large mt-30 mb-8'}>
         000000

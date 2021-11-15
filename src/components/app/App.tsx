@@ -35,8 +35,9 @@ function App() {
       try {
         const res = await fetch(dataURL, { method: "GET", mode: "cors", headers});
         if(res.ok) {
-          const data = await res.json();
-          setData(data.data);
+          const resData = await res.json();
+          setData(resData.data);
+          //data = resData.data.slice();
         } else {
           throw new Error('Fetch error'); 
         }
@@ -48,15 +49,22 @@ function App() {
     }
 
     getIngredientsData();
-  }, [data]);
+    
+  }, []);
 
-  /*React.useEffect(() => {
+  React.useEffect(() => {
+    document.addEventListener('keydown', closeModal);
+    return () => {
+      document.removeEventListener('keydown', closeModal);
+    }
+  }, []);
+
+  React.useEffect(() => {
     setBurger({
-      ...burger,
       bun: data[0],
       ingredients: data,
     });
-  });*/
+  }, [data]);
 
   function openModal(e: any) {
     if(e.currentTarget.className.match(/ingredients-item/i)) {
@@ -78,14 +86,15 @@ function App() {
   }
 
   function closeModal(e : any) {
-    if(e.target === e.currentTarget) {
+    e.stopPropagation();
+    if(e.target === e.currentTarget || e.type === 'keydown') {
       setModal({
         ...modal,
         isIngredModal: false,
         isOrderModal: false,
         isModalOpen: false,
       });
-    }
+    } 
   }
 
 
