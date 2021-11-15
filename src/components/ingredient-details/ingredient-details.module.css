@@ -12,6 +12,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 516px;
+  padding: 0;
 }
 
 .proteinWrapper {
@@ -23,6 +24,8 @@
   list-style-type: none;
   display: flex;
   flex-flow: column nowrap;
+  justify-content: space-between;
   text-align: center;
   color: #8585AD;
+  height: 56px;
 }

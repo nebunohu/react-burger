@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 //Styles
 import orderDetailsStyles from './order-details.module.css';
@@ -16,7 +17,7 @@ export default function OrderDetails(props) {
         <div className='close-button' onClick={props.closeModal} style={{cursor: 'pointer'}} ><CloseIcon onClick={props.closeModal} /></div>
       </div>
       <div className={orderDetailsStyles.number+' text text_type_digits-large mt-30 mb-8'}>
-        000000
+        {props.orderNumber}
       </div>
       <div className={`${orderDetailsStyles.title} text text_type_main-medium mb-15`}>
         идентификатор заказа
@@ -32,4 +33,9 @@ export default function OrderDetails(props) {
       </span>
     </>
   );
+}
+
+OrderDetails.propTypes = {
+  closeModal: PropTypes.func,
+  orderNumber: PropTypes.string,
 }

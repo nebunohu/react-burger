@@ -52,12 +52,6 @@ function App() {
     
   }, []);
 
-  React.useEffect(() => {
-    document.addEventListener('keydown', closeModal);
-    return () => {
-      document.removeEventListener('keydown', closeModal);
-    }
-  }, []);
 
   React.useEffect(() => {
     setBurger({
@@ -85,9 +79,9 @@ function App() {
     
   }
 
-  function closeModal(e : any) {
+  const closeModal = (e : any) => {
     e.stopPropagation();
-    if(e.target === e.currentTarget || e.type === 'keydown') {
+    if((e.type === 'click' && e.target === e.currentTarget) || (e.type === 'keydown' && e.key === 'Escape')) {
       setModal({
         ...modal,
         isIngredModal: false,
@@ -108,12 +102,12 @@ function App() {
       {modal.isModalOpen && 
         <Modal 
           closeModal={closeModal} 
-            modalState={{
-              isIngredModal: modal.isIngredModal,
-              isOrderModal: modal.isOrderModal,
-              modalIngredientId: modal.modalIngredientId,
+          modalState={{
+            isIngredModal: modal.isIngredModal,
+            isOrderModal: modal.isOrderModal,
+            modalIngredientId: modal.modalIngredientId,
             }}
-            data={data}
+          data={data}
         />
       }
     </>
