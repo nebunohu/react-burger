@@ -1,4 +1,7 @@
 .modalWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   position: relative;
   /*left: 0%;
   right: 0%;

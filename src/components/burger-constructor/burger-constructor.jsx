@@ -30,12 +30,21 @@ const DATA_TYPE =  {
 
 function BurgerConstructor(props) {
   let bunName, bunPrice, bunImage;
-  if(props.burger.bun.hasOwnProperty('name')) bunName = props.burger.bun.name;
-  else bunName = '';
-  if(props.burger.bun.hasOwnProperty('price')) bunPrice = props.burger.bun.price;
-  else bunPrice = 0;
-  if(props.burger.bun.hasOwnProperty('image')) bunImage = props.burger.bun.image;
-  else bunImage = '';
+  if(!!props.burger.bun) {
+    bunName = props.burger.bun.name;
+    bunPrice = props.burger.bun.price;
+    bunImage = props.burger.bun.image;
+  } else {
+    bunName = '';
+    bunPrice = 0;
+    bunImage = '';
+  }
+  /*if(props.burger.bun.hasOwnProperty('name')) 
+  else 
+  if(props.burger.bun.hasOwnProperty('price')) 
+  else 
+  if(props.burger.bun.hasOwnProperty('image')) 
+  else */
   return (
     <div className={`${constructorStyles.burgerConstructorWrapper} ml-10 pt-25`}>
       <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
@@ -78,8 +87,8 @@ function BurgerConstructor(props) {
         <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
           <span className='mr-2'>
             {
-              props.burger.bun.price * 2 + 
-              props.burger.ingredients 
+              /*props.burger.bun.price*/bunPrice * 2 + 
+              !!props.burger.ingredients 
               ? 
               props.burger.ingredients.reduce((previousValue, currentItem) => {
                 return previousValue + currentItem.price

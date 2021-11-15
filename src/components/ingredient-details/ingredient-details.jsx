@@ -9,11 +9,11 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 export default function IngredientDetails(props) {
   return (
     <>
-      <div className={ingredientdDetailsStyles+' mt-10 mr-10 ml-10'}>
+      <div className={`${ingredientdDetailsStyles.modalHeader} mt-10 mr-10 ml-10`}>
         <span className="text text_type_main-large">Детали ингредиента</span>
-        {/*<div style={{cursor: 'pointer'}}>*/}
+        <div style={{cursor: 'pointer'}} >
           <CloseIcon type="primary" onClick={props.closeModal} />
-        {/*</div>*/}
+        </div>
       </div>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>
         <img src={props.ingredient.image_large} alt='ингредиент' />

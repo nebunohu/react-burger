@@ -15,19 +15,19 @@ import AppStyles from './App.module.css';
 
 function App() {
   const dataURL = 'https://norma.nomoreparties.space/api/ingredients';
-  const [state, setState] = React.useState(
+  const [burger, setBurger] = React.useState(
     {
-      burger: {
-        bun: {},
-        ingredients: [],
-      },
-      isModalOpen: false,
-      isIngredModal: false,
-      isOrderModal: false,
-      modalIngredientId: '',
+      bun: {},
+      ingredients: [],      
     }
   );
   const [data, setData] = React.useState([]);
+  const [modal, setModal] = React.useState({
+    isModalOpen: false,
+    isIngredModal: false,
+    isOrderModal: false,
+    modalIngredientId: '',
+  });
 
   React.useEffect(() => {
     const getIngredientsData = async () => {
@@ -37,13 +37,6 @@ function App() {
         if(res.ok) {
           const data = await res.json();
           setData(data.data);
-          /*setState({
-            ...state,
-            burger: {
-              bun: data[0],
-              ingredients: data
-            }
-          })*/
         } else {
           throw new Error('Fetch error'); 
         }
@@ -55,37 +48,45 @@ function App() {
     }
 
     getIngredientsData();
-}, [data]);
+  }, [data]);
 
-function openModal(e: any) {
+  /*React.useEffect(() => {
+    setBurger({
+      ...burger,
+      bun: data[0],
+      ingredients: data,
+    });
+  });*/
+
+  function openModal(e: any) {
     if(e.currentTarget.className.match(/ingredients-item/i)) {
-      setState({
-        ...state,
+      setModal({
+        ...modal,
         isIngredModal: true,
         isModalOpen: true,
         modalIngredientId: e.currentTarget.dataset.id,
       });
     } else if(e.currentTarget.className.match(/button/i)) {
-      setState({
-        ...state,
+      setModal({
+        ...modal,
         isOrderModal: true,
         isModalOpen: true,
         
       });
     }
     
-}
-
-function closeModal(e : any) {
-  if(e.target === e.currentTarget) {
-    setState({
-      ...state,
-      isIngredModal: false,
-      isOrderModal: false,
-      isModalOpen: false,
-    });
   }
-}
+
+  function closeModal(e : any) {
+    if(e.target === e.currentTarget) {
+      setModal({
+        ...modal,
+        isIngredModal: false,
+        isOrderModal: false,
+        isModalOpen: false,
+      });
+    }
+  }
 
 
   return (
@@ -93,15 +94,15 @@ function closeModal(e : any) {
       <AppHeader />
       <div className={AppStyles.BurgerWrapper}>
         <BurgerIngredients data={data} openModal={openModal} />
-        <BurgerConstructor burger={state.burger} openModal={openModal} /> 
+        <BurgerConstructor burger={burger} openModal={openModal} /> 
       </div>
-      {state.isModalOpen && 
+      {modal.isModalOpen && 
         <Modal 
           closeModal={closeModal} 
             modalState={{
-              isIngredModal: state.isIngredModal,
-              isOrderModal: state.isOrderModal,
-              modalIngredientId: state.modalIngredientId,
+              isIngredModal: modal.isIngredModal,
+              isOrderModal: modal.isOrderModal,
+              modalIngredientId: modal.modalIngredientId,
             }}
             data={data}
         />

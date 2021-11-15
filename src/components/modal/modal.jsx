@@ -21,7 +21,7 @@ export default function Modal(props) {
       <div className={modalStyles.modalWrapper}>
         {props.modalState.isIngredModal &&
           (<>
-            <ModalHeader closeModal={props.closeModal} />
+            {/*<ModalHeader closeModal={props.closeModal} />*/}
             <IngredientDetails closeModal={props.closeModal} ingredient={currentIngredient} />
           </>)}
         {props.modalState.isOrderModal &&
