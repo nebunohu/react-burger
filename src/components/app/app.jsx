@@ -104,7 +104,6 @@ function App() {
         <Modal 
           closeModal={closeModal} 
           title='Детали ингредиента'
-          modalOverlay={modalOverlayRef}
         >
           <IngredientDetails ingredient={currentIngredient} />
         </Modal>}
@@ -112,7 +111,6 @@ function App() {
         <Modal
           closeModal={closeModal} 
           title=''
-          modalOverlay={modalOverlayRef}
         >
           <OrderDetails orderNumber='000000' />
         </Modal>}

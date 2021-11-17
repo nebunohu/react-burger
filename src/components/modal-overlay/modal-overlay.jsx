@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 import modalOverlayStyles from './modal-overlay.module.css';
 
 export default function ModalOverlay(props) {
+  const modalOverlayRef = React.createRef();
+
   function onClickHandler(e) {
-    if(e.target === props.modalOverlay.current) {
+    if(e.target === modalOverlayRef.current) {
       props.closeModal();
     }
   }
@@ -14,7 +16,7 @@ export default function ModalOverlay(props) {
     <div 
       className={modalOverlayStyles.back} 
       id="modal-overlay"
-      ref={props.modalOverlay}
+      ref={modalOverlayRef}
       onClick={onClickHandler} 
     >
       {props.children}
@@ -24,8 +26,4 @@ export default function ModalOverlay(props) {
 
 ModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  modalOverlay: PropTypes.oneOfType([
-    PropTypes.func, 
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]),
 }
