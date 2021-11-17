@@ -24,5 +24,8 @@ export default function ModalOverlay(props) {
 
 ModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  modalOverlay: PropTypes.any,
+  modalOverlay: PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
 }

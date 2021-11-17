@@ -58,5 +58,8 @@ Modal.propTypes = {
   //data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
   title: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
-  modalOverlay: PropTypes.any,
+  modalOverlay: PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
 }
