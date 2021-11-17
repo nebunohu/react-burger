@@ -22,7 +22,22 @@
   border-radius: 40px;
 }
 
+.modalWrapper:focus {
+  outline: none;
+}
+
 .modalHeader {
-  width: 640px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-self: start;
   height: 64px;
+}
+
+.closeButtonWrapper {
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  cursor: pointer;
 }

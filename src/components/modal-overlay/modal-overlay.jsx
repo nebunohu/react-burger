@@ -10,8 +10,6 @@ export default function ModalOverlay(props) {
       className={modalOverlayStyles.back} 
       id="modal-overlay"
       onClick={props.closeModal} 
-      onKeyDown={props.closeModal} 
-      tabIndex="-1"  
     >
       {props.children}
     </div>
@@ -19,5 +17,5 @@ export default function ModalOverlay(props) {
 }
 
 ModalOverlay.propTypes = {
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func.isRequired
 }

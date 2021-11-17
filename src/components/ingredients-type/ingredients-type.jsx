@@ -5,25 +5,11 @@ import PropTypes from 'prop-types';
 import IngredientsItem from "../ingredients-item/ingredients-item";
 
 // Data
+import { DATA_TYPE } from "../../utils/type";
 //import { data } from '../../utils/data';
 
 // Styles
 import typeStyles from './ingredients-type.module.css';
-
-const DATA_TYPE =  {
-  "_id": PropTypes.string,
-  "name": PropTypes.string,
-  "type": PropTypes.string,
-  "proteins": PropTypes.number,
-  "fat": PropTypes.number,
-  "carbohydrates": PropTypes.number,
-  "calories": PropTypes.number,
-  "price": PropTypes.number,
-  "image": PropTypes.string,
-  "image_mobile": PropTypes.string,
-  "image_large": PropTypes.string,
-  "__v": PropTypes.number
-};
 
 function IngredientsType(props) {
   const arrayOfElements = [];
@@ -47,7 +33,7 @@ function IngredientsType(props) {
 }
 
 IngredientsType.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
+  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE).isRequired),
   type: PropTypes.string.isRequired, 
   typeRus: PropTypes.string.isRequired
 }

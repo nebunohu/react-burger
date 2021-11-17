@@ -1,12 +1,3 @@
-.modalHeader {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  align-self: start;
-  width: 90%;
-}
-
 .infoWrapper {
   display: flex;
   flex-flow: row nowrap;

@@ -11,22 +11,8 @@ import {ConstructorElement,
 import constructorStyles from './burger-constructor.module.css';
 
 // Data
+import { DATA_TYPE } from "../../utils/type";
 //import { data } from '../../utils/data';
-
-const DATA_TYPE =  {
-  "_id": PropTypes.string,
-  "name": PropTypes.string,
-  "type": PropTypes.string,
-  "proteins": PropTypes.number,
-  "fat": PropTypes.number,
-  "carbohydrates": PropTypes.number,
-  "calories": PropTypes.number,
-  "price": PropTypes.number,
-  "image": PropTypes.string,
-  "image_mobile": PropTypes.string,
-  "image_large": PropTypes.string,
-  "__v": PropTypes.number
-};
 
 function BurgerConstructor(props) {
   let bunName, bunPrice, bunImage;

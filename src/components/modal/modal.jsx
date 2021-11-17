@@ -8,32 +8,19 @@ import modalStyles from './modal.module.css';
 // Components
 import ModalOverlay from "../modal-overlay/modal-overlay";
 //import ModalHeader from "../modal-header/modal-header";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const DATA_TYPE =  {
-  "_id": PropTypes.string,
-  "name": PropTypes.string,
-  "type": PropTypes.string,
-  "proteins": PropTypes.number,
-  "fat": PropTypes.number,
-  "carbohydrates": PropTypes.number,
-  "calories": PropTypes.number,
-  "price": PropTypes.number,
-  "image": PropTypes.string,
-  "image_mobile": PropTypes.string,
-  "image_large": PropTypes.string,
-  "__v": PropTypes.number
-};
+// Data
+//import { DATA_TYPE } from "../../utils/type";
 
 export default function Modal(props) {
-  let currentIngredient = {};
+  /*let currentIngredient = {};
   if(props.modalState.isIngredModal) {
     currentIngredient = props.data.find(ingredient => ingredient._id === props.modalState.modalIngredientId);
-  }
+  }*/
 
   React.useEffect(() => {
-    const modal = document.getElementById('modal-overlay');
+    const modal = document.getElementById('modal-wrapper');
     modal.focus();
     /*document.addEventListener('keydown', props.closeModal);
     return () => {
@@ -41,16 +28,25 @@ export default function Modal(props) {
     }*/
   }, []);
 
+  function escapeButtonHandler(e) {
+    if(e.key === 'Escape') {
+      props.closeModal();
+    }
+  }
+
   return ReactDOM.createPortal(
     <ModalOverlay closeModal={props.closeModal}>
-      <div className={modalStyles.modalWrapper}>
-        {props.modalState.isIngredModal &&
-          (<>
-            {/*<ModalHeader closeModal={props.closeModal} />*/}
-            <IngredientDetails closeModal={props.closeModal} ingredient={currentIngredient} />
-          </>)}
-        {props.modalState.isOrderModal &&
-          <OrderDetails closeModal={props.closeModal} orderNumber='000000' />}
+      <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex="-1">
+        <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`}>
+          <CloseIcon onClick={props.closeModal} />
+        </div>
+        {
+          !!props.title && 
+            <div className={`${modalStyles.modalHeader} text text_type_main-large mt-10 mr-10 ml-10`}>
+              {props.title}
+            </div>
+        }
+        {props.children}
       </div>
     </ModalOverlay>,
     document.getElementById('modal-root')
@@ -59,10 +55,7 @@ export default function Modal(props) {
 
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  modalState: PropTypes.shape({
-    isIngredModal: PropTypes.bool,
-    isOrderModal: PropTypes.bool,
-    modalIngredientId: PropTypes.string,
-    }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
+  //data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired
 }

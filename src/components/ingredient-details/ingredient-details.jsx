@@ -5,32 +5,13 @@ import PropTypes from 'prop-types';
 import ingredientdDetailsStyles from './ingredient-details.module.css';
 
 // Components
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const DATA_TYPE =  {
-  "_id": PropTypes.string,
-  "name": PropTypes.string,
-  "type": PropTypes.string,
-  "proteins": PropTypes.number,
-  "fat": PropTypes.number,
-  "carbohydrates": PropTypes.number,
-  "calories": PropTypes.number,
-  "price": PropTypes.number,
-  "image": PropTypes.string,
-  "image_mobile": PropTypes.string,
-  "image_large": PropTypes.string,
-  "__v": PropTypes.number
-};
+// Data
+import { DATA_TYPE } from "../../utils/type";
 
 export default function IngredientDetails(props) {
   return (
     <>
-      <div className={`${ingredientdDetailsStyles.modalHeader} mt-10 mr-10 ml-10`}>
-        <span className="text text_type_main-large">Детали ингредиента</span>
-        <div className='close-button' style={{cursor: 'pointer'}} onClick={props.closeModal} >
-          <CloseIcon type="primary" onClick={props.closeModal} />
-        </div>
-      </div>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>
         <img src={props.ingredient.image_large} alt='ингредиент' />
       </div>
@@ -76,6 +57,5 @@ export default function IngredientDetails(props) {
 }
 
 IngredientDetails.propTypes = {
-  closeModal: PropTypes.func,
-  ingredient: PropTypes.shape(DATA_TYPE),
+  ingredient: PropTypes.shape(DATA_TYPE).isRequired,
 }
