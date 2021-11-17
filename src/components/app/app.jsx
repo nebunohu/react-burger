@@ -30,6 +30,8 @@ function App() {
   });
   const [currentIngredient, seCurrentIngredient] = React.useState({});
 
+  const modalOverlayRef = React.createRef();
+
   React.useEffect(() => {
     const getIngredientsData = async () => {
       const headers = new Headers({ 
@@ -102,6 +104,7 @@ function App() {
         <Modal 
           closeModal={closeModal} 
           title='Детали ингредиента'
+          modalOverlay={modalOverlayRef}
         >
           <IngredientDetails ingredient={currentIngredient} />
         </Modal>}
@@ -109,6 +112,7 @@ function App() {
         <Modal
           closeModal={closeModal} 
           title=''
+          modalOverlay={modalOverlayRef}
         >
           <OrderDetails orderNumber='000000' />
         </Modal>}

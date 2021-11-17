@@ -35,7 +35,7 @@ export default function Modal(props) {
   }
 
   return ReactDOM.createPortal(
-    <ModalOverlay closeModal={props.closeModal}>
+    <ModalOverlay closeModal={props.closeModal} modalOverlay={props.modalOverlay}>
       <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex="-1">
         <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`}>
           <CloseIcon onClick={props.closeModal} />
@@ -57,5 +57,6 @@ Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   //data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
   title: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  modalOverlay: PropTypes.any,
 }
