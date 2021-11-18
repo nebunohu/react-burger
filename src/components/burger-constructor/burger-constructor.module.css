@@ -1,0 +1,60 @@
+.burgerConstructorWrapper {
+  display: flex;
+  flex-direction: column;
+  /*align-items: flex-end;*/
+  gap: 10px;
+  height: calc(100vh - 244px);
+  width: 512px;
+}
+
+.constructorElementWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center; 
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bunConstructor {
+  display: flex;
+  flex-direction: row; 
+  flex: 1 1 100%; 
+  max-height: 80px;
+}
+
+.totalWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  max-height: 64px;
+}
+
+.total {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.innerWrapper{
+  composes: burgerConstructorWrapper;
+  height: 464px;
+  width: 100%;
+  overflow-y: auto;
+  
+}
+
+.innerWrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.innerWrapper::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.innerWrapper::-webkit-scrollbar-thumb {
+  /*border-radius: 100px;*/
+  background-color: #8585AD;
+  height: 90%;
+}

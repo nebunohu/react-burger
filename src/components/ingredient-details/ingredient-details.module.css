@@ -1,0 +1,22 @@
+.infoWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 516px;
+  padding: 0;
+}
+
+.proteinWrapper {
+  width: 120px;
+  color: #8585AD;
+}
+
+.li {
+  list-style-type: none;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  text-align: center;
+  color: #8585AD;
+  height: 56px;
+}

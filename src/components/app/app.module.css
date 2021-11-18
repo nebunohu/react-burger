@@ -1,0 +1,8 @@
+.BurgerWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  max-height: 100vh;
+  min-height: 500px;
+  padding-top: 88px;
+}
