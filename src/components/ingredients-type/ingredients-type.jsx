@@ -7,14 +7,16 @@ import IngredientsItem from "../ingredients-item/ingredients-item";
 // Data
 import { DATA_TYPE } from "../../utils/type";
 //import { data } from '../../utils/data';
+import { AppContext } from "../../services/appContext";
 
 // Styles
 import typeStyles from './ingredients-type.module.css';
 
 function IngredientsType(props) {
+  const { data } = React.useContext(AppContext);
   const arrayOfElements = [];
-  if(props.data) {
-    props.data.forEach(el => {
+  if(data) {
+    data.forEach(el => {
       if(el.type === props.type)
         arrayOfElements.push(el);
     });
@@ -33,7 +35,6 @@ function IngredientsType(props) {
 }
 
 IngredientsType.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE).isRequired),
   type: PropTypes.string.isRequired, 
   typeRus: PropTypes.string.isRequired
 }

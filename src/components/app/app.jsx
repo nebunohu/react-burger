@@ -13,15 +13,16 @@ import AppStyles from './app.module.css';
 
 // Data
 //import { impData } from '../../utils/data';
+import { AppContext } from '../../services/appContext';
 
 function App() {
   const dataURL = 'https://norma.nomoreparties.space/api/ingredients';
-  const [burger, setBurger] = React.useState(
+  /*const [burger, setBurger] = React.useState(
     {
       bun: {},
       ingredients: [],      
     }
-  );
+  );*/
   const [data, setData] = React.useState([]);
   const [modal, setModal] = React.useState({
     isModalOpen: false,
@@ -29,8 +30,6 @@ function App() {
     isOrderModal: false,
   });
   const [currentIngredient, seCurrentIngredient] = React.useState({});
-
-  const modalOverlayRef = React.createRef();
 
   React.useEffect(() => {
     const getIngredientsData = async () => {
@@ -58,13 +57,13 @@ function App() {
   }, []);
 
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     const ingredients = data.filter(el => el.type !== 'bun');
     setBurger({
       bun: data[0],
       ingredients: ingredients,
     });
-  }, [data]);
+  }, [data]);*/
 
   function openIngredientsModal(item) {
     setModal({
@@ -94,11 +93,11 @@ function App() {
   }
 
   return (
-    <>
+    <AppContext.Provider value={{data, setData}}>
       <AppHeader />
       <div className={AppStyles.BurgerWrapper}>
-        <BurgerIngredients data={data} openModal={openIngredientsModal} />
-        <BurgerConstructor burger={burger} openModal={openOrderModal} /> 
+        <BurgerIngredients openModal={openIngredientsModal} />
+        <BurgerConstructor openModal={openOrderModal} /> 
       </div>
       {modal.isModalOpen && modal.isIngredModal &&   
         <Modal 
@@ -115,7 +114,7 @@ function App() {
           <OrderDetails orderNumber='000000' />
         </Modal>}
       
-    </>
+    </AppContext.Provider>
   );
 }
 
