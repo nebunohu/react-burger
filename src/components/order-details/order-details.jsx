@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from 'prop-types';
 
 //Styles
 import orderDetailsStyles from './order-details.module.css';
@@ -9,12 +8,15 @@ import orderDetailsStyles from './order-details.module.css';
 // Images
 import doneImage from '../../images/done.svg';
 
+import { OrderContext } from "../../services/orderContext";
+
 export default function OrderDetails(props) {
+  const { order } = React.useContext(OrderContext);
   return (
     <>
       
       <div className={orderDetailsStyles.number+' text text_type_digits-large mt-30 mb-8'}>
-        {props.orderNumber}
+        {order.number}
       </div>
       <div className={`${orderDetailsStyles.title} text text_type_main-medium mb-15`}>
         идентификатор заказа
@@ -32,6 +34,3 @@ export default function OrderDetails(props) {
   );
 }
 
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.string.isRequired,
-}

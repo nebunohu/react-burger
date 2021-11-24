@@ -13,18 +13,18 @@ import constructorStyles from './burger-constructor.module.css';
 // Data
 import { DATA_TYPE } from "../../utils/type";
 import { AppContext } from "../../services/appContext";
-//import { data } from '../../utils/data';
+import { impData } from '../../utils/data';
+import { OrderContext } from "../../services/orderContext";
+import { BurgerContext } from "../../services/burgerContext";
 
 
 
 function BurgerConstructor(props) {
   const { data } = React.useContext(AppContext);
-  const [burger, setBurger] = React.useState(
-    {
-      bun: {...data[0]},
-      ingredients: [...data],      
-    }
-  );
+  //const data = impData;
+  const { order, setOrder } = React.useContext(OrderContext);
+  const { burger, setBurger } = React.useContext(BurgerContext);
+  
   const orderFetchURL = 'https://norma.nomoreparties.space/api/orders';
   let bunName, bunPrice, bunImage;
 
@@ -40,12 +40,17 @@ function BurgerConstructor(props) {
 
   const createOrderClickHandler = async () => {
     try {
-      const headers = new Headers({"contente-type": "application/json"})
+      const headers = new Headers({"content-type": "application/json"})
       let fetchData = burger.ingredients.map(el => el._id);
-      fetchData = JSON.stringify(fetchData);
+      fetchData = JSON.stringify({ingredients: fetchData});
       const res = await fetch(orderFetchURL, {method: 'POST', mode: 'cors', headers, body: fetchData});
       if (res.ok) {
-        props.openModal();
+        const data = await res.json();
+        if(data.success) {
+          setBurger({...burger, name: data.name});
+          setOrder({...order, number: data.order.number});
+          props.openModal();
+        }  
       } else {
         throw new Error('Fetch error');
       }
@@ -53,6 +58,10 @@ function BurgerConstructor(props) {
     } catch(e) {
       console.log(e)
     }
+  }
+
+  const deleteElementHandler = (e) => {
+    console.log('click');
   }
 
   return (
@@ -76,13 +85,13 @@ function BurgerConstructor(props) {
                   text={el.name }
                   price={el.price}
                   thumbnail={el.image}
+                  handleClose={deleteElementHandler}
                 />
               </div>
             );
           })}
-      
-      
-      </div>)}
+        </div>)
+      }
       
       <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
         <ConstructorElement
@@ -97,7 +106,7 @@ function BurgerConstructor(props) {
         <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
           <span className='mr-2'>
             {
-              /*props.burger.bun.price*/bunPrice * 2 + 
+              bunPrice * 2 + 
               !!burger.ingredients 
               ? 
               burger.ingredients.reduce((previousValue, currentItem) => {

@@ -14,6 +14,8 @@ import AppStyles from './app.module.css';
 // Data
 //import { impData } from '../../utils/data';
 import { AppContext } from '../../services/appContext';
+import { OrderContext } from '../../services/orderContext';
+import { BurgerContext } from '../../services/burgerContext';
 
 function App() {
   const dataURL = 'https://norma.nomoreparties.space/api/ingredients';
@@ -24,6 +26,11 @@ function App() {
     }
   );*/
   const [data, setData] = React.useState([]);
+  const [burger, setBurger] = React.useState({
+    bun: {},
+    ingredients: []
+  });
+  const [order, setOrder] = React.useState({});
   const [modal, setModal] = React.useState({
     isModalOpen: false,
     isIngredModal: false,
@@ -41,6 +48,7 @@ function App() {
         if(res.ok) {
           const resData = await res.json();
           setData(resData.data);
+          
         } else {
           
           throw new Error('Fetch error'); 
@@ -56,14 +64,14 @@ function App() {
     
   }, []);
 
-
-  /*React.useEffect(() => {
+  React.useEffect(() => {
     const ingredients = data.filter(el => el.type !== 'bun');
     setBurger({
+      name: '',
       bun: data[0],
       ingredients: ingredients,
     });
-  }, [data]);*/
+  }, [data]);
 
   function openIngredientsModal(item) {
     setModal({
@@ -94,26 +102,29 @@ function App() {
 
   return (
     <AppContext.Provider value={{data, setData}}>
-      <AppHeader />
-      <div className={AppStyles.BurgerWrapper}>
-        <BurgerIngredients openModal={openIngredientsModal} />
-        <BurgerConstructor openModal={openOrderModal} /> 
-      </div>
-      {modal.isModalOpen && modal.isIngredModal &&   
-        <Modal 
-          closeModal={closeModal} 
-          title='Детали ингредиента'
-        >
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>}
-      {modal.isModalOpen && modal.isOrderModal && 
-        <Modal
-          closeModal={closeModal} 
-          title=''
-        >
-          <OrderDetails orderNumber='000000' />
-        </Modal>}
-      
+      <OrderContext.Provider value={{order, setOrder}}>
+        <BurgerContext.Provider value={{burger, setBurger}}>
+          <AppHeader />
+          <div className={AppStyles.BurgerWrapper}>
+            <BurgerIngredients openModal={openIngredientsModal} />
+            <BurgerConstructor openModal={openOrderModal} /> 
+          </div>
+          {modal.isModalOpen && modal.isIngredModal &&   
+            <Modal 
+              closeModal={closeModal} 
+              title='Детали ингредиента'
+            >
+              <IngredientDetails ingredient={currentIngredient} />
+            </Modal>}
+          {modal.isModalOpen && modal.isOrderModal && 
+            <Modal
+              closeModal={closeModal} 
+              title=''
+            >
+              <OrderDetails />
+            </Modal>}
+        </BurgerContext.Provider>
+      </OrderContext.Provider>
     </AppContext.Provider>
   );
 }
