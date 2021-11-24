@@ -21,8 +21,8 @@ function BurgerConstructor(props) {
   const { data } = React.useContext(AppContext);
   const [burger, setBurger] = React.useState(
     {
-      bun: {},
-      ingredients: [],      
+      bun: {...data[0]},
+      ingredients: [...data],      
     }
   );
   const orderFetchURL = 'https://norma.nomoreparties.space/api/orders';
@@ -40,8 +40,10 @@ function BurgerConstructor(props) {
 
   const createOrderClickHandler = async () => {
     try {
-      const fetchData =
-      const res = await fetch(orderFetchURL, {method: 'POST'});
+      const headers = new Headers({"contente-type": "application/json"})
+      let fetchData = burger.ingredients.map(el => el._id);
+      fetchData = JSON.stringify(fetchData);
+      const res = await fetch(orderFetchURL, {method: 'POST', mode: 'cors', headers, body: fetchData});
       if (res.ok) {
         props.openModal();
       } else {
