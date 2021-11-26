@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import IngredientsItem from "../ingredients-item/ingredients-item";
 
 // Data
-import { DATA_TYPE } from "../../utils/type";
+//import { DATA_TYPE } from "../../utils/type";
 //import { data } from '../../utils/data';
 import { AppContext } from "../../services/appContext";
 

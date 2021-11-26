@@ -11,16 +11,16 @@ import {ConstructorElement,
 import constructorStyles from './burger-constructor.module.css';
 
 // Data
-import { DATA_TYPE } from "../../utils/type";
-import { AppContext } from "../../services/appContext";
-import { impData } from '../../utils/data';
+//import { DATA_TYPE } from "../../utils/type";
+//import { AppContext } from "../../services/appContext";
+//import { impData } from '../../utils/data';
 import { OrderContext } from "../../services/orderContext";
 import { BurgerContext } from "../../services/burgerContext";
 
 
 
 function BurgerConstructor(props) {
-  const { data } = React.useContext(AppContext);
+  //const { data } = React.useContext(AppContext);
   //const data = impData;
   const { order, setOrder } = React.useContext(OrderContext);
   const { burger, setBurger } = React.useContext(BurgerContext);
@@ -66,20 +66,22 @@ function BurgerConstructor(props) {
 
   return (
     <div className={`${constructorStyles.burgerConstructorWrapper} ml-10 pt-25`}>
-      <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={bunName+' (верх)'}
-          price={bunPrice}
-          thumbnail={bunImage}
-        />
-      </div>
+      {!!burger.bun.name && 
+        <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={bunName+' (верх)'}
+            price={bunPrice}
+            thumbnail={bunImage}
+          />
+        </div>
+      }
       {!!burger.ingredients.length &&
         (<div className={constructorStyles.innerWrapper}>
            {burger.ingredients.map((el, index) => {
             return (
-              <div className={`${constructorStyles.constructorElementWrapper} pr-2`} key={index}>
+              <div className={`${constructorStyles.constructorElementWrapper} pr-2 mb-2`} key={index}>
                 <div className='pr-2'><DragIcon /></div>
                 <ConstructorElement
                   text={el.name }
@@ -93,19 +95,21 @@ function BurgerConstructor(props) {
         </div>)
       }
       
-      <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={bunName+' (низ)'}
-          price={bunPrice}
-          thumbnail={bunImage}
-        />
-      </div>
+      {!!burger.bun.name && 
+        <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={bunName+' (низ)'}
+            price={bunPrice}
+            thumbnail={bunImage}
+          />
+        </div>
+      }
       <div className={`${constructorStyles.totalWrapper} mt-10 mr-4`}>
         <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
           <span className='mr-2'>
-            {
+            {/*
               bunPrice * 2 + 
               !!burger.ingredients 
               ? 
@@ -113,8 +117,9 @@ function BurgerConstructor(props) {
                 return previousValue + currentItem.price
               }, 0) 
               : 
-              0
+              0*/
             }
+            {burger.totalPrice}
             </span>
           <CurrencyIcon />
         </div>
@@ -130,12 +135,6 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes ={
-  /*burger: PropTypes.shape(
-    {
-      bun: PropTypes.shape(DATA_TYPE),
-      ingredients: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE))
-    }
-  ),*/
   openModal: PropTypes.func,
 };
 

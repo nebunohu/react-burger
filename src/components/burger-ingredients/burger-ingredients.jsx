@@ -13,8 +13,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsType from "../ingredients-type/ingredients-type";
 
 // Data
-import { DATA_TYPE } from "../../utils/type";
-import { AppContext } from '../../services/appContext';
+//import { DATA_TYPE } from "../../utils/type";
+//import { AppContext } from '../../services/appContext';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('Булки');

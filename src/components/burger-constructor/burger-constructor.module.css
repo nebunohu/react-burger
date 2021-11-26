@@ -38,8 +38,8 @@
 }
 
 .innerWrapper{
-  composes: burgerConstructorWrapper;
-  height: 464px;
+  /*composes: burgerConstructorWrapper;*/
+  /*height: 464px;*/
   width: 100%;
   overflow-y: auto;
   
