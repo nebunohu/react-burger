@@ -18,10 +18,11 @@ import { OrderContext } from '../../services/orderContext';
 import { BurgerContext } from '../../services/burgerContext';
 
 // Actions
-import { ADD_INGREDIENT } from '../../services/burgerActions';
+import { ADD_INGREDIENT, ADD_BURGER_NAME } from '../../services/burgerActions';
+import { API_URL } from '../../utils/url';
 
 function App() {
-  const dataURL = 'https://norma.nomoreparties.space/api/ingredients';
+  //const dataURL = 'https://norma.nomoreparties.space/api/ingredients';
   /*const [burger, setBurger] = React.useState(
     {
       bun: {},
@@ -33,8 +34,13 @@ function App() {
     switch(action.type) {
       case ADD_INGREDIENT: 
         return addIngredient(state, action.ingredient);
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
+      case ADD_BURGER_NAME:
+        return {
+          ...state,
+          name: action.name,
+        }
+      default: 
+        throw new Error(`Wrong type of action: ${action.type}`);
     }
   } 
   const [burger, burgerDispatch] = useReducer(burgerReducer, {
@@ -63,7 +69,7 @@ function App() {
         "content-type": "application/json",
        });
       try {
-        const res = await fetch(dataURL, { method: "GET", mode: "cors", headers});
+        const res = await fetch(`${API_URL}/ingredients`, { method: "GET", mode: "cors", headers});
         if(res.ok) {
           const resData = await res.json();
           setData(resData.data);

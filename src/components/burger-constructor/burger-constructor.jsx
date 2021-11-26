@@ -11,11 +11,11 @@ import {ConstructorElement,
 import constructorStyles from './burger-constructor.module.css';
 
 // Data
-//import { DATA_TYPE } from "../../utils/type";
-//import { AppContext } from "../../services/appContext";
-//import { impData } from '../../utils/data';
 import { OrderContext } from "../../services/orderContext";
 import { BurgerContext } from "../../services/burgerContext";
+//import { data } from '../../utils/data';
+import { API_URL } from '../../utils/url';
+import { ADD_BURGER_NAME } from '../../services/burgerActions';
 
 
 
@@ -23,9 +23,9 @@ function BurgerConstructor(props) {
   //const { data } = React.useContext(AppContext);
   //const data = impData;
   const { order, setOrder } = React.useContext(OrderContext);
-  const { burger, setBurger } = React.useContext(BurgerContext);
+  const { burger, burgerDispatch } = React.useContext(BurgerContext);
   
-  const orderFetchURL = 'https://norma.nomoreparties.space/api/orders';
+  //const orderFetchURL = 'https://norma.nomoreparties.space/api/orders';
   let bunName, bunPrice, bunImage;
 
   if(!!burger.bun) {
@@ -43,11 +43,11 @@ function BurgerConstructor(props) {
       const headers = new Headers({"content-type": "application/json"})
       let fetchData = burger.ingredients.map(el => el._id);
       fetchData = JSON.stringify({ingredients: fetchData});
-      const res = await fetch(orderFetchURL, {method: 'POST', mode: 'cors', headers, body: fetchData});
+      const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body: fetchData});
       if (res.ok) {
         const data = await res.json();
         if(data.success) {
-          setBurger({...burger, name: data.name});
+          burgerDispatch({type: ADD_BURGER_NAME, name: data.name});
           setOrder({...order, number: data.order.number});
           props.openModal();
         }  
