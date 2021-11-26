@@ -13,10 +13,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsType from "../ingredients-type/ingredients-type";
 
 // Data
-import { DATA_TYPE } from "../../utils/type";
+//import { DATA_TYPE } from "../../utils/type";
+//import { AppContext } from '../../services/appContext';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('Булки');
+  //const { data } = React.useContext(AppContext);
   return (
     <div className={ingredientsStyles.burgerIngredientsWrapper+' pt-10'}>
       <span className='text text_type_main-large'>Соберите бургер</span>
@@ -33,16 +35,15 @@ function BurgerIngredients(props) {
         
       </div>
       <div className={ingredientsStyles.scrolledWindow}>
-        <IngredientsType data={props.data} type='bun' typeRus='Булки' openModal={props.openModal} />
-        <IngredientsType data={props.data} type='sauce' typeRus='Соусы' openModal={props.openModal} />
-        <IngredientsType data={props.data} type='main' typeRus='Начинки' openModal={props.openModal} />
+        <IngredientsType type='bun' typeRus='Булки' openModal={props.openModal} />
+        <IngredientsType type='sauce' typeRus='Соусы' openModal={props.openModal} />
+        <IngredientsType type='main' typeRus='Начинки' openModal={props.openModal} />
       </div>
     </div>
   );
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE).isRequired),
   openModal: PropTypes.func.isRequired
 };
 
