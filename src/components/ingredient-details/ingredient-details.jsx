@@ -11,7 +11,7 @@ import ingredientdDetailsStyles from './ingredient-details.module.css';
 import { DATA_TYPE } from "../../utils/type";
 
 export default function IngredientDetails(props) {
-  const currentIngredient = useSelector(store => store.currentIngredient)
+  const currentIngredient = useSelector(store => store.state.currentIngredient)
   return (
     <>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>

@@ -33,7 +33,7 @@ function App() {
 
   function openIngredientsModal(ingredient) {
     dispatch({type: OPEN_INGREDIENTS_MODAL})
-    setCurrentIngredient(ingredient);
+    //setCurrentIngredient(ingredient);
     dispatch({type: ADD_INGREDIENT, ingredient: ingredient});
   }
   
