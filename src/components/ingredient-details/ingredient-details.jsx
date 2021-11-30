@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 // Styles
@@ -8,7 +7,6 @@ import ingredientdDetailsStyles from './ingredient-details.module.css';
 // Components
 
 // Data
-import { DATA_TYPE } from "../../utils/type";
 
 export default function IngredientDetails(props) {
   const currentIngredient = useSelector(store => store.state.currentIngredient)

@@ -20,7 +20,7 @@ import { ADD_INGREDIENT, getIngredients, OPEN_INGREDIENTS_MODAL, OPEN_ORDER_MODA
 
 function App() {
 
-  const {modal, currentIngredient} = useSelector(store => store.state);
+  const {modal} = useSelector(store => store.state);
 
   const dispatch = useDispatch();
 
