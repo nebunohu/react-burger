@@ -1,2 +1,0 @@
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const ADD_BURGER_NAME = 'ADD_BURGER_NAME';

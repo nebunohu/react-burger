@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch} from "react-redux";
 
 // Components
 import {ConstructorElement, 
@@ -11,22 +12,18 @@ import {ConstructorElement,
 import constructorStyles from './burger-constructor.module.css';
 
 // Data
-import { OrderContext } from "../../services/orderContext";
-import { BurgerContext } from "../../services/burgerContext";
 //import { data } from '../../utils/data';
-import { API_URL } from '../../utils/url';
-import { ADD_BURGER_NAME } from '../../services/burgerActions';
 
+// Actions
+import {  postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
 
 
 function BurgerConstructor(props) {
-  //const { data } = React.useContext(AppContext);
-  //const data = impData;
-  const { order, setOrder } = React.useContext(OrderContext);
-  const { burger, burgerDispatch } = React.useContext(BurgerContext);
+  const burger = useSelector(store => store.state.burger);
   
-  //const orderFetchURL = 'https://norma.nomoreparties.space/api/orders';
   let bunName, bunPrice, bunImage;
+
+  const dispatch = useDispatch();
 
   if(!!burger.bun) {
     bunName = burger.bun.name;
@@ -39,25 +36,8 @@ function BurgerConstructor(props) {
   }
 
   const createOrderClickHandler = async () => {
-    try {
-      const headers = new Headers({"content-type": "application/json"})
-      let fetchData = burger.ingredients.map(el => el._id);
-      fetchData = JSON.stringify({ingredients: fetchData});
-      const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body: fetchData});
-      if (res.ok) {
-        const data = await res.json();
-        if(data.success) {
-          burgerDispatch({type: ADD_BURGER_NAME, name: data.name});
-          setOrder({...order, number: data.order.number});
-          props.openModal();
-        }  
-      } else {
-        throw new Error('Fetch error');
-      }
-      
-    } catch(e) {
-      console.log(e)
-    }
+    dispatch(postOrder(burger));
+    dispatch({type: OPEN_ORDER_MODAL});
   }
 
   const deleteElementHandler = (e) => {
@@ -109,16 +89,6 @@ function BurgerConstructor(props) {
       <div className={`${constructorStyles.totalWrapper} mt-10 mr-4`}>
         <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
           <span className='mr-2'>
-            {/*
-              bunPrice * 2 + 
-              !!burger.ingredients 
-              ? 
-              burger.ingredients.reduce((previousValue, currentItem) => {
-                return previousValue + currentItem.price
-              }, 0) 
-              : 
-              0*/
-            }
             {burger.totalPrice}
             </span>
           <CurrencyIcon />

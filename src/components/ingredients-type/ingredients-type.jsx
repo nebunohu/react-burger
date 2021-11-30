@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 
 // Components
@@ -7,13 +8,14 @@ import IngredientsItem from "../ingredients-item/ingredients-item";
 // Data
 //import { DATA_TYPE } from "../../utils/type";
 //import { data } from '../../utils/data';
-import { AppContext } from "../../services/appContext";
+//import { AppContext } from "../../services/appContext";
 
 // Styles
 import typeStyles from './ingredients-type.module.css';
 
 function IngredientsType(props) {
-  const { data } = React.useContext(AppContext);
+  //const { data } = React.useContext(AppContext);
+  const data = useSelector(store => store.state.ingredients);
   const arrayOfElements = [];
   if(data) {
     data.forEach(el => {
