@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import itemStyles from './ingredients-item.module.css';
 
@@ -7,9 +8,12 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import { DATA_TYPE } from "../../utils/type";
 
+import { SET_CURRENT_INGREDIENT } from '../../services/actions/burgerActions';
+
 function IngredientsItem(props) {
+  const dispatch = useDispatch();
   function clickHandler(e) {
-    
+    dispatch({type: SET_CURRENT_INGREDIENT, ingredient: props.item});
     props.openModal(props.item);
   }
 

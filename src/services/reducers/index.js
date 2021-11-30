@@ -5,6 +5,7 @@ import {
   ADD_INGREDIENT, 
   DELETE_INGREDIENT,
   SET_BURGER_NAME,
+  SET_CURRENT_INGREDIENT,
   GET_INGREDIENTS_API_REQUEST,
   GET_INGREDIENTS_API_REQUEST_SUCCESS,
   GET_INGREDIENTS_API_REQUEST_FAILED,
@@ -74,6 +75,12 @@ const stateReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT: {
       return {
         ...state
+      }
+    }
+    case SET_CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        currentIngredient: action.ingredient,
       }
     }
     case SET_BURGER_NAME: {
@@ -155,6 +162,7 @@ const stateReducer = (state = initialState, action) => {
     case CLOSE_MODAL: {
       return {
         ...state,
+        currentIngredient: {},
         modal: {
           ...state.modal,
           isModalOpen: false,

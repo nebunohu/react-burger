@@ -20,9 +20,7 @@ import { ADD_INGREDIENT, getIngredients, OPEN_INGREDIENTS_MODAL, OPEN_ORDER_MODA
 
 function App() {
 
-  const {modal} = useSelector(store => store.state);
-
-  const [currentIngredient, setCurrentIngredient] = React.useState({});
+  const {modal, currentIngredient} = useSelector(store => store.state);
 
   const dispatch = useDispatch();
 
@@ -48,27 +46,26 @@ function App() {
   }
 
   return (
-    
     <>
-          <AppHeader />
-          <div className={AppStyles.BurgerWrapper}>
-            <BurgerIngredients openModal={openIngredientsModal} />
-            <BurgerConstructor openModal={openOrderModal} /> 
-          </div>
-          {modal.isModalOpen && modal.isIngredModal &&   
-            <Modal 
-              closeModal={closeModal} 
-              title='Детали ингредиента'
-            >
-              <IngredientDetails ingredient={currentIngredient} />
-            </Modal>}
-          {modal.isModalOpen && modal.isOrderModal && 
-            <Modal
-              closeModal={closeModal} 
-              title=''
-            >
-              <OrderDetails />
-            </Modal>}
+      <AppHeader />
+      <div className={AppStyles.BurgerWrapper}>
+        <BurgerIngredients openModal={openIngredientsModal} />
+        <BurgerConstructor openModal={openOrderModal} /> 
+      </div>
+      {modal.isModalOpen && modal.isIngredModal &&   
+        <Modal 
+          closeModal={closeModal} 
+          title='Детали ингредиента'
+        >
+          <IngredientDetails />
+        </Modal>}
+      {modal.isModalOpen && modal.isOrderModal && 
+        <Modal
+          closeModal={closeModal} 
+          title=''
+        >
+          <OrderDetails />
+        </Modal>}
     </>
   );
 }
