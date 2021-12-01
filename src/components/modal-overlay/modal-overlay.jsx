@@ -1,15 +1,19 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
 
 // Styles
 import modalOverlayStyles from './modal-overlay.module.css';
 
+// Actions
+import { CLOSE_MODAL } from "../../services/actions/burgerActions";
+
 export default function ModalOverlay(props) {
+  const dispatch = useDispatch();
   const modalOverlayRef = React.createRef();
 
   function onClickHandler(e) {
     if(e.target === modalOverlayRef.current) {
-      props.closeModal();
+      dispatch({type: CLOSE_MODAL});
     }
   }
   return (
@@ -22,8 +26,4 @@ export default function ModalOverlay(props) {
       {props.children}
     </div>
   );
-}
-
-ModalOverlay.propTypes = {
-  closeModal: PropTypes.func.isRequired,
 }

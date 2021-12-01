@@ -1,5 +1,8 @@
 import { combineReducers } from "redux";
 
+// Reducers
+import constructorTabReducer from "./constuctor-tab-reducer";
+
 // Actions
 import {
   ADD_INGREDIENT, 
@@ -178,6 +181,7 @@ const stateReducer = (state = initialState, action) => {
 
 const rootReducer = combineReducers({
   state: stateReducer,
+  tabsState:constructorTabReducer,
 });
 
 export default rootReducer;

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 // Components
 import AppHeader from '../app-header/app-header';
@@ -16,7 +18,7 @@ import AppStyles from './app.module.css';
 //import { impData } from '../../utils/data';
 
 // Actions
-import { ADD_INGREDIENT, getIngredients, OPEN_INGREDIENTS_MODAL, OPEN_ORDER_MODAL, CLOSE_MODAL } from '../../services/actions/burgerActions';
+import { getIngredients} from '../../services/actions/burgerActions';
 
 function App() {
 
@@ -29,39 +31,23 @@ function App() {
     
   }, [dispatch]);
 
-
-
-  function openIngredientsModal(ingredient) {
-    dispatch({type: OPEN_INGREDIENTS_MODAL})
-    //setCurrentIngredient(ingredient);
-    dispatch({type: ADD_INGREDIENT, ingredient: ingredient});
-  }
-  
-  function openOrderModal(e) {
-    dispatch({type: OPEN_ORDER_MODAL})
-  }
-
-  const closeModal = (e) => {
-    dispatch({type: CLOSE_MODAL})
-  }
-
   return (
     <>
       <AppHeader />
-      <div className={AppStyles.BurgerWrapper}>
-        <BurgerIngredients openModal={openIngredientsModal} />
-        <BurgerConstructor openModal={openOrderModal} /> 
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <div className={AppStyles.BurgerWrapper}>
+          <BurgerIngredients />
+          <BurgerConstructor /> 
+        </div>
+      </DndProvider>
       {modal.isModalOpen && modal.isIngredModal &&   
         <Modal 
-          closeModal={closeModal} 
           title='Детали ингредиента'
         >
           <IngredientDetails />
         </Modal>}
       {modal.isModalOpen && modal.isOrderModal && 
         <Modal
-          closeModal={closeModal} 
           title=''
         >
           <OrderDetails />

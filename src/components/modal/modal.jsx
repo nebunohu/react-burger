@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
 
 //Styles
 import modalStyles from './modal.module.css';
@@ -10,35 +11,32 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 //import ModalHeader from "../modal-header/modal-header";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-// Data
-//import { DATA_TYPE } from "../../utils/type";
+// Actions
+import  { CLOSE_MODAL } from '../../services/actions/burgerActions';
 
 export default function Modal(props) {
-  /*let currentIngredient = {};
-  if(props.modalState.isIngredModal) {
-    currentIngredient = props.data.find(ingredient => ingredient._id === props.modalState.modalIngredientId);
-  }*/
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     const modal = document.getElementById('modal-wrapper');
     modal.focus();
-    /*document.addEventListener('keydown', props.closeModal);
-    return () => {
-      document.removeEventListener('keydown', props.closeModal);
-    }*/
   }, []);
 
   function escapeButtonHandler(e) {
     if(e.key === 'Escape') {
-      props.closeModal();
+      dispatch({type: CLOSE_MODAL});
     }
   }
 
+  function closeButtonClickHandler() {
+    dispatch({type: CLOSE_MODAL});
+  }
+
   return ReactDOM.createPortal(
-    <ModalOverlay closeModal={props.closeModal}>
+    <ModalOverlay>
       <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex="-1">
         <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`}>
-          <CloseIcon onClick={props.closeModal} />
+          <CloseIcon onClick={closeButtonClickHandler} />
         </div>
         {
           !!props.title && 
@@ -54,8 +52,6 @@ export default function Modal(props) {
 }
 
 Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  //data: PropTypes.arrayOf(PropTypes.shape(DATA_TYPE)),
   title: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
 }

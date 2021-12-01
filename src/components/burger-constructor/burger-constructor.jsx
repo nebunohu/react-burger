@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch} from "react-redux";
+import { useDrop } from "react-dnd";
 
 // Components
 import {ConstructorElement, 
@@ -15,15 +16,30 @@ import constructorStyles from './burger-constructor.module.css';
 //import { data } from '../../utils/data';
 
 // Actions
-import {  postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
+import { ADD_INGREDIENT, postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
 
 
 function BurgerConstructor(props) {
+  const data = useSelector(store => store.state.ingredients);
   const burger = useSelector(store => store.state.burger);
   
   let bunName, bunPrice, bunImage;
 
   const dispatch = useDispatch();
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(itemId) {
+      onDropHandler(itemId)
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
+
+  function onDropHandler(item) {
+    dispatch({type: ADD_INGREDIENT, ingredient: data.find(el => el._id === item.id)});
+  }
 
   if(!!burger.bun) {
     bunName = burger.bun.name;
@@ -42,10 +58,15 @@ function BurgerConstructor(props) {
 
   const deleteElementHandler = (e) => {
     console.log('click');
+    
   }
 
   return (
-    <div className={`${constructorStyles.burgerConstructorWrapper} ml-10 pt-25`}>
+    <div 
+      className={`${constructorStyles.burgerConstructorWrapper} ml-10 pt-25`} 
+      ref={dropTarget}
+      
+    >
       {!!burger.bun.name && 
         <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
           <ConstructorElement
