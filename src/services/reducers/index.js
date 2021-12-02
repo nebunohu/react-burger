@@ -21,10 +21,11 @@ import {
 } from '../actions/burgerActions';
 
 const initialState ={
-  indredients: [],
+  ingredients: [],
   burger: {
     bun: {},
     ingredients: [],
+    ingredientsCounts: [],
     name: '',
     totalPrice: 0
   },
@@ -48,11 +49,22 @@ const initialState ={
 function addIngredient(burger, ingredient) {
   let burgerState = {...burger};
   if (ingredient.type === 'bun') {
-    burgerState.bun =ingredient;
+    burgerState.bun = ingredient;
+    burgerState.ingredientsCounts = burgerState.ingredientsCounts.filter(el => el.type !== 'bun');
+    burgerState.ingredientsCounts.push({count: 1, type: ingredient.type, id: ingredient._id});
+
   } else {
-    let tempArray = [...burgerState.ingredients];
-    tempArray.push(ingredient);
-    burgerState.ingredients = tempArray;
+    const currentItem = burgerState.ingredients.find(el => el._id === ingredient._id)
+    burgerState.ingredients.push(ingredient); 
+    if(!currentItem) {
+      //const newItem = {count: 1, id: ingredient._id};
+      
+      burgerState.ingredientsCounts.push({count: 1, type: ingredient.type, id: ingredient._id});
+    } else {
+      //const currentId = burgerState.ingredients[burgerState.ingredients.indexOf(currentItem)]._id;
+      burgerState.ingredientsCounts.find(el => el.id === ingredient._id).count++;
+    }
+    
   }
 
   burgerState.totalPrice = (!!burgerState.bun.price ? burgerState.bun.price : 0) * 2 + 
@@ -76,9 +88,18 @@ const stateReducer = (state = initialState, action) => {
       }
     }
     case DELETE_INGREDIENT: {
-      return {
-        ...state
-      }
+      const tempState = {...state};
+      tempState.burger.ingredients.splice(action.index, 1);
+      const currentIndex = tempState.burger.ingredientsCounts.findIndex(el => el.id === action.id);
+      let currentCount = tempState.burger.ingredientsCounts[currentIndex].count;
+      //tempState.burger.ingredientsCounts[currentIndex].count--;
+      if(currentCount > 1) { 
+        currentCount--;
+        tempState.burger.ingredientsCounts[currentIndex].count = currentCount;
+      } else {
+        tempState.burger.ingredientsCounts.splice(currentIndex, 1);
+      } 
+      return tempState;
     }
     case SET_CURRENT_INGREDIENT: {
       return {
