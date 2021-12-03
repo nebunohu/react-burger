@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -13,7 +13,7 @@ export default function ConstructorIngredientItem({ el, index }) {
   const ref = useRef();
   const dispatch = useDispatch();
 
-  function moveItem(dragIndex, hoverIndex) {
+  const moveItem = useCallback((dragIndex, hoverIndex) => {
     const burger = [...burgerIngredients];
     const dragItem = burgerIngredients[dragIndex];
 
@@ -21,7 +21,7 @@ export default function ConstructorIngredientItem({ el, index }) {
     burger.splice(hoverIndex, 0, dragItem);
 
     dispatch({type: UPDATE_BURGER_INGREDIENTS, burger});
-  }
+  }, [burgerIngredients]);
 
   const [{handlerId},dropTarget] = useDrop({
     accept: 'inBurgerIngredient',
