@@ -9,6 +9,7 @@ import {
   DELETE_INGREDIENT,
   SET_BURGER_NAME,
   SET_CURRENT_INGREDIENT,
+  UPDATE_BURGER_INGREDIENTS,
   GET_INGREDIENTS_API_REQUEST,
   GET_INGREDIENTS_API_REQUEST_SUCCESS,
   GET_INGREDIENTS_API_REQUEST_FAILED,
@@ -105,6 +106,15 @@ const stateReducer = (state = initialState, action) => {
       return {
         ...state,
         currentIngredient: action.ingredient,
+      }
+    }
+    case UPDATE_BURGER_INGREDIENTS: {
+      return {
+        ...state,
+        burger: {
+          ...state.burger,
+          ingredients: action.burger,
+        }
       }
     }
     case SET_BURGER_NAME: {

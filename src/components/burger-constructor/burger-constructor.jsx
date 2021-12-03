@@ -110,7 +110,7 @@ function BurgerConstructor(props) {
         }
         
         {!!burger.bun.name && 
-          <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
+          <div className={constructorStyles.bunConstructor+' mt-2 ml-8 mr-4'}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
