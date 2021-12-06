@@ -52,10 +52,10 @@ function addIngredient(burger, ingredient) {
   if (ingredient.type === 'bun') {
     burgerState.bun = ingredient;
     burgerState.ingredientsCounts = burgerState.ingredientsCounts.filter(el => el.type !== 'bun');
-    burgerState.ingredientsCounts.push({count: 1, type: ingredient.type, id: ingredient._id});
+    burgerState.ingredientsCounts.push({count: 2, type: ingredient.type, id: ingredient._id});
 
   } else {
-    const currentItem = burgerState.ingredients.find(el => el._id === ingredient._id)
+    const currentItem = burgerState.ingredients.find(el => el.item._id === ingredient._id);
     burgerState.ingredients.push({index: burgerState.ingredients.length, item: ingredient}); 
     if(!currentItem) {
       //const newItem = {count: 1, id: ingredient._id};
@@ -90,7 +90,9 @@ const stateReducer = (state = initialState, action) => {
     }
     case DELETE_INGREDIENT: {
       const tempState = {...state};
+      const currentItemPrice = tempState.burger.ingredients[action.index].item.price;
       tempState.burger.ingredients.splice(action.index, 1);
+      
       const currentIndex = tempState.burger.ingredientsCounts.findIndex(el => el.id === action.id);
       let currentCount = tempState.burger.ingredientsCounts[currentIndex].count;
       //tempState.burger.ingredientsCounts[currentIndex].count--;
@@ -100,6 +102,8 @@ const stateReducer = (state = initialState, action) => {
       } else {
         tempState.burger.ingredientsCounts.splice(currentIndex, 1);
       } 
+      tempState.burger.totalPrice = tempState.burger.totalPrice - currentItemPrice;
+
       return tempState;
     }
     case SET_CURRENT_INGREDIENT: {

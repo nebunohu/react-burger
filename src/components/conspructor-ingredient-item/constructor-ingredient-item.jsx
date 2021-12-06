@@ -4,6 +4,8 @@ import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import update from 'immutability-helper';
+import PropTypes from 'prop-types';
+import { DATA_TYPE } from '../../utils/type';
 
 import itemStyles from "./constructor-ingredient-item.module.css";
 import { DELETE_INGREDIENT, UPDATE_BURGER_INGREDIENTS } from "../../services/actions/burgerActions";
@@ -89,3 +91,11 @@ export default function ConstructorIngredientItem({ el, index }) {
     </div>
   );
 }
+
+ConstructorIngredientItem.propTypes ={
+  el: PropTypes.shape({
+    index: PropTypes.number,
+    item: PropTypes.shape(DATA_TYPE)
+  }),
+  index: PropTypes.number
+};

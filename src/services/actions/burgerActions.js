@@ -43,7 +43,7 @@ export function postOrder(burger) {
     dispatch({type: POST_ORDER_REQUEST});
     try {
       const headers = new Headers({"content-type": "application/json"});
-      let fetchData = burger.ingredients.map(el => el._id);
+      let fetchData = burger.ingredients.map(el => el.item._id);
       fetchData = JSON.stringify({ingredients: fetchData});
       const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body: fetchData});
       if (res.ok) {
