@@ -14,22 +14,22 @@ export default function ConstructorIngredientItem({ el, index }) {
   const dispatch = useDispatch();
 
   const moveItem = useCallback((dragIndex, hoverIndex) => {
-    const burger = [...burgerIngredients];
+    //const burger = [...burgerIngredients];
     const dragItem = burgerIngredients[dragIndex];
 
-    burger.splice(dragIndex, 1);
-    burger.splice(hoverIndex, 0, dragItem);
+    dispatch({
+      type: UPDATE_BURGER_INGREDIENTS,
+      burger: update(burgerIngredients, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragItem]
+        ],
+      })
+    });
+  }, [burgerIngredients, dispatch]);
 
-    dispatch({type: UPDATE_BURGER_INGREDIENTS, burger});
-  }, [burgerIngredients]);
-
-  const [{handlerId},dropTarget] = useDrop({
+  const [,dropTarget] = useDrop({
     accept: 'inBurgerIngredient',
-    collect(monitor) {
-      return {
-          handlerId: monitor.getHandlerId(),
-      };
-    },
     hover: (item, monitor) => {
     
       const dragIndex = item.index;
@@ -58,9 +58,10 @@ export default function ConstructorIngredientItem({ el, index }) {
       }
 
       moveItem(dragIndex, hoverIndex);
-      item.index = hoverIndex; // ???
+      item.index = hoverIndex; 
     }
   });
+
   const [{isDragging}, dragRef] = useDrag({
     type: 'inBurgerIngredient',
     item: {id: el._id, index},
@@ -75,7 +76,7 @@ export default function ConstructorIngredientItem({ el, index }) {
   }
 
   dragRef(dropTarget(ref));
-  const opacity = isDragging ? 0.5 : 1;
+  const opacity = isDragging ? 0 : 1;
   return (
     <div className={`${itemStyles.constructorElementWrapper} pr-2`} ref={ref} style={{opacity}} >
       <div className='pr-2' style={{cursor: "move"}} ><DragIcon /></div>

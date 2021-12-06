@@ -56,7 +56,7 @@ function addIngredient(burger, ingredient) {
 
   } else {
     const currentItem = burgerState.ingredients.find(el => el._id === ingredient._id)
-    burgerState.ingredients.push(ingredient); 
+    burgerState.ingredients.push({index: burgerState.ingredients.length, item: ingredient}); 
     if(!currentItem) {
       //const newItem = {count: 1, id: ingredient._id};
       
@@ -72,7 +72,7 @@ function addIngredient(burger, ingredient) {
       (!!burgerState.ingredients 
       ? 
       burgerState.ingredients.reduce((previousValue, currentItem) => {
-        return previousValue + currentItem.price
+        return previousValue + currentItem.item.price
       }, 0) 
       : 
       0);

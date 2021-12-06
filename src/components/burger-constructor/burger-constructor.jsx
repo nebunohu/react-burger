@@ -105,7 +105,7 @@ function BurgerConstructor(props) {
         }
         {!!burger.ingredients.length &&
           <div className={constructorStyles.innerWrapper}>
-            {burger.ingredients.map((el, index) => <ConstructorIngredientItem el={el} index={index} key={index}/>)}
+            {burger.ingredients.map((el, index) => <ConstructorIngredientItem el={el.item} index={index} key={el.index}/>)}
           </div>
         }
         
