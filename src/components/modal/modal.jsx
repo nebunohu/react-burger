@@ -28,7 +28,7 @@ export default function Modal(props) {
   }
 
   return ReactDOM.createPortal(
-    <ModalOverlay>
+    <ModalOverlay closeModal={props.closeModal}>
       <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex="-1">
         <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`}>
           <CloseIcon onClick={closeButtonClickHandler} />
