@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
-import { useDispatch } from "react-redux";
 
 //Styles
 import modalStyles from './modal.module.css';
@@ -11,11 +10,7 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 //import ModalHeader from "../modal-header/modal-header";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-// Actions
-import  { CLOSE_MODAL } from '../../services/actions/burgerActions';
-
 export default function Modal(props) {
-  const dispatch = useDispatch();
 
   React.useEffect(() => {
     const modal = document.getElementById('modal-wrapper');
@@ -24,12 +19,12 @@ export default function Modal(props) {
 
   function escapeButtonHandler(e) {
     if(e.key === 'Escape') {
-      dispatch({type: CLOSE_MODAL});
+      props.closeModal();
     }
   }
 
   function closeButtonClickHandler() {
-    dispatch({type: CLOSE_MODAL});
+    props.closeModal();
   }
 
   return ReactDOM.createPortal(

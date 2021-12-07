@@ -163,6 +163,10 @@ const stateReducer = (state = initialState, action) => {
         ...state,
         orderPostRequest: false,
         orderPostRequestFailed: false,
+        burger: {
+          ...initialState.burger,
+          ingredients: [],
+        },
         order: {
           ...state.order,
           number: action.orderNumber,

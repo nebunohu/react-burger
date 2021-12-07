@@ -18,7 +18,7 @@ import AppStyles from './app.module.css';
 //import { impData } from '../../utils/data';
 
 // Actions
-import { getIngredients} from '../../services/actions/burgerActions';
+import { getIngredients, CLOSE_MODAL} from '../../services/actions/burgerActions';
 
 function App() {
 
@@ -30,6 +30,10 @@ function App() {
     dispatch(getIngredients());
     
   }, [dispatch]);
+
+  const closeModal = () => {
+    dispatch({type: CLOSE_MODAL});
+  }
 
   return (
     <>
@@ -43,12 +47,14 @@ function App() {
       {modal.isModalOpen && modal.isIngredModal &&   
         <Modal 
           title='Детали ингредиента'
+          closeModal={closeModal}
         >
           <IngredientDetails />
         </Modal>}
       {modal.isModalOpen && modal.isOrderModal && 
         <Modal
           title=''
+          closeModal={closeModal}
         >
           <OrderDetails />
         </Modal>}

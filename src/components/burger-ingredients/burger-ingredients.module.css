@@ -10,6 +10,8 @@
 .scrolledWindow {
   overflow-y: auto;
   height: 100%;
+  margin: 0;
+  padding: 0;
   /*height: 900px;
   scrollbar-color: #d4aa70 #e4e4e4;
   scrollbar-width: thin;*/

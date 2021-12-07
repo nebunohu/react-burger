@@ -11,8 +11,10 @@ header {
 }
 
 nav {
+  margin: auto;
   height: 100%;
   width: 100%;
+  max-width: 1240px;
 }
 
 .headerUl {
@@ -33,6 +35,14 @@ nav {
   align-items: center;
   list-style-type: none;
   padding: 0 20px;
+}
+
+.listElement:first-child {
+  padding-left: 0;
+}
+
+.listElement:last-child {
+  padding-right: 0;
 }
 
 .active {

@@ -10,7 +10,7 @@ import IngredientsType from "../ingredients-type/ingredients-type";
 
 // Data
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
   //const [current, setCurrent] = React.useState('Булки');
   const current = useSelector(store => store.tabsState.tabs.reduce((current, tab) => {
     return current.ratio < tab.ratio ? tab : current
@@ -51,7 +51,7 @@ function BurgerIngredients(props) {
         </Tab>
         
       </div>
-      <ul className={ingredientsStyles.scrolledWindow} style={{margin: 0, padding: 0}}>
+      <ul className={ingredientsStyles.scrolledWindow} >
         <li ref={bunRef}>
           <IngredientsType reference={bunRef} id='bun' type='Булки' />
         </li>

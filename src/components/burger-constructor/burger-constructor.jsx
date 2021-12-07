@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch} from "react-redux";
 import { useDrop } from "react-dnd";
 
@@ -19,7 +18,7 @@ import constructorStyles from './burger-constructor.module.css';
 import { ADD_INGREDIENT, postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
 
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
   const data = useSelector(store => store.state.ingredients);
   const burger = useSelector(store => store.state.burger);
   
@@ -62,31 +61,14 @@ function BurgerConstructor(props) {
     dispatch({type: OPEN_ORDER_MODAL});
   }
 
-  const wrapperClassName = `${isHover ? 'readyToDrop' : ''}`
+  const wrapperClassName = `${constructorStyles.dropTarget} ${isHover ? 'readyToDrop' : ''}`
   return (
     <div 
       className={`${constructorStyles.burgerConstructorWrapper} ml-10 mt-25`} 
       ref={dropTarget}
     >
-      {/*<div 
-        className={wrapperClassName} 
-        style={{border: "2px solid rgba(0,0,0,0)", height: "calc(100vh - 244px)"}}
-        
-      >*/}
       {burger.ingredients.length === 0 && !bunName &&
-        <div 
-          className={wrapperClassName} 
-          style={{
-            height: 300, 
-            border: "2px solid grey", 
-            color:"grey",
-            borderRadius: 25, 
-            display: "flex", 
-            justifyContent: "center", 
-            alignItems: "center", 
-            fontSize: 35
-          }} 
-        >
+        <div className={wrapperClassName} >
           Добавьте ингредиенты
         </div>
 
@@ -130,19 +112,15 @@ function BurgerConstructor(props) {
               </span>
             <CurrencyIcon />
           </div>
-          <div style={{minWidth: 215}}>
-          <Button type="primary" size="medium" onClick={createOrderClickHandler}>
-            Оформить заказ
-          </Button>
-          </div>
+          {bunName && <div className={constructorStyles.buttonWrapper}>
+            <Button type="primary" size="medium" onClick={createOrderClickHandler}>
+              Оформить заказ
+            </Button>
+          </div>}
         </div>}
     </div>
   );
   
 }
-
-BurgerConstructor.propTypes ={
-  openModal: PropTypes.func,
-};
 
 export default BurgerConstructor;

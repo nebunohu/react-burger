@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import PropTypes from 'prop-types';
 
 // Styles
 import modalOverlayStyles from './modal-overlay.module.css';
@@ -26,4 +27,8 @@ export default function ModalOverlay(props) {
       {props.children}
     </div>
   );
+}
+
+ModalOverlay.propTypes = {
+  children: PropTypes.element.isRequired,
 }

@@ -8,7 +8,7 @@ import ingredientdDetailsStyles from './ingredient-details.module.css';
 
 // Data
 
-export default function IngredientDetails(props) {
+export default function IngredientDetails() {
   const currentIngredient = useSelector(store => store.state.currentIngredient)
   return (
     <>
