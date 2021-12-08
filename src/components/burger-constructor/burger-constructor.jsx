@@ -1,32 +1,50 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch} from "react-redux";
+import { useDrop } from "react-dnd";
 
 // Components
 import {ConstructorElement, 
-        DragIcon, 
         Button, 
         CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
+import ConstructorIngredientItem from "../conspructor-ingredient-item/constructor-ingredient-item";
 
 // Styles
 import constructorStyles from './burger-constructor.module.css';
 
 // Data
-import { OrderContext } from "../../services/orderContext";
-import { BurgerContext } from "../../services/burgerContext";
 //import { data } from '../../utils/data';
-import { API_URL } from '../../utils/url';
-import { ADD_BURGER_NAME } from '../../services/burgerActions';
+
+// Actions
+import { ADD_INGREDIENT, postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
 
 
-
-function BurgerConstructor(props) {
-  //const { data } = React.useContext(AppContext);
-  //const data = impData;
-  const { order, setOrder } = React.useContext(OrderContext);
-  const { burger, burgerDispatch } = React.useContext(BurgerContext);
+function BurgerConstructor() {
+  const data = useSelector(store => store.state.ingredients);
+  const burger = useSelector(store => store.state.burger);
   
-  //const orderFetchURL = 'https://norma.nomoreparties.space/api/orders';
   let bunName, bunPrice, bunImage;
+
+  const dispatch = useDispatch();
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: ["ingredient", 'inBurgerIngredient'],
+    drop(itemId, monitor) {
+      const type = monitor.getItemType();
+      onDropHandler(itemId, type);
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
+
+  function onDropHandler(item, type) {
+    if (type === 'ingredient') {
+      dispatch({type: ADD_INGREDIENT, ingredient: data.find(el => el._id === item.id)});
+    } else {
+
+    }
+    
+  }
 
   if(!!burger.bun) {
     bunName = burger.bun.name;
@@ -39,103 +57,70 @@ function BurgerConstructor(props) {
   }
 
   const createOrderClickHandler = async () => {
-    try {
-      const headers = new Headers({"content-type": "application/json"})
-      let fetchData = burger.ingredients.map(el => el._id);
-      fetchData = JSON.stringify({ingredients: fetchData});
-      const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body: fetchData});
-      if (res.ok) {
-        const data = await res.json();
-        if(data.success) {
-          burgerDispatch({type: ADD_BURGER_NAME, name: data.name});
-          setOrder({...order, number: data.order.number});
-          props.openModal();
-        }  
-      } else {
-        throw new Error('Fetch error');
-      }
-      
-    } catch(e) {
-      console.log(e)
-    }
+    dispatch(postOrder(burger));
+    dispatch({type: OPEN_ORDER_MODAL});
   }
 
-  const deleteElementHandler = (e) => {
-    console.log('click');
-  }
-
+  const wrapperClassName = `${constructorStyles.dropTarget} ${isHover ? 'readyToDrop' : ''}`
   return (
-    <div className={`${constructorStyles.burgerConstructorWrapper} ml-10 pt-25`}>
-      {!!burger.bun.name && 
-        <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={bunName+' (верх)'}
-            price={bunPrice}
-            thumbnail={bunImage}
-          />
+    <div 
+      className={`${constructorStyles.burgerConstructorWrapper} ml-10 mt-25`} 
+      ref={dropTarget}
+    >
+      {burger.ingredients.length === 0 && !bunName &&
+        <div className={wrapperClassName} >
+          Добавьте ингредиенты
         </div>
+
       }
-      {!!burger.ingredients.length &&
-        (<div className={constructorStyles.innerWrapper}>
-           {burger.ingredients.map((el, index) => {
-            return (
-              <div className={`${constructorStyles.constructorElementWrapper} pr-2 mb-2`} key={index}>
-                <div className='pr-2'><DragIcon /></div>
-                <ConstructorElement
-                  text={el.name }
-                  price={el.price}
-                  thumbnail={el.image}
-                  handleClose={deleteElementHandler}
-                />
-              </div>
-            );
-          })}
-        </div>)
-      }
-      
-      {!!burger.bun.name && 
-        <div className={constructorStyles.bunConstructor+' ml-8 mr-4'}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={bunName+' (низ)'}
-            price={bunPrice}
-            thumbnail={bunImage}
-          />
-        </div>
-      }
+
+        {!!burger.bun.name && 
+          <div className={constructorStyles.bunConstructor+' mb-2 ml-8 mr-4'}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={bunName+' (верх)'}
+              price={bunPrice}
+              thumbnail={bunImage}
+            />
+          </div>
+        }
+        {!!burger.ingredients.length &&
+          <div className={constructorStyles.innerWrapper}>
+            {burger.ingredients.map((el, index) => <ConstructorIngredientItem el={el.item} index={index} key={el.index}/>)}
+          </div>
+        }
+        
+        {!!burger.bun.name && 
+          <div className={constructorStyles.bunConstructor+' mt-2 ml-8 mr-4'}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={bunName+' (низ)'}
+              price={bunPrice}
+              thumbnail={bunImage}
+            />
+          </div>
+        }
+        
+      {/*</div>*/}
+      {(burger.ingredients.length > 0 || bunName) &&
       <div className={`${constructorStyles.totalWrapper} mt-10 mr-4`}>
-        <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
-          <span className='mr-2'>
-            {/*
-              bunPrice * 2 + 
-              !!burger.ingredients 
-              ? 
-              burger.ingredients.reduce((previousValue, currentItem) => {
-                return previousValue + currentItem.price
-              }, 0) 
-              : 
-              0*/
-            }
-            {burger.totalPrice}
-            </span>
-          <CurrencyIcon />
-        </div>
-        <div style={{minWidth: 215}}>
-        <Button type="primary" size="medium" onClick={createOrderClickHandler}>
-          Оформить заказ
-        </Button>
-        </div>
-      </div>
+          <div className={constructorStyles.total + ' text text_type_digits-medium mr-10'}>
+            <span className='mr-2'>
+              {burger.totalPrice}
+              </span>
+            <CurrencyIcon />
+          </div>
+          {bunName && <div className={constructorStyles.buttonWrapper}>
+            <Button type="primary" size="medium" onClick={createOrderClickHandler}>
+              Оформить заказ
+            </Button>
+          </div>}
+        </div>}
     </div>
   );
   
 }
-
-BurgerConstructor.propTypes ={
-  openModal: PropTypes.func,
-};
 
 export default BurgerConstructor;

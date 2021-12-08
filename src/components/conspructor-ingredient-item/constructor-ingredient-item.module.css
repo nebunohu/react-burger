@@ -1,0 +1,9 @@
+.constructorElementWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start; 
+  align-items: center;
+  margin-left: 20px;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+}

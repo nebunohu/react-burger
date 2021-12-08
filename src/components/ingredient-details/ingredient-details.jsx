@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 // Styles
 import ingredientdDetailsStyles from './ingredient-details.module.css';
@@ -7,16 +7,16 @@ import ingredientdDetailsStyles from './ingredient-details.module.css';
 // Components
 
 // Data
-import { DATA_TYPE } from "../../utils/type";
 
-export default function IngredientDetails(props) {
+export default function IngredientDetails() {
+  const currentIngredient = useSelector(store => store.state.currentIngredient)
   return (
     <>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>
-        <img src={props.ingredient.image_large} alt='ингредиент' />
+        <img src={currentIngredient.image_large} alt='ингредиент' />
       </div>
       <div className={ingredientdDetailsStyles.nameWrapper+' mb-8'}>
-        <span className="text text_type_main-medium">{props.ingredient.name}</span>
+        <span className="text text_type_main-medium">{currentIngredient.name}</span>
       </div>
       <ul className={ingredientdDetailsStyles.infoWrapper+' mb-15'}>
         <li className={`${ingredientdDetailsStyles.caloriesWrapper} ${ingredientdDetailsStyles.li}`}>
@@ -24,7 +24,7 @@ export default function IngredientDetails(props) {
             Калории, ккал
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-            {props.ingredient.calories}
+            {currentIngredient.calories}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>
@@ -32,7 +32,7 @@ export default function IngredientDetails(props) {
             Белки, г
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-          {props.ingredient.proteins}
+          {currentIngredient.proteins}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>
@@ -40,7 +40,7 @@ export default function IngredientDetails(props) {
             Жиры, г
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-          {props.ingredient.fat}
+          {currentIngredient.fat}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>
@@ -48,14 +48,10 @@ export default function IngredientDetails(props) {
             Углеводы, г
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-          {props.ingredient.carbohydrates}
+          {currentIngredient.carbohydrates}
           </span>
         </li>
       </ul>
     </>
   );
-}
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape(DATA_TYPE).isRequired,
 }

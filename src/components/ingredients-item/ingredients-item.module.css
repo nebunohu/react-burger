@@ -24,4 +24,7 @@
   height: 32px;
   border-radius: 50%;
   background-color: #4C4CFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

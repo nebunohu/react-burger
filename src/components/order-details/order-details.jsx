@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 //Styles
 import orderDetailsStyles from './order-details.module.css';
@@ -8,10 +9,8 @@ import orderDetailsStyles from './order-details.module.css';
 // Images
 import doneImage from '../../images/done.svg';
 
-import { OrderContext } from "../../services/orderContext";
-
 export default function OrderDetails(props) {
-  const { order } = React.useContext(OrderContext);
+  const order = useSelector(store => store.state.order);
   return (
     <>
       
