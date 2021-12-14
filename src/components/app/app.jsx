@@ -25,11 +25,9 @@ function App() {
           <Route path='/register' component={RegisterPage}/>
           <Route path='/forgot-password' component={ForgotPasswordPage}/>
           <Route path='/reset-password' component={ResetPasswordPage}/>
-          <Route path='/profile ' component={ProfilePage}/>
+          <Route path='/profile' component={ProfilePage}/>
           <Route path='/ingredients/:id' component={IngredientPage}/>
-          <Route path="/" exact component={ConstructorPage}>
-            
-          </Route>
+          <Route exact path="/" component={ConstructorPage} />
           <Route component={NotFound404} />
         </Switch>
       </Router>

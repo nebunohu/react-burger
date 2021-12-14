@@ -8,3 +8,9 @@
   left: calc(50% - 480px/2);
   top: 288px;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

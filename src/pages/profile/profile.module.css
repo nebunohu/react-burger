@@ -1,0 +1,23 @@
+.profileWrapper {
+
+}
+
+.propertiesFormWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 480px;
+    height: 430px;
+    left: calc(50% - 480px/2);
+    top: 288px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .menuWrapper {
+
+  }
