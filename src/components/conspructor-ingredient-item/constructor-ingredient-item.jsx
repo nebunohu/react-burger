@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { DATA_TYPE } from '../../utils/type';
 
 import itemStyles from "./constructor-ingredient-item.module.css";
-import { DELETE_INGREDIENT, UPDATE_BURGER_INGREDIENTS } from "../../services/actions/burgerActions";
+import { DELETE_INGREDIENT, UPDATE_BURGER_INGREDIENTS } from "../../services/actions/burger-actions";
 
 export default function ConstructorIngredientItem({ el, index }) {
   const burgerIngredients = useSelector(store => store.state.burger.ingredients);

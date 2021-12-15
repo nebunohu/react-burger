@@ -9,7 +9,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import { DATA_TYPE } from "../../utils/type";
 
-import { SET_CURRENT_INGREDIENT, OPEN_INGREDIENTS_MODAL } from '../../services/actions/burgerActions';
+import { SET_CURRENT_INGREDIENT, OPEN_INGREDIENTS_MODAL } from '../../services/actions/burger-actions';
 
 function IngredientsItem({item}) {
   const burgerIngredientsCounts = useSelector(store => store.state.burger.ingredientsCounts);

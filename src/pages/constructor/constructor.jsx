@@ -11,7 +11,7 @@ import OrderDetails from "../../components/order-details/order-details";
 import Modal from "../../components/modal/modal";
 
 // Actions
-import { CLOSE_MODAL, getIngredients } from "../../services/actions/burgerActions";
+import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
 
 // Styles
 import cnstructorStyles from './constructor.module.css'

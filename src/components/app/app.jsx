@@ -17,22 +17,19 @@ import NotFound404 from '../../pages/not-found-404/not-found-404';
 
 function App() {
   return (
-    <>
+    <Router>
       <AppHeader />
-      <Router>
-        <Switch>
-          <Route path='/login' component={LoginPage}/>
-          <Route path='/register' component={RegisterPage}/>
-          <Route path='/forgot-password' component={ForgotPasswordPage}/>
-          <Route path='/reset-password' component={ResetPasswordPage}/>
-          <Route path='/profile' component={ProfilePage}/>
-          <Route path='/ingredients/:id' component={IngredientPage}/>
-          <Route exact path="/" component={ConstructorPage} />
-          <Route component={NotFound404} />
-        </Switch>
-      </Router>
-      
-    </>
+      <Switch>
+        <Route path='/login' component={LoginPage}/>
+        <Route path='/register' component={RegisterPage}/>
+        <Route path='/forgot-password' component={ForgotPasswordPage}/>
+        <Route path='/reset-password' component={ResetPasswordPage}/>
+        <Route path='/profile' component={ProfilePage}/>
+        <Route path='/ingredients/:id' component={IngredientPage}/>
+        <Route exact path="/" component={ConstructorPage} />
+        <Route component={NotFound404} />
+      </Switch>
+    </Router>
   );
 }
 

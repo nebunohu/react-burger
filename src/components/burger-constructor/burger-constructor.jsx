@@ -15,7 +15,7 @@ import constructorStyles from './burger-constructor.module.css';
 //import { data } from '../../utils/data';
 
 // Actions
-import { ADD_INGREDIENT, postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
+import { ADD_INGREDIENT, postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burger-actions';
 
 
 function BurgerConstructor() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Styles
 import headerStyles from './app-header.module.css';
@@ -13,7 +14,7 @@ function AppHeader() {
       <nav>
         <ul className={headerStyles.headerUl}>
           <li className={`${headerStyles.active} ${headerStyles.listElement}`}>
-            <BurgerIcon type='primary' /> <span className='ml-2'>Конструктор</span>
+            <Link className={`${headerStyles.link}`} to='/'><BurgerIcon type='primary' /> <span className='ml-2'>Конструктор</span></Link>
           </li>
           <li className={`${headerStyles.listElement} ${headerStyles.listElement}`}>
             <ListIcon type='secondary'/> <span className='ml-2'>Лента заказов</span>
@@ -22,7 +23,7 @@ function AppHeader() {
             <Logo />
           </li>
           <li className={`${headerStyles.profile} ${headerStyles.listElement}`}>
-            <ProfileIcon type='secondary'/> <span className='ml-2'>Личный кабинет</span>    
+            <Link className={`${headerStyles.link}`} to='/profile'><ProfileIcon type='secondary'/> <span className='ml-2'>Личный кабинет</span></Link>
           </li>
         </ul>
       </nav>
