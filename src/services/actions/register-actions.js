@@ -1,5 +1,8 @@
 import { API_URL } from "../../utils/url";
 //import { useHistory } from 'react-router-dom';
+import { setCookie } from "../../utils/cookie";
+import { SET_IS_AUTH } from "./auth-actions";
+import { SET_USER } from "./user-actions";
 
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
 export const REGISTER_USER_REQUEST_SUCCESS = 'REGISTER_USER_REQUEST_SUCCESS';
@@ -16,12 +19,10 @@ export function registerUserRequest(body) {
       if (res.ok) {
         const data = await res.json();
         if(data.success) {
-          //setBurger({...burger, name: data.name});
-          //dispatch({type: SET_BURGER_NAME, name: data.name});
           dispatch({type: REGISTER_USER_REQUEST_SUCCESS});
-
-          //setOrder({...order, number: data.order.number});
-          //props.openModal();
+          document.cookie = setCookie('token', data.refreshToken);
+          dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken, tokenExp: 1200 });
+          dispatch({ type: SET_USER, user: data.user});
         }  
       } else {
         throw new Error('Registration error');

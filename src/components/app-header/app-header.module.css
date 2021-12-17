@@ -23,6 +23,10 @@ nav {
   align-items: center;
   color: #8585AD;
   text-decoration: none;
+  font-family: JetBrains Mono;
+  font-size: 16px;
+  line-height: 24px;
+
 }
 
 .link:visited {

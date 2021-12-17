@@ -2,11 +2,20 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_REQUEST_SUCCESS,
   FORGOT_PASSWORD_REQUEST_FAILED,
+  FORGOT_PASSWORD_REDIRECT_CLEAR,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_REQUEST_SUCCESS,
+  RESET_PASSWORD_REQUEST_FAILED
 } from '../actions/password-actions.js'
 
 const initialState ={
   forgotPasswordRequest: false,
   forgotPasswordRequestFailed: false,
+  fromForgotPasswordRedirect: false,
+
+  resetPasswordRequest: false,
+  resetPasswordRequestFailed: false,
+  fromresetPasswordRedirect: false,
 };
 
 export function passwordReducer( state = initialState, action ) {
@@ -14,7 +23,7 @@ export function passwordReducer( state = initialState, action ) {
     case FORGOT_PASSWORD_REQUEST: {
       return {
         ...state,
-        forgotPasswordRequest: true,
+        forgotPasswordRequest: true
       };
     }
 
@@ -23,6 +32,7 @@ export function passwordReducer( state = initialState, action ) {
         ...state,
         forgotPasswordRequest: false,
         forgotPasswordRequestFailed: false,
+        fromForgotPasswordRedirect: true,
       };
     }
 
@@ -31,6 +41,37 @@ export function passwordReducer( state = initialState, action ) {
         ...state,
         forgotPasswordRequest: false,
         forgotPasswordRequestFailed: true,
+      };
+    }
+
+    case FORGOT_PASSWORD_REDIRECT_CLEAR: {
+      return {
+        ...state,
+        fromForgotPasswordRedirect: false,
+      }
+    }
+
+    case RESET_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        resetPasswordRequest: true
+      };
+    }
+
+    case RESET_PASSWORD_REQUEST_SUCCESS: {
+      return {
+        ...state,
+        resetPasswordRequest: false,
+        resetPasswordRequestFailed: false,
+        fromResetPasswordRedirect: true,
+      };
+    }
+
+    case RESET_PASSWORD_REQUEST_FAILED: {
+      return {
+        ...state,
+        resetPasswordRequest: false,
+        resetPasswordRequestFailed: true,
       };
     }
 

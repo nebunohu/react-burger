@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import './index.css';
+import './fonts/fonts.css';
 import App from './components/app/app.jsx';
 import reportWebVitals from './reportWebVitals';
 

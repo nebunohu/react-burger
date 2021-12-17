@@ -14,6 +14,7 @@ import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import IngredientPage from '../../pages/ingredients/ingredients';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
+import { ProtectedRoute } from '../protected-route/protected-route';
 
 function App() {
   return (
@@ -24,7 +25,9 @@ function App() {
         <Route path='/register' component={RegisterPage}/>
         <Route path='/forgot-password' component={ForgotPasswordPage}/>
         <Route path='/reset-password' component={ResetPasswordPage}/>
-        <Route path='/profile' component={ProfilePage}/>
+        <ProtectedRoute path='/profile'>
+          <ProfilePage />
+        </ProtectedRoute>
         <Route path='/ingredients/:id' component={IngredientPage}/>
         <Route exact path="/" component={ConstructorPage} />
         <Route component={NotFound404} />

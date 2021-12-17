@@ -3,6 +3,8 @@ import { combineReducers } from "redux";
 // Reducers
 import constructorTabReducer from "./constuctor-tab-reducer";
 import { passwordReducer } from "./password-reducer";
+import { userReducer } from "./user-reducer";
+import { authReducer } from "./auth-reducer";
 
 // Actions
 import {
@@ -21,6 +23,8 @@ import {
   OPEN_ORDER_MODAL,
   CLOSE_MODAL
 } from '../actions/burger-actions';
+
+
 
 const initialState ={
   ingredients: [],
@@ -222,7 +226,9 @@ const stateReducer = (state = initialState, action) => {
 const rootReducer = combineReducers({
   state: stateReducer,
   tabsState: constructorTabReducer,
-  password: passwordReducer
+  password: passwordReducer, 
+  user: userReducer,
+  auth: authReducer
 });
 
 export default rootReducer;
