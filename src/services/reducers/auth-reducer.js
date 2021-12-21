@@ -35,6 +35,8 @@ export function authReducer(state = initialState, action) {
       return {
         ...state,
         isAuth: false,
+        fromLoginRedirect: false,
+        accessToken: '',
       }
     }
 

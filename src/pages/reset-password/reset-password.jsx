@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { resetPasswordRequest } from '../../services/actions/password-actions';
@@ -8,12 +8,14 @@ import { resetPasswordRequest } from '../../services/actions/password-actions';
 // Styles
 import resetPassStyles from './reset-password.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { getCookie } from '../../utils/cookie';
 
 
 export default function ResetPasswordPage() {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [ formState, setFormState ] = useState({ token: '', password: ''});
+  const history = useHistory();
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
   function onClickHandler(e) {
@@ -29,6 +31,11 @@ export default function ResetPasswordPage() {
     const target = e.target;
     if (target.name !== 'password') setFormState({ ...formState, [target.name]: target.value}); 
   }*/
+
+  if(getCookie('token')) {
+    history.replace('/');
+    return null;
+  }
 
   return (
     isRedirect ?

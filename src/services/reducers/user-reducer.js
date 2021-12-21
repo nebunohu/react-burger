@@ -3,12 +3,15 @@ import {
   RESET_USER,
   GET_USER_REQUEST,
   GET_USER_REQUEST_SUCCESS,
-  GET_USER_REQUEST_FAILED 
+  GET_USER_REQUEST_FAILED,
+  SET_IS_USER_LOADED,
+  RESET_IS_USER_LOADED 
  } from '../actions/user-actions.js';
 
 const initialState ={
   getUserRequest: false,
   getUserRequestFailed: false,
+  isUserLoaded: false,
   name: '',
   email: ''
 };
@@ -26,7 +29,8 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
         name: '',
-        email: ''
+        email: '',
+        isUserLoaded: false
       }
     }
 
@@ -41,7 +45,8 @@ export function userReducer(state = initialState, action) {
       return {
         ...state, 
         getUserRequest: false,
-        getUserRequestFailed: false
+        getUserRequestFailed: false,
+        isUserLoaded: true,
       }
     }
 
@@ -50,6 +55,20 @@ export function userReducer(state = initialState, action) {
         ...state, 
         getUserRequest: false,
         getUserRequestFailed: true
+      }
+    }
+
+    case SET_IS_USER_LOADED: {
+      return {
+        ...state,
+        isUserLoaded: true,
+      }
+    }
+
+    case RESET_IS_USER_LOADED: {
+      return {
+        ...state,
+        isUserLoaded: false,
       }
     }
 

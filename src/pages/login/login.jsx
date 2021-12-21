@@ -1,16 +1,28 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 // Styles
 import loginStyles from './login.module.css';
 import { /*EmailInput,*/ Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { loginRequest } from '../../services/actions/auth-actions';
+import { loginRequest, refreshToken } from '../../services/actions/auth-actions';
+import { getUser } from '../../services/actions/user-actions';
+import { getCookie } from '../../utils/cookie';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
-  const isRedirect = useSelector(store => store.auth.fromLoginRedirect)
+  const [ isUserLoaded, setIsUserLoaded ] = useState(false);
+  const auth = useSelector(store => store.auth);
+
+  useEffect(() => {
+    const token = getCookie('token');
+    if ( typeof token !== 'undefined')  {
+      dispatch(refreshToken({ "token": token }));
+      
+    } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function onClickHandler(e) {
     let body = {};
@@ -25,7 +37,7 @@ export default function LoginPage() {
   }
 
   return (
-    isRedirect ?
+    auth.fromLoginRedirect || getCookie('token') ?
       <Redirect to='/' />
     :
       <div className={loginStyles.loginFormWrapper}>

@@ -10,6 +10,9 @@ export const EDIT_USER_REQUEST = "EDIT_USER_REQUEST";
 export const EDIT_USER_REQUEST_SUCCESS = "EDIT_USER_REQUEST_SUCCESS";
 export const EDIT_USER_REQUEST_FAILED = "EDIT_USER_REQUEST_FAILED";
 
+export const SET_IS_USER_LOADED = 'SET_IS_USER_LOADED';
+export const RESET_IS_USER_LOADED = 'RESET_IS_USER_LOADED';
+
 export function getUser(token) {
   return async function(dispatch) {
     dispatch({type: GET_USER_REQUEST});
@@ -22,6 +25,7 @@ export function getUser(token) {
       //if (res.ok) {
         
         if(data.success) {
+          dispatch({type: GET_USER_REQUEST_SUCCESS});
           dispatch({ type: SET_USER, user: data.user});
         } else {
           throw new Error(data.message);
@@ -30,6 +34,7 @@ export function getUser(token) {
       //  throw new Error('Get user failed')
       //}
     } catch(e) {
+      dispatch({type: GET_USER_REQUEST_FAILED});
       console.log(e);
     }
   }
@@ -46,12 +51,14 @@ export function editUser(body, token) {
       if (res.ok) {
         const data = await res.json();
         if(data.success) {
+          dispatch({type: GET_USER_REQUEST_SUCCESS});
           dispatch({ type: SET_USER, user: data.user});
         }
       } else {
         throw new Error('Edit user failed')
       }
     } catch(e) {
+      dispatch({type: GET_USER_REQUEST_FAILED});
       console.log(e);
     }
   }

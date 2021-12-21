@@ -28,16 +28,7 @@ export function refreshToken(body) {
       });
 
       const res = await fetch(`${API_URL}/auth/token`, { method: 'POST', mode: 'cors', headers, body: JSON.stringify(body) });
-      /*  .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            dispatch({ type: REFRESH_TOKEN_REQUEST_SUCCESS });
-            document.cookie = setCookie('token', data.refreshToken);
-            dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
-          } else {
-            throw new Error(data.message);
-          }
-        });*/
+
       const data = await res.json();
       if (data.success) {
         dispatch({ type: REFRESH_TOKEN_REQUEST_SUCCESS });
@@ -66,7 +57,7 @@ export function loginRequest(body) {
         const data = await res.json();
         if(data.success) {
           dispatch({ type: LOGIN_REQUEST_REQUEST_SUCCESS });
-          document.cookie = setCookie('token', data.refreshToken);
+          document.cookie = setCookie('token', data.refreshToken, { 'max-age': 1200 });
           dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
           dispatch({ type: SET_USER, user: data.user});
         }  
@@ -93,12 +84,12 @@ export function logoutRequest(body) {
         const data = await res.json();
         if(data.success) {
           dispatch({ type: LOGOUT_REQUEST_REQUEST_SUCCESS });
-          document.cookie = '';
+          setCookie('token', '', { 'max-age': -1 });
           dispatch({ type: RESET_IS_AUTH });
           dispatch({ type: RESET_USER });
         }  
       } else {
-        throw new Error('Login error');
+        throw new Error('Logout error');
       }
       
     } catch(e) {

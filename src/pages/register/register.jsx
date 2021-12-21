@@ -1,15 +1,30 @@
-import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 // Styles
 import registerStyles from './register.module.css';
 import { /*EmailInput,*/ Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUserRequest } from '../../services/actions/register-actions';
+import { getCookie } from '../../utils/cookie';
+import { refreshToken } from '../../services/actions/auth-actions';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
+  const auth = useSelector(store => store.auth);
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = getCookie('token');
+    if ( typeof token !== 'undefined')  {
+      dispatch(refreshToken({ "token": token }));
+      
+    } 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
 
   function onClickHandler(e) {
     let body ={};
@@ -28,6 +43,10 @@ export default function RegisterPage() {
     const target = e.target;
     if (target.name !== 'password') setFormState({ ...formState, [target.name]: target.value}); 
   }*/
+  if ( getCookie('token') ) {
+    history.replace('/');
+    return null;
+  }
 
   return (
     <div className={registerStyles.loginFormWrapper}>

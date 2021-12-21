@@ -18,9 +18,10 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const token = getCookie('token');
-    if ( typeof token === 'undefined' || typeof auth.accessToken === 'undefined' ) {
+    if ( typeof token === 'undefined' || typeof auth.accessToken === 'undefined' || auth.accessToken === '' ) {
       dispatch(refreshToken({ "token": token }));
     }    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
