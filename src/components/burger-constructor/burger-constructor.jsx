@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch} from "react-redux";
 import { useDrop } from "react-dnd";
 
@@ -117,5 +118,9 @@ function BurgerConstructor({ openOrderModal }) {
   );
   
 }
+
+BurgerConstructor.propTypes ={
+  openOrderModal: PropTypes.func
+};
 
 export default BurgerConstructor;

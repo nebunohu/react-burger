@@ -15,6 +15,7 @@ import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
+import OrdersPage from '../../pages/orders/orders';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -53,6 +54,7 @@ function App() {
             <IngredientDetails />
           </div>
         </Route>
+        <Route path='/orders' component={OrdersPage} />
         <Route exact path="/" component={ConstructorPage} />
         <Route component={NotFound404} />
       </Switch>

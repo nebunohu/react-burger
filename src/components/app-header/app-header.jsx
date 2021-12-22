@@ -22,7 +22,9 @@ function AppHeader() {
             </Link>
           </li>
           <li className={`${headerStyles.listElement} ${headerStyles.listElement}`}>
-            <ListIcon type='secondary'/> <span className='ml-2'>Лента заказов</span>
+            <Link className={`${state === 'orders' ? headerStyles.linkActive : headerStyles.link}`} to='/orders'>
+              <ListIcon type={state === 'orders' ? 'primary' : 'secondary'}/> <span className='ml-2'>Лента заказов</span>
+            </Link>
           </li>
           <li className={`${headerStyles.logo} ${headerStyles.listElement}`}>
             <Logo />
