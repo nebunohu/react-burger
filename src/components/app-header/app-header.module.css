@@ -29,6 +29,11 @@ nav {
 
 }
 
+.linkActive {
+  composes: link;
+  color: #F2F2F3 !important;
+}
+
 .link:visited {
   color: #8585AD;
 }

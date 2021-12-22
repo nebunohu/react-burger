@@ -57,7 +57,7 @@ export function loginRequest(body) {
         const data = await res.json();
         if(data.success) {
           dispatch({ type: LOGIN_REQUEST_REQUEST_SUCCESS });
-          document.cookie = setCookie('token', data.refreshToken, { 'max-age': 1200 });
+          document.cookie = setCookie('token', data.refreshToken);
           dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
           dispatch({ type: SET_USER, user: data.user});
         }  

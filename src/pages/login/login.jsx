@@ -5,14 +5,12 @@ import { Link, Redirect } from 'react-router-dom';
 import loginStyles from './login.module.css';
 import { /*EmailInput,*/ Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginRequest, refreshToken } from '../../services/actions/auth-actions';
-import { getUser } from '../../services/actions/user-actions';
 import { getCookie } from '../../utils/cookie';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
-  const [ isUserLoaded, setIsUserLoaded ] = useState(false);
   const auth = useSelector(store => store.auth);
 
   useEffect(() => {

@@ -1,15 +1,37 @@
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from "react-router-dom";
 
 // Styles
 import ingredientdDetailsStyles from './ingredient-details.module.css';
 
 // Components
 
+// Actions
+import { getIngredients, SET_CURRENT_INGREDIENT } from "../../services/actions/burger-actions";
+
 // Data
 
 export default function IngredientDetails() {
-  const currentIngredient = useSelector(store => store.state.currentIngredient)
+  const dispatch = useDispatch();
+  const { ingredients, currentIngredient } = useSelector(store => store.state);
+  const location = useLocation();
+  const urlId = location.pathname.split('/')[2];
+
+  React.useEffect(() => {
+    dispatch(getIngredients());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
+
+  if(ingredients.length === 0) {
+    return null;
+  }
+
+  if(Object.keys(currentIngredient).length === 0) {
+    dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find(el => el._id === urlId)});
+    return null;
+  }
+
   return (
     <>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>

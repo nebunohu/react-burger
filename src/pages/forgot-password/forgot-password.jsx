@@ -11,7 +11,7 @@ export default function ForgotPasswordPage() {
   const formRef = useRef();
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: ''});
-  const { password, auth }= useSelector(store => store);
+  const { password }= useSelector(store => store);
   const history = useHistory();
   
   function onClickHandler(e) {

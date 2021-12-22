@@ -45,6 +45,8 @@ const initialState ={
     isOrderModal: false,
   },
 
+  section: 'constructor',
+
   ingredientsRequest: false,
   ingredientsRequestFailed: false,
 
@@ -171,6 +173,7 @@ const stateReducer = (state = initialState, action) => {
         burger: {
           ...initialState.burger,
           ingredients: [],
+          ingredientsCounts: [],
         },
         order: {
           ...state.order,

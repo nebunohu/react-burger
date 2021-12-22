@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 // Components
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import OrderDetails from "../../components/order-details/order-details";
 import Modal from "../../components/modal/modal";
 
@@ -16,17 +15,26 @@ import { CLOSE_MODAL, OPEN_ORDER_MODAL, getIngredients, postOrder } from "../../
 
 // Styles
 import cnstructorStyles from './constructor.module.css'
+import { getUser } from "../../services/actions/user-actions";
+import { getCookie } from "../../utils/cookie";
+import { refreshToken } from "../../services/actions/auth-actions";
 
 export default function ConstructorPage() {
   const { state, auth } = useSelector(store => store);
   const history = useHistory();
-  //const { isAuth } = useSelector( store => store.auth.isAuth);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    const token = getCookie('token');
+    dispatch( refreshToken( { token } ) );
     dispatch(getIngredients());
-    
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect( () => {
+    if(typeof auth.accessToken === 'string' && auth.accessToken !== '') dispatch( getUser( auth.accessToken ) );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.accessToken]);
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
@@ -34,7 +42,7 @@ export default function ConstructorPage() {
 
   const openOrderModal = () => {
     
-    if ( auth.isAuth ) {
+    if ( getCookie('token') ) {
       dispatch(postOrder(state.burger));
       dispatch({type: OPEN_ORDER_MODAL});  
     } else {
@@ -51,13 +59,6 @@ export default function ConstructorPage() {
           <BurgerConstructor openOrderModal={openOrderModal} /> 
         </div>
       </DndProvider>
-      {state.modal.isModalOpen && state.modal.isIngredModal &&   
-        <Modal 
-          title='Детали ингредиента'
-          closeModal={closeModal}
-        >
-          <IngredientDetails />
-        </Modal>}
       {state.modal.isModalOpen && state.modal.isOrderModal && 
         <Modal
           title=''

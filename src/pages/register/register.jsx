@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 // Styles
 import registerStyles from './register.module.css';
 import { /*EmailInput,*/ Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,7 +12,6 @@ export default function RegisterPage() {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
-  const auth = useSelector(store => store.auth);
   const history = useHistory();
 
   useEffect(() => {
@@ -37,12 +36,6 @@ export default function RegisterPage() {
     });
     dispatch(registerUserRequest(body));
   }
-
-  /*function onChangeHandler(e) {
-    e.preventDefault();
-    const target = e.target;
-    if (target.name !== 'password') setFormState({ ...formState, [target.name]: target.value}); 
-  }*/
   if ( getCookie('token') ) {
     history.replace('/');
     return null;
