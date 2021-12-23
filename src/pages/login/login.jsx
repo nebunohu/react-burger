@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 // Styles
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { loginRequest, refreshToken } from '../../services/actions/auth-actions';
+import { loginRequest } from '../../services/actions/auth-actions';
 import { getCookie } from '../../utils/cookie';
 
 export default function LoginPage() {
@@ -12,15 +12,6 @@ export default function LoginPage() {
   const [ formState, setFormState ] = useState({ email: '', password: ''});
   const auth = useSelector(store => store.auth);
   const history = useHistory();
-
-  /*useEffect(() => {
-    const token = getCookie('token');
-    if ( typeof token !== 'undefined')  {
-      dispatch(refreshToken({ "token": token }));
-      
-    } 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])*/
 
   function onSubmitHandler(e) {
     e.preventDefault();

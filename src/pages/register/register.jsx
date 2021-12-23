@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 // Styles
@@ -6,23 +6,11 @@ import registerStyles from './register.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUserRequest } from '../../services/actions/register-actions';
 import { getCookie } from '../../utils/cookie';
-import { refreshToken } from '../../services/actions/auth-actions';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
   const history = useHistory();
-
-  /*useEffect(() => {
-    const token = getCookie('token');
-    if ( typeof token !== 'undefined')  {
-      dispatch(refreshToken({ "token": token }));
-      
-    } 
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])*/
-
 
   function onSubmitHandler(e) {
     e.preventDefault();

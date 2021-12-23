@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import profileStyles from './profile.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { editUser, getUser } from '../../services/actions/user-actions';
-import { refreshToken, logoutRequest } from '../../services/actions/auth-actions';
+import { logoutRequest } from '../../services/actions/auth-actions';
 import { getCookie } from '../../utils/cookie';
 
 export default function ProfilePage() {
@@ -15,14 +15,6 @@ export default function ProfilePage() {
   const { user, auth } = useSelector(store => store);
   const [formState, setFormState] = useState({ ...user, password: '123456' });
   const [changedFormElements, setChangedFormElements] = useState([]);
-
-  /*useEffect(() => {
-    const token = getCookie('token');
-    if ( typeof token === 'undefined' || typeof auth.accessToken === 'undefined' || auth.accessToken === '' ) {
-      dispatch(refreshToken({ "token": token }));
-    }    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
 
   useEffect(() => {
     if ( typeof auth.accessToken !== 'undefined' ) dispatch(getUser(auth.accessToken));
