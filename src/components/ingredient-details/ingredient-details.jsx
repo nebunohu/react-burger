@@ -8,7 +8,7 @@ import ingredientdDetailsStyles from './ingredient-details.module.css';
 // Components
 
 // Actions
-import { getIngredients, SET_CURRENT_INGREDIENT } from "../../services/actions/burger-actions";
+import { SET_CURRENT_INGREDIENT } from "../../services/actions/burger-actions";
 
 // Data
 
@@ -18,10 +18,10 @@ export default function IngredientDetails() {
   const location = useLocation();
   const urlId = location.pathname.split('/')[2];
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     dispatch(getIngredients());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, []); */
 
   if(ingredients.length === 0) {
     return null;

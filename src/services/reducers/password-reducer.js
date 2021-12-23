@@ -76,7 +76,7 @@ export function passwordReducer( state = initialState, action ) {
     }
 
     default: {
-      return {...state};
+      return state;
     }
   }
 

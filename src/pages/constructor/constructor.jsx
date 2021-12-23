@@ -11,25 +11,24 @@ import OrderDetails from "../../components/order-details/order-details";
 import Modal from "../../components/modal/modal";
 
 // Actions
-import { CLOSE_MODAL, OPEN_ORDER_MODAL, getIngredients, postOrder } from "../../services/actions/burger-actions";
+import { CLOSE_MODAL, OPEN_ORDER_MODAL, postOrder } from "../../services/actions/burger-actions";
 
 // Styles
 import cnstructorStyles from './constructor.module.css'
 import { getUser } from "../../services/actions/user-actions";
 import { getCookie } from "../../utils/cookie";
-import { refreshToken } from "../../services/actions/auth-actions";
+//import { refreshToken } from "../../services/actions/auth-actions";
 
 export default function ConstructorPage() {
   const { state, auth } = useSelector(store => store);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     const token = getCookie('token');
     dispatch( refreshToken( { token } ) );
-    dispatch(getIngredients());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []);*/
 
   React.useEffect( () => {
     if(typeof auth.accessToken === 'string' && auth.accessToken !== '') dispatch( getUser( auth.accessToken ) );
@@ -46,7 +45,7 @@ export default function ConstructorPage() {
       dispatch(postOrder(state.burger));
       dispatch({type: OPEN_ORDER_MODAL});  
     } else {
-      history.push('/login');
+      history.push({ pathname: '/login', state: {from: history.location.pathname}});
     }
     
   }

@@ -120,7 +120,7 @@ function BurgerConstructor({ openOrderModal }) {
 }
 
 BurgerConstructor.propTypes ={
-  openOrderModal: PropTypes.func
+  openOrderModal: PropTypes.func.isRequired
 };
 
 export default BurgerConstructor;

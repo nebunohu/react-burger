@@ -1,46 +1,40 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 // Styles
 import loginStyles from './login.module.css';
-import { /*EmailInput,*/ Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginRequest, refreshToken } from '../../services/actions/auth-actions';
 import { getCookie } from '../../utils/cookie';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-  const formRef = useRef();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
   const auth = useSelector(store => store.auth);
+  const history = useHistory();
 
-  useEffect(() => {
+  /*useEffect(() => {
     const token = getCookie('token');
     if ( typeof token !== 'undefined')  {
       dispatch(refreshToken({ "token": token }));
       
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [])*/
 
-  function onClickHandler(e) {
-    let body = {};
+  function onSubmitHandler(e) {
     e.preventDefault();
 
-    Array.from(formRef.current).forEach((el, index) => {
-      if ( index !== formRef.current.length - 1 ) {
-        body[el.name] = el.value;
-      }
-    });
-    dispatch(loginRequest( body ));
+    dispatch(loginRequest( formState ));
   }
 
   return (
     auth.fromLoginRedirect || getCookie('token') ?
-      <Redirect to='/' />
+      <Redirect to={history.location.state.from} />
     :
       <div className={loginStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Вход</span>
-        <form className={`${loginStyles.form} mt-6 mb-20`} ref={formRef} >
+        <form className={`${loginStyles.form} mt-6 mb-20`} onSubmit={onSubmitHandler}>
           <div className="mb-6">
             <Input 
               type='email' 
@@ -58,7 +52,7 @@ export default function LoginPage() {
              />
           </div>
           
-          <Button type='primary' size='medium' onClick={onClickHandler}>
+          <Button type='primary' size='medium' >
             Войти
           </Button>
         </form>

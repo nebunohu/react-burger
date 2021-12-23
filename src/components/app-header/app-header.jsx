@@ -16,18 +16,20 @@ function AppHeader() {
     <header>
       <nav>
         <ul className={headerStyles.headerUl}>
-          <li className={`${headerStyles.active} ${headerStyles.listElement}`}>
+          <li className={`${headerStyles.listElement}`}>
             <Link className={`${state === '' ? headerStyles.linkActive : headerStyles.link}`} to='/'>
               <BurgerIcon type={state === '' ? 'primary' : 'secondary'} /> <span className='ml-2'>Конструктор</span>
             </Link>
           </li>
-          <li className={`${headerStyles.listElement} ${headerStyles.listElement}`}>
+          <li className={`${headerStyles.listElement}`}>
             <Link className={`${state === 'orders' ? headerStyles.linkActive : headerStyles.link}`} to='/orders'>
               <ListIcon type={state === 'orders' ? 'primary' : 'secondary'}/> <span className='ml-2'>Лента заказов</span>
             </Link>
           </li>
           <li className={`${headerStyles.logo} ${headerStyles.listElement}`}>
-            <Logo />
+            <Link to='/' >
+              <Logo />
+            </Link>          
           </li>
           <li className={`${headerStyles.profile} ${headerStyles.listElement}`}>
             <Link className={`${state === 'profile' ? headerStyles.linkActive : headerStyles.link}`} to='/profile'>

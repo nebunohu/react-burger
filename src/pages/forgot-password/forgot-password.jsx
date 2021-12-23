@@ -1,29 +1,22 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 // Styles
 import forgotPassStyles from './forgot-password.module.css';
-import { /*EmailInput,*/ Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPasswordRequest } from '../../services/actions/password-actions';
 import { getCookie } from '../../utils/cookie';
 
 export default function ForgotPasswordPage() {
-  const formRef = useRef();
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: ''});
   const { password }= useSelector(store => store);
   const history = useHistory();
   
-  function onClickHandler(e) {
+  function onSubmitHandler(e) {
     e.preventDefault();
-    dispatch(forgotPasswordRequest(formRef.current[0].value));
+    dispatch(forgotPasswordRequest(formState['email']));
   }
-
-  /*function onChangeHandler(e) {
-    e.preventDefault();
-    const target = e.target;
-    if (target.name !== 'password') setFormState({ ...formState, [target.name]: target.value}); 
-  }*/
 
   if(getCookie('token')) {
     history.replace('/');
@@ -32,11 +25,15 @@ export default function ForgotPasswordPage() {
 
   return (
     password.fromForgotPasswordRedirect ?
-      <Redirect to='/reset-password' />
+      <Redirect to={{
+        pathname: '/reset-password',
+        state: { from: history.location.pathname }
+      }}
+       />
       :
       <div className={forgotPassStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Восстановление пароля</span>
-        <form className={`${forgotPassStyles.form} mt-6 mb-20`} ref={formRef} >
+        <form className={`${forgotPassStyles.form} mt-6 mb-20`} onSubmit={onSubmitHandler} >
           <div className="mb-6">
             <Input 
               type='email' 
@@ -46,7 +43,7 @@ export default function ForgotPasswordPage() {
               onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
             />
           </div>        
-          <Button type='primary' size='medium' onClick={onClickHandler}>
+          <Button type='primary' size='medium' >
             Восстановить
           </Button>
         </form>

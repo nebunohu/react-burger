@@ -8,6 +8,7 @@ export function ProtectedRoute({ children, ...rest }) {
   const dispatch = useDispatch();
   const { user, auth } = useSelector(store => store);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  
   //const { isAuth, accessToken } = useSelector(store => store.auth.isAuth);
   
   const init = useCallback(() => {
@@ -30,11 +31,14 @@ export function ProtectedRoute({ children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={() => 
+      render={({location}) => 
         auth.isAuth ? (
           children
          ) : (
-          <Redirect to='/login' />
+          <Redirect to={{
+            pathname: '/login',
+            state: {from: location}
+           }} />
          )
       }
     />

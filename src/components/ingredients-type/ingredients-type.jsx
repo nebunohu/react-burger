@@ -53,7 +53,10 @@ function IngredientsType(props) {
 IngredientsType.propTypes = {
   id: PropTypes.string.isRequired, 
   type: PropTypes.string.isRequired,
-  refer: PropTypes.any
+  refer:  PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+])
 }
 
 export default IngredientsType;

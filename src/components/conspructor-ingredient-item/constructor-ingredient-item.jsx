@@ -94,8 +94,8 @@ export default function ConstructorIngredientItem({ el, index }) {
 
 ConstructorIngredientItem.propTypes ={
   el: PropTypes.shape({
-    index: PropTypes.number,
-    item: PropTypes.shape(DATA_TYPE)
-  }),
-  index: PropTypes.number
+    index: PropTypes.number.isRequired,
+    item: PropTypes.shape(DATA_TYPE).isRequired
+  }).isRequired,
+  index: PropTypes.number.isRequired
 };

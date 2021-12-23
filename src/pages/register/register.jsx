@@ -1,20 +1,19 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 // Styles
 import registerStyles from './register.module.css';
-import { /*EmailInput,*/ Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUserRequest } from '../../services/actions/register-actions';
 import { getCookie } from '../../utils/cookie';
 import { refreshToken } from '../../services/actions/auth-actions';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
-  const formRef = useRef();
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
   const history = useHistory();
 
-  useEffect(() => {
+  /*useEffect(() => {
     const token = getCookie('token');
     if ( typeof token !== 'undefined')  {
       dispatch(refreshToken({ "token": token }));
@@ -22,20 +21,14 @@ export default function RegisterPage() {
     } 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [])*/
 
 
-  function onClickHandler(e) {
-    let body ={};
+  function onSubmitHandler(e) {
     e.preventDefault();
-
-    Array.from(formRef.current).forEach((el, index) => {
-      if ( index !== formRef.current.length - 1 ) {
-        body[el.name] = el.value;
-      }
-    });
-    dispatch(registerUserRequest(body));
+    dispatch(registerUserRequest(formState));
   }
+
   if ( getCookie('token') ) {
     history.replace('/');
     return null;
@@ -44,8 +37,7 @@ export default function RegisterPage() {
   return (
     <div className={registerStyles.loginFormWrapper}>
       <span className="text text_type_main-default">Зарегистрироваться</span>
-      <form className={`${registerStyles.form} mt-6 mb-20`} ref={formRef}
-      >
+      <form className={`${registerStyles.form} mt-6 mb-20`} onSubmit={onSubmitHandler} >
         <div className="mb-6">
           <Input 
             type='text' 
@@ -72,7 +64,7 @@ export default function RegisterPage() {
           />
         </div>
         
-        <Button type='primary' size='medium' onClick={onClickHandler}>
+        <Button type='primary' size='medium' >
           Зарегистрироваться
         </Button>
       </form>

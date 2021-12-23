@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { 
   Switch, 
   Route,
@@ -21,16 +22,27 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 // Actions
-import { CLOSE_MODAL } from "../../services/actions/burger-actions";
+import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
 
 //Styles
 import appStyles from './app.module.css';
+import { refreshToken } from '../../services/actions/auth-actions';
+import { getCookie } from '../../utils/cookie';
+
 
 function App() {
   const location = useLocation();
   const history = useHistory();
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
+
+  useEffect( () => {
+    const token = getCookie('token');
+
+    dispatch(getIngredients());
+    if(token) dispatch(refreshToken({token}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});

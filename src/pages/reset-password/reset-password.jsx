@@ -1,9 +1,8 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { resetPasswordRequest } from '../../services/actions/password-actions';
-//import { getCookie } from '../../utils/cookie';
 
 // Styles
 import resetPassStyles from './reset-password.module.css';
@@ -13,29 +12,25 @@ import { getCookie } from '../../utils/cookie';
 
 export default function ResetPasswordPage() {
   const dispatch = useDispatch();
-  const formRef = useRef();
   const [ formState, setFormState ] = useState({ token: '', password: ''});
   const history = useHistory();
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
-  function onClickHandler(e) {
+  function onSubmitHandler(e) {
     e.preventDefault();
-    dispatch( resetPasswordRequest({
-      "password": formRef.current[0].value,
-      "token": formRef.current[1].value
-    }));
+    dispatch( resetPasswordRequest( formState ));
   }
-
-  /*function onChangeHandler(e) {
-    e.preventDefault();
-    const target = e.target;
-    if (target.name !== 'password') setFormState({ ...formState, [target.name]: target.value}); 
-  }*/
 
   if(getCookie('token')) {
     history.replace('/');
     return null;
   }
+
+  if(typeof history.location.state === 'undefined') {
+    history.replace('/forgot-password');
+    return null;
+  }
+
 
   return (
     isRedirect ?
@@ -43,7 +38,7 @@ export default function ResetPasswordPage() {
     :
       <div className={resetPassStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Восстановление пароля</span>
-        <form className={`${resetPassStyles.form} mt-6 mb-20`} ref={formRef} >
+        <form className={`${resetPassStyles.form} mt-6 mb-20`} onSubmit={onSubmitHandler} >
           <div className="mb-6">
             <PasswordInput 
               name='password' 
@@ -60,7 +55,7 @@ export default function ResetPasswordPage() {
               onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
             />
           </div>        
-          <Button type='primary' size='medium' onClick={onClickHandler}>
+          <Button type='primary' size='medium' >
             Сохранить
           </Button>
         </form>
