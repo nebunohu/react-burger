@@ -31,11 +31,17 @@ export default function ProfilePage() {
     }
   }
 
-  function onChangeHandler(e) {
+  /*function onChangeHandler(e) {
     e.preventDefault();
     setIsEdit(true);
     const target = e.target;
     setFormState({ ...formState, [target.name]: target.value}); 
+  }*/
+
+  function handleChange(e) {
+    setIsEdit(true);
+    if(!changedFormElements.includes(e.target.name)) setChangedFormElements([...changedFormElements, e.target.name]);
+    setFormState({ ...formState, [e.target.name]: e.target.value});
   }
 
   function onSaveHandler(e) {
@@ -69,7 +75,7 @@ export default function ProfilePage() {
         <li className={`${profileStyles.note} mt-20`}>В этом разделе вы можете изменить свои персональные данные</li>
       </ul>
       <div className={profileStyles.propertiesFormWrapper}>
-        <form className={`${profileStyles.form} mb-20`} onChange={onChangeHandler} onFocus={onFocusHandler} onSubmit={onSaveHandler}>
+        <form className={`${profileStyles.form} mb-20`} onFocus={onFocusHandler} onSubmit={onSaveHandler}>
           <div className="mb-6">
             <Input 
               type='text' 
@@ -78,10 +84,7 @@ export default function ProfilePage() {
               value={formState.name} 
               icon='EditIcon' 
               size='default' 
-              onChange={e => {
-                if(!changedFormElements.includes(e.target.name)) setChangedFormElements([...changedFormElements, e.target.name]);
-                setFormState({ ...formState, [e.target.name]: e.target.value});
-              }}
+              onChange={handleChange}
             />
           </div>
           <div className="mb-6">
@@ -91,10 +94,7 @@ export default function ProfilePage() {
               placeholder='E-mail' 
               value={formState.email} 
               icon='EditIcon' 
-              onChange={e => {
-                if(!changedFormElements.includes(e.target.name)) setChangedFormElements([...changedFormElements, e.target.name]);
-                setFormState({ ...formState, [e.target.name]: e.target.value});
-              }} 
+              onChange={handleChange} 
             />
           </div>
           <div className="mb-10">
@@ -104,10 +104,7 @@ export default function ProfilePage() {
               placeholder='Пароль' 
               value={formState.password} 
               icon='EditIcon' 
-              onChange={e => {
-                if(!changedFormElements.includes(e.target.name)) setChangedFormElements([...changedFormElements, e.target.name]);
-                setFormState({ ...formState, [e.target.name]: e.target.value});
-              }}
+              onChange={handleChange}
             />
           </div>
           {isEdit && (

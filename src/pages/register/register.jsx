@@ -17,6 +17,10 @@ export default function RegisterPage() {
     dispatch(registerUserRequest(formState));
   }
 
+  function handleChange(e) {
+    setFormState({ ...formState, [e.target.name]: e.target.value})
+  }
+
   if ( getCookie('token') ) {
     history.replace('/');
     return null;
@@ -32,7 +36,7 @@ export default function RegisterPage() {
             name='name' 
             placeholder='Имя' 
             value={formState.name}  
-            onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})}  
+            onChange={handleChange}  
           />
         </div>
         <div className="mb-6">
@@ -41,14 +45,14 @@ export default function RegisterPage() {
             name='email' 
             placeholder='E-mail' 
             value={formState.email} 
-            onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+            onChange={handleChange} 
           />
         </div>
         <div className="mb-6">
           <PasswordInput 
             name='password' 
             value={formState.password} 
-            onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+            onChange={handleChange} 
           />
         </div>
         

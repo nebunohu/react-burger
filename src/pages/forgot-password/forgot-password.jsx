@@ -18,6 +18,10 @@ export default function ForgotPasswordPage() {
     dispatch(forgotPasswordRequest(formState['email']));
   }
 
+  function handleChange(e) {
+    setFormState({ ...formState, [e.target.name]: e.target.value})
+  }
+
   if(getCookie('token')) {
     history.replace('/');
     return null;
@@ -40,7 +44,7 @@ export default function ForgotPasswordPage() {
               name='email' 
               placeholder='Укажите e-mail' 
               value={formState.email} 
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+              onChange={handleChange} 
             />
           </div>        
           <Button type='primary' size='medium' >

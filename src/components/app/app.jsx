@@ -17,16 +17,18 @@ import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import OrdersPage from '../../pages/orders/orders';
+import IngredientPage from '../../pages/ingredient/ingredient';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 // Actions
 import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
+import { refreshToken } from '../../services/actions/auth-actions';
 
 //Styles
-import appStyles from './app.module.css';
-import { refreshToken } from '../../services/actions/auth-actions';
+
+// Utils
 import { getCookie } from '../../utils/cookie';
 
 
@@ -60,12 +62,7 @@ function App() {
         <ProtectedRoute path='/profile'>
           <ProfilePage />
         </ProtectedRoute>
-        <Route path='/ingredients/:id' >
-          <div className={appStyles.modal} >
-            <span className='text text_type_main-large mt-10 mr-10 ml-10'>Детали ингредиента</span>
-            <IngredientDetails />
-          </div>
-        </Route>
+        <Route path='/ingredients/:id' component={IngredientPage} />
         <Route path='/orders' component={OrdersPage} />
         <Route exact path="/" component={ConstructorPage} />
         <Route component={NotFound404} />

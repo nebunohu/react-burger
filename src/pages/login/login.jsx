@@ -19,6 +19,10 @@ export default function LoginPage() {
     dispatch(loginRequest( formState ));
   }
 
+  function handleChange(e) {
+    setFormState({ ...formState, [e.target.name]: e.target.value})
+  }
+
   return (
     auth.fromLoginRedirect || getCookie('token') ?
       <Redirect to={history.location.state.from} />
@@ -32,14 +36,14 @@ export default function LoginPage() {
               name='email' 
               placeholder='E-mail' 
               value={formState.email}
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})}  
+              onChange={handleChange}  
             />
           </div>
           <div className="mb-6">
             <PasswordInput 
               name='password' 
               value={formState.password}
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})}  
+              onChange={handleChange}  
              />
           </div>
           
