@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from "react-router-dom";
 
@@ -18,17 +18,17 @@ export default function IngredientDetails() {
   const location = useLocation();
   const urlId = location.pathname.split('/')[2];
 
-  /*React.useEffect(() => {
-    dispatch(getIngredients());
+  useEffect( () => {
+    if(typeof currentIngredient !== 'undefined') {
+      if(Object.keys(currentIngredient).length === 0 && ingredients.length !== 0) {
+        dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find(el => el._id === urlId)});
+        return null;
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); */
+  }, [ingredients, currentIngredient]);
 
-  if(ingredients.length === 0) {
-    return null;
-  }
-
-  if(Object.keys(currentIngredient).length === 0) {
-    dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find(el => el._id === urlId)});
+  if(ingredients.length === 0 || typeof currentIngredient === 'undefined') {
     return null;
   }
 

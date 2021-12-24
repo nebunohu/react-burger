@@ -31,13 +31,6 @@ export default function ProfilePage() {
     }
   }
 
-  /*function onChangeHandler(e) {
-    e.preventDefault();
-    setIsEdit(true);
-    const target = e.target;
-    setFormState({ ...formState, [target.name]: target.value}); 
-  }*/
-
   function handleChange(e) {
     setIsEdit(true);
     if(!changedFormElements.includes(e.target.name)) setChangedFormElements([...changedFormElements, e.target.name]);
