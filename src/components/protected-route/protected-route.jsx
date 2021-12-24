@@ -16,9 +16,10 @@ export function ProtectedRoute({ children, ...rest }) {
       dispatch(getUser(auth.accessToken));
     }
     //dispatch({ type: SET_IS_USER_LOADED });
+    if(isUserLoaded) return;
     setIsUserLoaded(true);
     if(user.name && auth.accessToken) dispatch({ type: SET_IS_AUTH, accessToken: auth.accessToken });
-  }, [auth.accessToken, dispatch, user.name]);
+  }, [isUserLoaded, auth.accessToken, dispatch, user.name]);
 
   useEffect(() => {
     init();
