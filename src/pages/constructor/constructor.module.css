@@ -1,0 +1,10 @@
+.burgerWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  max-height: 100vh;
+  min-height: 500px;
+  padding-top: 88px;
+  max-width: 1240px;
+  margin: auto;
+}

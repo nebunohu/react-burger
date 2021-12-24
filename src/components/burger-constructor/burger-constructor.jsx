@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch} from "react-redux";
 import { useDrop } from "react-dnd";
 
@@ -15,10 +16,10 @@ import constructorStyles from './burger-constructor.module.css';
 //import { data } from '../../utils/data';
 
 // Actions
-import { ADD_INGREDIENT, postOrder, OPEN_ORDER_MODAL } from '../../services/actions/burgerActions';
+import { ADD_INGREDIENT } from '../../services/actions/burger-actions';
 
 
-function BurgerConstructor() {
+function BurgerConstructor({ openOrderModal }) {
   const data = useSelector(store => store.state.ingredients);
   const burger = useSelector(store => store.state.burger);
   
@@ -54,11 +55,6 @@ function BurgerConstructor() {
     bunName = '';
     bunPrice = 0;
     bunImage = '';
-  }
-
-  const createOrderClickHandler = async () => {
-    dispatch(postOrder(burger));
-    dispatch({type: OPEN_ORDER_MODAL});
   }
 
   const wrapperClassName = `${constructorStyles.dropTarget} ${isHover ? 'readyToDrop' : ''}`
@@ -113,7 +109,7 @@ function BurgerConstructor() {
             <CurrencyIcon />
           </div>
           {bunName && <div className={constructorStyles.buttonWrapper}>
-            <Button type="primary" size="medium" onClick={createOrderClickHandler}>
+            <Button type="primary" size="medium" onClick={openOrderModal}>
               Оформить заказ
             </Button>
           </div>}
@@ -122,5 +118,9 @@ function BurgerConstructor() {
   );
   
 }
+
+BurgerConstructor.propTypes ={
+  openOrderModal: PropTypes.func.isRequired
+};
 
 export default BurgerConstructor;

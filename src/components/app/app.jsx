@@ -1,63 +1,80 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useEffect } from 'react';
+import { 
+  Switch, 
+  Route,
+  useLocation,
+  useHistory 
+} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // Components
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import LoginPage from '../../pages/login/login';
+import ConstructorPage from '../../pages/constructor/constructor.jsx';
+import RegisterPage from '../../pages/register/register';
+import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
+import ResetPasswordPage from '../../pages/reset-password/reset-password';
+import ProfilePage from '../../pages/profile/profile';
+import NotFound404 from '../../pages/not-found-404/not-found-404';
+import OrdersPage from '../../pages/orders/orders';
+import IngredientPage from '../../pages/ingredient/ingredient';
+import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
-
-// Styles
-import AppStyles from './app.module.css';
-
-// Data
-//import { impData } from '../../utils/data';
 
 // Actions
-import { getIngredients, CLOSE_MODAL} from '../../services/actions/burgerActions';
+import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
+import { refreshToken } from '../../services/actions/auth-actions';
+
+//Styles
+
+// Utils
+import { getCookie } from '../../utils/cookie';
+
 
 function App() {
-
-  const {modal} = useSelector(store => store.state);
-
+  const location = useLocation();
+  const history = useHistory();
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect( () => {
+    const token = getCookie('token');
+
     dispatch(getIngredients());
-    
-  }, [dispatch]);
+    if(token) dispatch(refreshToken({token}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
+    history.push('/');
   }
 
   return (
     <>
       <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <div className={AppStyles.BurgerWrapper}>
-          <BurgerIngredients />
-          <BurgerConstructor /> 
-        </div>
-      </DndProvider>
-      {modal.isModalOpen && modal.isIngredModal &&   
-        <Modal 
+      <Switch location={background || location}>
+        <Route path='/login' component={LoginPage}/>
+        <Route path='/register' component={RegisterPage}/>
+        <Route path='/forgot-password' component={ForgotPasswordPage}/>
+        <Route path='/reset-password' component={ResetPasswordPage}/>
+        <ProtectedRoute path='/profile'>
+          <ProfilePage />
+        </ProtectedRoute>
+        <Route path='/ingredients/:id' component={IngredientPage} />
+        <Route path='/orders' component={OrdersPage} />
+        <Route exact path="/" component={ConstructorPage} />
+        <Route component={NotFound404} />
+      </Switch>
+      {background && <Route path='/ingredients/:id' >
+        <Modal
           title='Детали ингредиента'
           closeModal={closeModal}
         >
           <IngredientDetails />
-        </Modal>}
-      {modal.isModalOpen && modal.isOrderModal && 
-        <Modal
-          title=''
-          closeModal={closeModal}
-        >
-          <OrderDetails />
-        </Modal>}
+        </Modal>
+      </Route>}
     </>
   );
 }
