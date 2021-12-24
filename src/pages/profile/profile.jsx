@@ -102,8 +102,8 @@ export default function ProfilePage() {
           </div>
           {isEdit && (
             <div className={`${profileStyles.buttonsWrapper}`}>
+              <Button type='secondary' onClick={onCancelClickHandler}>Отмена</Button>
               <Button>Сохранить</Button>
-              <Button onClick={onCancelClickHandler}>Отмена</Button>
             </div>
             
           )}
