@@ -7,7 +7,7 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import './index.css';
 import './fonts/fonts.css';
-import App from './components/app/app.jsx';
+import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 
 import rootReducer from './services/reducers';

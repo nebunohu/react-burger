@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { resetPasswordRequest } from '../../services/actions/password-actions';
@@ -13,7 +13,8 @@ import { getCookie } from '../../utils/cookie';
 export default function ResetPasswordPage() {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ token: '', password: ''});
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
   function onSubmitHandler(e) {
@@ -22,19 +23,19 @@ export default function ResetPasswordPage() {
   }
 
   if(getCookie('token')) {
-    history.replace('/');
+    navigate('/');
     return null;
   }
 
-  if(typeof history.location.state === 'undefined') {
-    history.replace('/forgot-password');
+  if(typeof location.state === 'undefined') {
+    navigate('/forgot-password');
     return null;
   }
 
 
   return (
     isRedirect ?
-      <Redirect to='/login' />
+      <Navigate to='/login' replace />
     :
       <div className={resetPassStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Восстановление пароля</span>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import itemStyles from './ingredients-item.module.css';
 
@@ -17,7 +17,7 @@ function IngredientsItem({item}) {
   const current =  burgerIngredientsCounts.find(el => el.id === item._id);
   const count = current ? current.count : 0;
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [, dragRef] = useDrag({
@@ -31,7 +31,7 @@ function IngredientsItem({item}) {
   function clickHandler(e) {
     dispatch({type: SET_CURRENT_INGREDIENT, ingredient: item});
     dispatch({type: OPEN_INGREDIENTS_MODAL});
-    history.push(`/ingredients/${item._id}`, {background: location});
+    navigate(`/ingredients/${item._id}`, {background: location});
   }
 
   return (

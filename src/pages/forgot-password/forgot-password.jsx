@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 // Styles
 import forgotPassStyles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,8 @@ export default function ForgotPasswordPage() {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: ''});
   const { password }= useSelector(store => store);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   
   function onSubmitHandler(e) {
     e.preventDefault();
@@ -23,15 +24,15 @@ export default function ForgotPasswordPage() {
   }
 
   if(getCookie('token')) {
-    history.replace('/');
+    navigate('/');
     return null;
   }
 
   return (
     password.fromForgotPasswordRedirect ?
-      <Redirect to={{
+      <Navigate to={{
         pathname: '/reset-password',
-        state: { from: history.location.pathname }
+        state: { from: location.pathname }
       }}
        />
       :

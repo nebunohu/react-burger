@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // Styles
 import registerStyles from './register.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,7 +10,7 @@ import { getCookie } from '../../utils/cookie';
 export default function RegisterPage() {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function onSubmitHandler(e) {
     e.preventDefault();
@@ -22,7 +22,7 @@ export default function RegisterPage() {
   }
 
   if ( getCookie('token') ) {
-    history.replace('/');
+    navigate('/');
     return null;
   }
 

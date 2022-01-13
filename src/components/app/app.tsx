@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { 
-  Switch, 
+  Routes, 
   Route,
   useLocation,
-  useHistory 
+  useNavigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -31,11 +31,15 @@ import { refreshToken } from '../../services/actions/auth-actions';
 // Utils
 import { getCookie } from '../../utils/cookie';
 
+interface ILocationState {
+  background: string;
+}
 
-function App() {
+const App: FC = () => {
   const location = useLocation();
-  const history = useHistory();
-  const background = location.state && location.state.background;
+  const state = location.state as ILocationState; // Есть ли вариант сделать это как-то иначе?
+  const navigate = useNavigate();
+  const background = state && state.background;
   const dispatch = useDispatch();
 
   useEffect( () => {
@@ -48,25 +52,25 @@ function App() {
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
-    history.push('/');
+    navigate('/');
   }
 
   return (
     <>
       <AppHeader />
-      <Switch location={background || location}>
-        <Route path='/login' component={LoginPage}/>
-        <Route path='/register' component={RegisterPage}/>
-        <Route path='/forgot-password' component={ForgotPasswordPage}/>
-        <Route path='/reset-password' component={ResetPasswordPage}/>
+      <Routes location={background || location}>
+        <Route path='/login' children={LoginPage} />
+        <Route path='/register' children={RegisterPage} />
+        <Route path='/forgot-password' children={ForgotPasswordPage} />
+        <Route path='/reset-password' children={ResetPasswordPage} />
         <ProtectedRoute path='/profile'>
           <ProfilePage />
         </ProtectedRoute>
-        <Route path='/ingredients/:id' component={IngredientPage} />
-        <Route path='/orders' component={OrdersPage} />
-        <Route exact path="/" component={ConstructorPage} />
-        <Route component={NotFound404} />
-      </Switch>
+        <Route path='/ingredients/:id' children={IngredientPage} />
+        <Route path='/orders' children={OrdersPage} />
+        <Route path="/" children={ConstructorPage} />
+        <Route children={NotFound404} />
+      </Routes>
       {background && <Route path='/ingredients/:id' >
         <Modal
           title='Детали ингредиента'

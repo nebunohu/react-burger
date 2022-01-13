@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 // Styles
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,8 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
   const auth = useSelector(store => store.auth);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   function onSubmitHandler(e) {
     e.preventDefault();
@@ -25,7 +26,7 @@ export default function LoginPage() {
 
   return (
     auth.fromLoginRedirect || getCookie('token') ?
-      <Redirect to={history.location.state.from} />
+      <Navigate to={location.state.from} replace/>
     :
       <div className={loginStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Вход</span>
