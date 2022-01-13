@@ -52,20 +52,17 @@ export const ProtectedRoute: FC<TProtectedRouteProps & RouteProps> = ({ children
   }, [init])
 
   if ( !isUserLoaded ) {
-    return null;
+    //return null;
   }
 
   return (
     <Route
       {...rest}
-      children={({location}) => 
+      element={({location}: {location: string}) => 
         auth.isAuth ? (
           children
          ) : (
-          <Route path={location} children={<Navigate to={{
-            pathname: '/login',
-            state: {from: location}
-           }} replace />} />
+          <Route path={location} children={<Navigate to='/login' state={{from: location}} replace />} />
          )
       }
     />

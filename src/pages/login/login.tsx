@@ -1,29 +1,31 @@
-import { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useLocation, To } from 'react-router-dom';
+import * as H from "history";
 // Styles
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginRequest } from '../../services/actions/auth-actions';
 import { getCookie } from '../../utils/cookie';
 
-export default function LoginPage() {
+const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
+  // @ts-ignore
   const auth = useSelector(store => store.auth);
-  const navigate = useNavigate();
   const location = useLocation();
 
-  function onSubmitHandler(e) {
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
     dispatch(loginRequest( formState ));
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
+  // location.state.from
   return (
     auth.fromLoginRedirect || getCookie('token') ?
       <Navigate to={location.state.from} replace/>
@@ -57,3 +59,5 @@ export default function LoginPage() {
       </div>
   );
 }
+
+export default LoginPage;
