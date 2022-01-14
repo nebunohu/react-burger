@@ -14,3 +14,4 @@ export const DATA_TYPE = {
   "image_large": PropTypes.string,
   "__v": PropTypes.number
 };
+

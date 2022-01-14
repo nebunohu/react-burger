@@ -63,7 +63,14 @@ const App: FC = () => {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/forgot-password' element={<ForgotPasswordPage />} />
         <Route path='/reset-password' element={<ResetPasswordPage />} />
-        <Route path='/profile' element={<ProtectedRoute path='/profile'><ProfilePage /></ProtectedRoute>} />
+        <Route 
+          path='/profile' 
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path='/ingredients/:id' element={<IngredientPage />} />
         <Route path='/orders' element={<OrdersPage />} />
         <Route path="/" element={<ConstructorPage />} />

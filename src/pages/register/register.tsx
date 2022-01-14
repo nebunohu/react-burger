@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 // Styles
@@ -7,17 +7,17 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { registerUserRequest } from '../../services/actions/register-actions';
 import { getCookie } from '../../utils/cookie';
 
-export default function RegisterPage() {
+const RegisterPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
   const navigate = useNavigate();
 
-  function onSubmitHandler(e) {
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     dispatch(registerUserRequest(formState));
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
@@ -64,3 +64,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+export default RegisterPage;

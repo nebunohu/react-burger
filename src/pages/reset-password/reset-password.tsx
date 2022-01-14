@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,14 +10,15 @@ import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burg
 import { getCookie } from '../../utils/cookie';
 
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ token: '', password: ''});
   const navigate = useNavigate();
   const location = useLocation();
+  // @ts-ignore
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
-  function onSubmitHandler(e) {
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     dispatch( resetPasswordRequest( formState ));
   }
@@ -64,3 +65,5 @@ export default function ResetPasswordPage() {
       </div>
   );
 }
+
+export default ResetPasswordPage;

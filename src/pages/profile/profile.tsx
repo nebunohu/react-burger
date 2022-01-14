@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, FC } from 'react'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,12 +9,13 @@ import { editUser, getUser } from '../../services/actions/user-actions';
 import { logoutRequest } from '../../services/actions/auth-actions';
 import { getCookie } from '../../utils/cookie';
 
-export default function ProfilePage() {
+const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
+  // @ts-ignore
   const { user, auth } = useSelector(store => store);
   const [formState, setFormState] = useState({ ...user, password: '123456' });
-  const [changedFormElements, setChangedFormElements] = useState([]);
+  const [changedFormElements, setChangedFormElements] = useState<Array<string>>([]);
 
   useEffect(() => {
     if ( typeof auth.accessToken !== 'undefined' ) dispatch(getUser(auth.accessToken));
@@ -24,22 +25,22 @@ export default function ProfilePage() {
     setFormState({ ...user, password: '123456' })
   }, [user]);
 
-  function onFocusHandler(e) {
+  function onFocusHandler(e: React.FocusEvent<HTMLFormElement>): void {
     e.preventDefault();
     if ( e.target.name === 'password' ) {
       setFormState({ ...formState, password: '' });
     }
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setIsEdit(true);
     if(!changedFormElements.includes(e.target.name)) setChangedFormElements([...changedFormElements, e.target.name]);
     setFormState({ ...formState, [e.target.name]: e.target.value});
   }
 
-  function onSaveHandler(e) {
+  function onSaveHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    const body = {};
+    const body: any = {};
     changedFormElements.forEach( (el) =>  body[el] = formState[el]);
     
     setChangedFormElements([]);
@@ -47,13 +48,13 @@ export default function ProfilePage() {
     dispatch(editUser(body, auth.accessToken));
   }
 
-  function onCancelClickHandler(e) {
+  function onCancelClickHandler(e: React.SyntheticEvent<Element, Event>): void {
     e.preventDefault();
     setFormState({ ...user, password: '123456' }); 
     setIsEdit(false);
   }
 
-  function logoutHandler(e) {
+  function logoutHandler(e: React.MouseEvent<HTMLAnchorElement>): void {
     const token = getCookie('token');
     e.preventDefault();
     dispatch(logoutRequest({ "token": token }));
@@ -112,3 +113,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+export default ProfilePage;

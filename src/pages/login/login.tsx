@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate, useLocation, To } from 'react-router-dom';
-import * as H from "history";
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { TLocationWithState } from '../../react-burger-env';
 // Styles
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,7 +13,7 @@ const LoginPage: FC = () => {
   const [ formState, setFormState ] = useState({ email: '', password: ''});
   // @ts-ignore
   const auth = useSelector(store => store.auth);
-  const location = useLocation();
+  const location = useLocation() as TLocationWithState;
 
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
@@ -24,6 +24,7 @@ const LoginPage: FC = () => {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
+  if(!location.state === null) location.state.from = '/';
 
   // location.state.from
   return (

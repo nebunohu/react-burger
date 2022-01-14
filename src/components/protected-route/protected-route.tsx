@@ -1,39 +1,16 @@
-import { useCallback, useEffect, useState, FC } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Navigate, RouteProps } from 'react-router-dom';
+import { useLocation } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import { SET_IS_AUTH } from '../../services/actions/auth-actions';
 import { getUser } from '../../services/actions/user-actions';
 
-interface RootState {
-  user: {
-    getUserRequest: boolean;
-    getUserRequestFailed: boolean;
-    isUserLoaded: boolean;
-    name: string;
-    email: string;
-  };
-  auth: {
-    isAuth: boolean;
-
-    refreshTokenRequest: boolean;
-    refreshTokenRequestFailed: boolean;
-
-    loginRequest: boolean;
-    loginRequestFailed: boolean;
-    fromLoginRedirect: boolean;
-    accessToken?: string;
-  };
-};
-
-type TProtectedRouteProps = {
-  path: string;
-};
-
-export const ProtectedRoute: FC<TProtectedRouteProps & RouteProps> = ({ children, ...rest }) => {
+export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
   // @ts-ignore
   const { user, auth } = useSelector((store) => store);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const location = useLocation();
   
   //const { isAuth, accessToken } = useSelector(store => store.auth.isAuth);
   
@@ -52,19 +29,11 @@ export const ProtectedRoute: FC<TProtectedRouteProps & RouteProps> = ({ children
   }, [init])
 
   if ( !isUserLoaded ) {
-    //return null;
+    return null;
   }
 
-  return (
-    <Route
-      {...rest}
-      element={({location}: {location: string}) => 
-        auth.isAuth ? (
-          children
-         ) : (
-          <Route path={location} children={<Navigate to='/login' state={{from: location}} replace />} />
-         )
-      }
-    />
-  );
+  if(!auth.isAuth) {
+    return <Navigate to='/login' state={{from: location}} replace />
+  }
+  return children;
 } 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, SyntheticEvent } from "react";
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch} from "react-redux";
 import { useDrop } from "react-dnd";
@@ -14,13 +14,16 @@ import constructorStyles from './burger-constructor.module.css';
 
 // Data
 //import { data } from '../../utils/data';
+import { DATA_TYPE } from "../../react-burger-env";
 
 // Actions
 import { ADD_INGREDIENT } from '../../services/actions/burger-actions';
 
 
-function BurgerConstructor({ openOrderModal }) {
+const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent) => void)}> = ({ openOrderModal }) => {
+  // @ts-ignore
   const data = useSelector(store => store.state.ingredients);
+  // @ts-ignore
   const burger = useSelector(store => store.state.burger);
   
   let bunName, bunPrice, bunImage;
@@ -38,9 +41,9 @@ function BurgerConstructor({ openOrderModal }) {
     })
   });
 
-  function onDropHandler(item, type) {
+  function onDropHandler(item: any, type: any) {
     if (type === 'ingredient') {
-      dispatch({type: ADD_INGREDIENT, ingredient: data.find(el => el._id === item.id)});
+      dispatch({type: ADD_INGREDIENT, ingredient: data.find((el: DATA_TYPE) => el._id === item.id)});
     } else {
 
     }
@@ -83,7 +86,7 @@ function BurgerConstructor({ openOrderModal }) {
         }
         {!!burger.ingredients.length &&
           <div className={constructorStyles.innerWrapper}>
-            {burger.ingredients.map((el, index) => <ConstructorIngredientItem el={el.item} index={index} key={el.index}/>)}
+            {burger.ingredients.map((el: {item: DATA_TYPE, index: number}, index: number) => <ConstructorIngredientItem el={el.item} index={index} key={el.index}/>)}
           </div>
         }
         
@@ -106,7 +109,7 @@ function BurgerConstructor({ openOrderModal }) {
             <span className='mr-2'>
               {burger.totalPrice}
               </span>
-            <CurrencyIcon />
+            <CurrencyIcon type='primary' />
           </div>
           {bunName && <div className={constructorStyles.buttonWrapper}>
             <Button type="primary" size="medium" onClick={openOrderModal}>
