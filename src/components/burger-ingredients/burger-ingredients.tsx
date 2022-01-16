@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 
 // Styles
@@ -10,16 +10,17 @@ import IngredientsType from "../ingredients-type/ingredients-type";
 
 // Data
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
   //const [current, setCurrent] = React.useState('Булки');
-  const current = useSelector(store => store.tabsState.tabs.reduce((current, tab) => {
+  // @ts-ignore
+  const current: any = useSelector((store: any) => store.tabsState.tabs.reduce((current, tab) => {
     return current.ratio < tab.ratio ? tab : current
   }, store.tabsState.tabs[0]).title);
-  const bunRef = React.useRef(null);
-  const sauceRef = React.useRef(null);
-  const mainRef = React.useRef(null);
+  const bunRef = React.useRef<HTMLLIElement>(null);
+  const sauceRef = React.useRef<HTMLLIElement>(null);
+  const mainRef = React.useRef<HTMLLIElement>(null);
 
-  const setTab = (tab) => {
+  const setTab = (tab: string) => {
     //setCurrent(tab);
     switch (tab) {
       case 'Булки':

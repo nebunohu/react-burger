@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, RefObject } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import PropTypes from 'prop-types';
@@ -13,14 +13,22 @@ import { UPDATE_CURRENT_TAB } from "../../services/actions/constructor-tab-actio
 
 // Styles
 import typeStyles from './ingredients-type.module.css';
+import { DATA_TYPE } from "../../react-burger-env";
 
-function IngredientsType(props) {
+type TIngredientsTypeProps = {
+  reference: RefObject<HTMLLIElement>;
+  id: string;
+  type: string;
+}
+
+const IngredientsType: FC<TIngredientsTypeProps> = (props) => {
   //const { data } = React.useContext(AppContext);
   const dispatch = useDispatch();
+  // @ts-ignore
   const data = useSelector(store => store.state.ingredients);
-  const arrayOfElements = [];
+  const arrayOfElements: Array<DATA_TYPE> = [];
   if(data) {
-    data.forEach(el => {
+    data.forEach((el: DATA_TYPE) => {
       if(el.type === props.id)
         arrayOfElements.push(el);
     });
@@ -50,13 +58,13 @@ function IngredientsType(props) {
   );
 }
 
-IngredientsType.propTypes = {
+/*IngredientsType.propTypes = {
   id: PropTypes.string.isRequired, 
   type: PropTypes.string.isRequired,
   refer:  PropTypes.oneOfType([
     PropTypes.func, 
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
 ])
-}
+}*/
 
 export default IngredientsType;

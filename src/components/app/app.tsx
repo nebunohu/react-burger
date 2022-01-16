@@ -75,7 +75,7 @@ const App: FC = () => {
         <Route path='/orders' element={<OrdersPage />} />
         <Route path="/" element={<ConstructorPage />} />
         <Route element={<NotFound404 />} />
-      </Routes>
+      
       {background && <Route path='/ingredients/:id' >
         <Modal
           title='Детали ингредиента'
@@ -84,6 +84,7 @@ const App: FC = () => {
           <IngredientDetails />
         </Modal>
       </Route>}
+      </Routes>
     </>
   );
 }
