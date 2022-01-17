@@ -24,7 +24,7 @@ const LoginPage: FC = () => {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
-  if(!location.state === null) location.state.from = '/';
+  if(location.state === null) location.state = {from: '/'};
 
   // location.state.from
   return (

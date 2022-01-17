@@ -75,16 +75,18 @@ const App: FC = () => {
         <Route path='/orders' element={<OrdersPage />} />
         <Route path="/" element={<ConstructorPage />} />
         <Route element={<NotFound404 />} />
-      
-      {background && <Route path='/ingredients/:id' >
-        <Modal
-          title='Детали ингредиента'
-          closeModal={closeModal}
-        >
-          <IngredientDetails />
-        </Modal>
-      </Route>}
       </Routes>
+      {background && <Routes>
+        <Route path='/ingredients/:id' element={
+          <Modal
+            title='Детали ингредиента'
+            closeModal={closeModal}
+          >
+            <IngredientDetails />
+          </Modal>
+        } />
+      </Routes>}
+      
     </>
   );
 }

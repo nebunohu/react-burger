@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -55,9 +54,5 @@ const IngredientsItem: FC<TIngredientItemProps> = ({item}) => {
     </div>
   );
 }
-
-/*IngredientsItem.propTypes = {
-  item: PropTypes.shape(DATA_TYPE).isRequired
-}*/
 
 export default IngredientsItem;

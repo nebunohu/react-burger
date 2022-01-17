@@ -1,7 +1,6 @@
 import React, { FC, RefObject } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import PropTypes from 'prop-types';
 
 // Components
 import IngredientsItem from "../ingredients-item/ingredients-item";
@@ -57,14 +56,5 @@ const IngredientsType: FC<TIngredientsTypeProps> = (props) => {
     </div>
   );
 }
-
-/*IngredientsType.propTypes = {
-  id: PropTypes.string.isRequired, 
-  type: PropTypes.string.isRequired,
-  refer:  PropTypes.oneOfType([
-    PropTypes.func, 
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-])
-}*/
 
 export default IngredientsType;
