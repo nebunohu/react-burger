@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetPasswordRequest } from '../../services/actions/password-actions';
+import { FORGOT_PASSWORD_REDIRECT_CLEAR, resetPasswordRequest } from '../../services/actions/password-actions';
 
 // Styles
 import resetPassStyles from './reset-password.module.css';
@@ -18,9 +18,17 @@ const ResetPasswordPage: FC = () => {
   // @ts-ignore
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
+  useEffect(() => {
+    dispatch({ type: FORGOT_PASSWORD_REDIRECT_CLEAR });
+  }, []);
+
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     dispatch( resetPasswordRequest( formState ));
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
   if(getCookie('token')) {
@@ -45,7 +53,7 @@ const ResetPasswordPage: FC = () => {
             <PasswordInput 
               name='password' 
               value={formState.password}  
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+              onChange={handleChange} 
             />
           </div>  
           <div className="mb-6">
@@ -54,7 +62,7 @@ const ResetPasswordPage: FC = () => {
               name='token' 
               placeholder='Введите код из письма' 
               value={formState.token} 
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+              onChange={handleChange} 
             />
           </div>        
           <Button type='primary' size='medium' >

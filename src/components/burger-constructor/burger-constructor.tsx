@@ -1,5 +1,4 @@
 import React, { FC, SyntheticEvent } from "react";
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch} from "react-redux";
 import { useDrop } from "react-dnd";
 
@@ -121,9 +120,5 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
   );
   
 }
-
-BurgerConstructor.propTypes ={
-  openOrderModal: PropTypes.func.isRequired
-};
 
 export default BurgerConstructor;
