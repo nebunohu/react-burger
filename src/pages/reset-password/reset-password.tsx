@@ -20,7 +20,7 @@ const ResetPasswordPage: FC = () => {
 
   useEffect(() => {
     dispatch({ type: FORGOT_PASSWORD_REDIRECT_CLEAR });
-  }, []);
+  });
 
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
