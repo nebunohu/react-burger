@@ -1,39 +1,39 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 // Styles
 import forgotPassStyles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPasswordRequest } from '../../services/actions/password-actions';
 import { getCookie } from '../../utils/cookie';
 
-export default function ForgotPasswordPage() {
+import { TLocationWithState } from '../../react-burger-env';
+
+const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: ''});
+  // @ts-ignore
   const { password }= useSelector(store => store);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation() as TLocationWithState;
   
-  function onSubmitHandler(e) {
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     dispatch(forgotPasswordRequest(formState['email']));
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
   if(getCookie('token')) {
-    history.replace('/');
+    navigate('/');
     return null;
   }
 
   return (
     password.fromForgotPasswordRedirect ?
-      <Redirect to={{
-        pathname: '/reset-password',
-        state: { from: history.location.pathname }
-      }}
-       />
+      <Navigate to={'/reset-password'} state={ {from: location.pathname} } />
       :
       <div className={forgotPassStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Восстановление пароля</span>
@@ -57,3 +57,5 @@ export default function ForgotPasswordPage() {
     
   );
 }
+
+export default ForgotPasswordPage;

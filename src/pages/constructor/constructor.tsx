@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Components
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
@@ -19,9 +19,11 @@ import { getUser } from "../../services/actions/user-actions";
 import { getCookie } from "../../utils/cookie";
 //import { refreshToken } from "../../services/actions/auth-actions";
 
-export default function ConstructorPage() {
+const ConstructorPage: FC = () => {
+  // @ts-ignore
   const { state, auth } = useSelector(store => store);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   /*React.useEffect(() => {
@@ -45,7 +47,7 @@ export default function ConstructorPage() {
       dispatch(postOrder(state.burger));
       dispatch({type: OPEN_ORDER_MODAL});  
     } else {
-      history.push({ pathname: '/login', state: {from: history.location.pathname}});
+      navigate('/login', { state: {from: location.pathname}});
     }
     
   }
@@ -68,3 +70,5 @@ export default function ConstructorPage() {
     </>
   );
 }
+
+export default ConstructorPage;

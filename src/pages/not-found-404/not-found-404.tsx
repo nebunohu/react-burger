@@ -1,8 +1,10 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 // Styles
 import notFoundStyles from './not-found-404.module.css'
-export default function NotFound404() {
+
+const NotFound404: FC = () => {
   return (
     <div className={notFoundStyles.noticeWrapper}>
       <span className={notFoundStyles.notice}>Упс... Страница не найдена</span>
@@ -10,3 +12,5 @@ export default function NotFound404() {
     </div>
   )
 }
+
+export default NotFound404;

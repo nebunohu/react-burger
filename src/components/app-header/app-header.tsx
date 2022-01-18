@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon , ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-function AppHeader() {
+const AppHeader: FC = () => {
   const location = useLocation();
   const state = location.pathname.split('/')[1];
   return (

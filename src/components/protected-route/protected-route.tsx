@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import { SET_IS_AUTH } from '../../services/actions/auth-actions';
 import { getUser } from '../../services/actions/user-actions';
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
-  const { user, auth } = useSelector(store => store);
+  // @ts-ignore
+  const { user, auth } = useSelector((store) => store);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const location = useLocation();
   
   //const { isAuth, accessToken } = useSelector(store => store.auth.isAuth);
   
@@ -29,19 +32,8 @@ export function ProtectedRoute({ children, ...rest }) {
     return null;
   }
 
-  return (
-    <Route
-      {...rest}
-      render={({location}) => 
-        auth.isAuth ? (
-          children
-         ) : (
-          <Redirect to={{
-            pathname: '/login',
-            state: {from: location}
-           }} />
-         )
-      }
-    />
-  );
+  if(!auth.isAuth) {
+    return <Navigate to='/login' state={{from: location}} replace />
+  }
+  return children;
 } 

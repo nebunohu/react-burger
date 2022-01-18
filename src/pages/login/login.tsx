@@ -1,31 +1,35 @@
-import { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { TLocationWithState } from '../../react-burger-env';
 // Styles
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginRequest } from '../../services/actions/auth-actions';
 import { getCookie } from '../../utils/cookie';
 
-export default function LoginPage() {
+const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
+  // @ts-ignore
   const auth = useSelector(store => store.auth);
-  const history = useHistory();
+  const location = useLocation() as TLocationWithState;
 
-  function onSubmitHandler(e) {
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
     dispatch(loginRequest( formState ));
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
+  if(location.state === null) location.state = {from: '/'};
 
+  // location.state.from
   return (
     auth.fromLoginRedirect || getCookie('token') ?
-      <Redirect to={history.location.state.from} />
+      <Navigate to={location.state.from} replace/>
     :
       <div className={loginStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Вход</span>
@@ -56,3 +60,5 @@ export default function LoginPage() {
       </div>
   );
 }
+
+export default LoginPage;

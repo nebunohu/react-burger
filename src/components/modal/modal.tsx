@@ -1,6 +1,5 @@
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from 'prop-types';
 
 //Styles
 import modalStyles from './modal.module.css';
@@ -10,44 +9,47 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 //import ModalHeader from "../modal-header/modal-header";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function Modal(props) {
+type TModalProps = {
+  closeModal: () => void;
+  title: string;  
+  children: JSX.Element;
+};
+
+const Modal: FC<TModalProps> = ({ closeModal, title, children}) => {
+  const portalDiv = document.getElementById('modal-root')!;
 
   React.useEffect(() => {
     const modal = document.getElementById('modal-wrapper');
-    modal.focus();
+    modal!.focus();
   }, []);
 
-  function escapeButtonHandler(e) {
+  function escapeButtonHandler(e: React.KeyboardEvent<HTMLDivElement>) {
     if(e.key === 'Escape') {
-      props.closeModal();
+      closeModal();
     }
   }
 
   function closeButtonClickHandler() {
-    props.closeModal();
+    closeModal();
   }
 
   return ReactDOM.createPortal(
-    <ModalOverlay closeModal={props.closeModal}>
-      <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex="-1">
+    <ModalOverlay closeModal={closeModal}>
+      <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex={-1}>
         <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`}>
-          <CloseIcon onClick={closeButtonClickHandler} />
+          <CloseIcon type='primary' onClick={closeButtonClickHandler} />
         </div>
         {
-          !!props.title && 
+          !!title && 
             <div className={`${modalStyles.modalHeader} text text_type_main-large mt-10 mr-10 ml-10`}>
-              {props.title}
+              {title}
             </div>
         }
-        {props.children}
+        {children}
       </div>
     </ModalOverlay>,
-    document.getElementById('modal-root')
+    portalDiv
   );
 }
 
-Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
-  closeModal: PropTypes.func.isRequired
-}
+export default Modal;

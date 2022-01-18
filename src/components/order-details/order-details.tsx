@@ -9,7 +9,8 @@ import orderDetailsStyles from './order-details.module.css';
 // Images
 import doneImage from '../../images/done.svg';
 
-export default function OrderDetails(props) {
+const OrderDetails: React.FC = () => {
+  // @ts-ignore
   const order = useSelector(store => store.state.order);
   return (
     <>
@@ -32,4 +33,6 @@ export default function OrderDetails(props) {
     </>
   );
 }
+
+export default OrderDetails;
 

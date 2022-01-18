@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from "react-router-dom";
 
@@ -9,22 +9,27 @@ import ingredientdDetailsStyles from './ingredient-details.module.css';
 
 // Actions
 import { SET_CURRENT_INGREDIENT } from "../../services/actions/burger-actions";
+import { DATA_TYPE } from "../../react-burger-env";
 
 // Data
 
-export default function IngredientDetails() {
+const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
+  // @ts-ignore
   const { ingredients, currentIngredient } = useSelector(store => store.state);
   const location = useLocation();
   const urlId = location.pathname.split('/')[2];
 
   useEffect( () => {
+    const setCurrentIngredient = () => {
     if(typeof currentIngredient !== 'undefined') {
       if(Object.keys(currentIngredient).length === 0 && ingredients.length !== 0) {
-        dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find(el => el._id === urlId)});
+        dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find((el: DATA_TYPE) => el._id === urlId)});
         return null;
       }
-    }
+    }}
+
+    setCurrentIngredient();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ingredients, currentIngredient]);
 
@@ -77,3 +82,5 @@ export default function IngredientDetails() {
     </>
   );
 }
+
+export default IngredientDetails;

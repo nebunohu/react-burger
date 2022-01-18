@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import React, { FC, useEffect, useState } from 'react';
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetPasswordRequest } from '../../services/actions/password-actions';
+import { FORGOT_PASSWORD_REDIRECT_CLEAR, resetPasswordRequest } from '../../services/actions/password-actions';
 
 // Styles
 import resetPassStyles from './reset-password.module.css';
@@ -10,31 +10,41 @@ import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burg
 import { getCookie } from '../../utils/cookie';
 
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ token: '', password: ''});
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+  // @ts-ignore
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
-  function onSubmitHandler(e) {
+  useEffect(() => {
+    dispatch({ type: FORGOT_PASSWORD_REDIRECT_CLEAR });
+  });
+
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     dispatch( resetPasswordRequest( formState ));
   }
 
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setFormState({ ...formState, [e.target.name]: e.target.value})
+  }
+
   if(getCookie('token')) {
-    history.replace('/');
+    navigate('/');
     return null;
   }
 
-  if(typeof history.location.state === 'undefined') {
-    history.replace('/forgot-password');
+  if(typeof location.state === 'undefined') {
+    navigate('/forgot-password');
     return null;
   }
 
 
   return (
     isRedirect ?
-      <Redirect to='/login' />
+      <Navigate to='/login' replace />
     :
       <div className={resetPassStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Восстановление пароля</span>
@@ -43,7 +53,7 @@ export default function ResetPasswordPage() {
             <PasswordInput 
               name='password' 
               value={formState.password}  
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+              onChange={handleChange} 
             />
           </div>  
           <div className="mb-6">
@@ -52,7 +62,7 @@ export default function ResetPasswordPage() {
               name='token' 
               placeholder='Введите код из письма' 
               value={formState.token} 
-              onChange={e => setFormState({ ...formState, [e.target.name]: e.target.value})} 
+              onChange={handleChange} 
             />
           </div>        
           <Button type='primary' size='medium' >
@@ -63,3 +73,5 @@ export default function ResetPasswordPage() {
       </div>
   );
 }
+
+export default ResetPasswordPage;

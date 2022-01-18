@@ -1,10 +1,11 @@
 // Components
+import { FC } from 'react';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 
 // Styles
 import ingredientStyles from './ingredient.module.css';
 
-export default function IngredientPage() {
+const IngredientPage: FC = () => {
   return (
     <div className={ingredientStyles.modal} >
       <span className='text text_type_main-large mt-10 mr-10 ml-10'>Детали ингредиента</span>
@@ -12,3 +13,5 @@ export default function IngredientPage() {
     </div>
   );
 }
+
+export default IngredientPage;

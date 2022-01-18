@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { 
-  Switch, 
+  Routes, 
   Route,
   useLocation,
-  useHistory 
+  useNavigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // Components
 import AppHeader from '../app-header/app-header';
 import LoginPage from '../../pages/login/login';
-import ConstructorPage from '../../pages/constructor/constructor.jsx';
+import ConstructorPage from '../../pages/constructor/constructor';
 import RegisterPage from '../../pages/register/register';
 import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
@@ -31,11 +31,15 @@ import { refreshToken } from '../../services/actions/auth-actions';
 // Utils
 import { getCookie } from '../../utils/cookie';
 
+interface ILocationState {
+  background: string;
+}
 
-function App() {
+const App: FC = () => {
   const location = useLocation();
-  const history = useHistory();
-  const background = location.state && location.state.background;
+  const state = location.state as ILocationState; // Есть ли вариант сделать это как-то иначе?
+  const navigate = useNavigate();
+  const background = state && state.background;
   const dispatch = useDispatch();
 
   useEffect( () => {
@@ -48,33 +52,41 @@ function App() {
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
-    history.push('/');
+    navigate('/');
   }
 
   return (
     <>
       <AppHeader />
-      <Switch location={background || location}>
-        <Route path='/login' component={LoginPage}/>
-        <Route path='/register' component={RegisterPage}/>
-        <Route path='/forgot-password' component={ForgotPasswordPage}/>
-        <Route path='/reset-password' component={ResetPasswordPage}/>
-        <ProtectedRoute path='/profile'>
-          <ProfilePage />
-        </ProtectedRoute>
-        <Route path='/ingredients/:id' component={IngredientPage} />
-        <Route path='/orders' component={OrdersPage} />
-        <Route exact path="/" component={ConstructorPage} />
-        <Route component={NotFound404} />
-      </Switch>
-      {background && <Route path='/ingredients/:id' >
-        <Modal
-          title='Детали ингредиента'
-          closeModal={closeModal}
-        >
-          <IngredientDetails />
-        </Modal>
-      </Route>}
+      <Routes location={background || location}>
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+        <Route path='/reset-password' element={<ResetPasswordPage />} />
+        <Route 
+          path='/profile' 
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path='/ingredients/:id' element={<IngredientPage />} />
+        <Route path='/orders' element={<OrdersPage />} />
+        <Route path="/" element={<ConstructorPage />} />
+        <Route element={<NotFound404 />} />
+      </Routes>
+      {background && <Routes>
+        <Route path='/ingredients/:id' element={
+          <Modal
+            title='Детали ингредиента'
+            closeModal={closeModal}
+          >
+            <IngredientDetails />
+          </Modal>
+        } />
+      </Routes>}
+      
     </>
   );
 }
