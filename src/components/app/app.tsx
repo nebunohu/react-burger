@@ -17,6 +17,7 @@ import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import OrdersPage from '../../pages/orders/orders';
+import FeedPage from '../../pages/feed/feed';
 import IngredientPage from '../../pages/ingredient/ingredient';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
@@ -71,8 +72,17 @@ const App: FC = () => {
             </ProtectedRoute>
           } 
         />
+        <Route 
+          path='/profile/orders' 
+          element={
+            <ProtectedRoute>
+              <OrdersPage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path='/ingredients/:id' element={<IngredientPage />} />
-        <Route path='/orders' element={<OrdersPage />} />
+        <Route path='/feed' element={<FeedPage />} />
+        
         <Route path="/" element={<ConstructorPage />} />
         <Route element={<NotFound404 />} />
       </Routes>

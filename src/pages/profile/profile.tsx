@@ -64,7 +64,7 @@ const ProfilePage: FC = () => {
     <div className={`${profileStyles.profileWrapper}`}>
       <ul className={`${profileStyles.menuWrapper} mr-15`}>
         <li className={`${profileStyles.listItem} ${profileStyles.activeListItem}`}>Профиль</li>
-        <li className={profileStyles.listItem}><Link className={`${profileStyles.itemLink}`} to='/orders'>История заказов</Link></li>
+        <li className={profileStyles.listItem}><Link className={`${profileStyles.itemLink}`} to='orders'>История заказов</Link></li>
         <li className={profileStyles.listItem}><Link className={`${profileStyles.itemLink}`} to='/' onClick={logoutHandler}>Выход</Link></li>
         <li className={`${profileStyles.note} mt-20`}>В этом разделе вы можете изменить свои персональные данные</li>
       </ul>

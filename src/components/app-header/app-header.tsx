@@ -22,8 +22,8 @@ const AppHeader: FC = () => {
             </Link>
           </li>
           <li className={`${headerStyles.listElement}`}>
-            <Link className={`${state === 'orders' ? headerStyles.linkActive : headerStyles.link}`} to='/orders'>
-              <ListIcon type={state === 'orders' ? 'primary' : 'secondary'}/> <span className='ml-2'>Лента заказов</span>
+            <Link className={`${state === 'feed' ? headerStyles.linkActive : headerStyles.link}`} to='/feed'>
+              <ListIcon type={state === 'feed' ? 'primary' : 'secondary'}/> <span className='ml-2'>Лента заказов</span>
             </Link>
           </li>
           <li className={`${headerStyles.logo} ${headerStyles.listElement}`}>
