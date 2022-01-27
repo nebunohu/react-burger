@@ -62,7 +62,7 @@ export interface ILogoutRequestFailed {
   readonly type: typeof LOGOUT_REQUEST_REQUEST_FAILED;
 };
 
-export type TLoginActions = ISetIsAuth |
+export type TAuthActions = ISetIsAuth |
   IResetIsAuth |
   IRefreshTokenRequest |
   IRefreshTokenRequestSuccess |
