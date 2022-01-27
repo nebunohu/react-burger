@@ -21,23 +21,57 @@ import {
   POST_ORDER_REQUEST_FAILED,
   OPEN_INGREDIENTS_MODAL, 
   OPEN_ORDER_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  TBurgerActions
 } from '../actions/burger-actions';
+import { DATA_TYPE } from "../../react-burger-env";
 
+export type TBurgerState = {
+  bun: DATA_TYPE | null;
+  ingredients: Array<{index: number, item: DATA_TYPE}>;
+  ingredientsCounts: Array<{count: number, type: string, id: string}>;
+  name: string;
+  totalPrice: number;
+};
 
+type TState = {
+  ingredients: Array<DATA_TYPE>;
+  burger: TBurgerState;
+  currentIngredient: DATA_TYPE | null;
 
-const initialState ={
+  order: {
+    number: number | null;
+  };
+
+  modal: {
+    isModalOpen: boolean;
+    isIngredModal: boolean;
+    isOrderModal: boolean;
+  },
+
+  section: string;
+
+  ingredientsRequest: boolean;
+  ingredientsRequestFailed: boolean;
+
+  orderPostRequest: boolean;
+  orderPostRequestFailed: boolean;
+};
+
+const initialState: TState = {
   ingredients: [],
   burger: {
-    bun: {},
+    bun: null,
     ingredients: [],
     ingredientsCounts: [],
     name: '',
     totalPrice: 0
   },
-  currentIngredient: {},
+  currentIngredient: null,
 
-  order: {},
+  order: {
+    number: null,
+  },
 
   modal: {
     isModalOpen: false,
@@ -54,7 +88,7 @@ const initialState ={
   orderPostRequestFailed: false,
 }
 
-function addIngredient(burger, ingredient) {
+function addIngredient(burger: TBurgerState, ingredient: DATA_TYPE) {
   let burgerState = {...burger};
   if (ingredient.type === 'bun') {
     burgerState.bun = ingredient;
@@ -62,7 +96,7 @@ function addIngredient(burger, ingredient) {
     burgerState.ingredientsCounts.push({count: 2, type: ingredient.type, id: ingredient._id});
 
   } else {
-    const currentItem = burgerState.ingredients.find(el => el.item._id === ingredient._id);
+    const currentItem = burgerState.ingredients.find((el) => el.item._id === ingredient._id);
     burgerState.ingredients.push({index: burgerState.ingredients.length, item: ingredient}); 
     if(!currentItem) {
       //const newItem = {count: 1, id: ingredient._id};
@@ -70,10 +104,15 @@ function addIngredient(burger, ingredient) {
       burgerState.ingredientsCounts.push({count: 1, type: ingredient.type, id: ingredient._id});
     } else {
       //const currentId = burgerState.ingredients[burgerState.ingredients.indexOf(currentItem)]._id;
-      burgerState.ingredientsCounts.find(el => el.id === ingredient._id).count++;
+      if(typeof burgerState.ingredientsCounts.find(el => el.id === ingredient._id) !== 'undefined') {
+        burgerState.ingredientsCounts.find(el => el.id === ingredient._id)!.count++;
+      }
+      
     }
     
   }
+
+  if (burgerState.bun === null) burgerState.bun = {price: 0} as DATA_TYPE;
 
   burgerState.totalPrice = (!!burgerState.bun.price ? burgerState.bun.price : 0) * 2 + 
       (!!burgerState.ingredients 
@@ -87,7 +126,7 @@ function addIngredient(burger, ingredient) {
   return burgerState;
 }
 
-const stateReducer = (state = initialState, action) => {
+const stateReducer = (state = initialState, action: TBurgerActions): TState => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       return {
@@ -212,7 +251,7 @@ const stateReducer = (state = initialState, action) => {
     case CLOSE_MODAL: {
       return {
         ...state,
-        currentIngredient: {},
+        currentIngredient: null,
         modal: {
           ...state.modal,
           isModalOpen: false,
