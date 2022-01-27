@@ -2,14 +2,20 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_REQUEST_SUCCESS,
   REGISTER_USER_REQUEST_FAILED,
+  TRegisterActions,
 } from '../actions/register-actions.js'
 
-const initialState ={
+type TRegisterState = {
+  registerUserRequest: boolean;
+  registerUserRequestFailed: boolean;
+};
+
+const initialState: TRegisterState ={
   registerUserRequest: false,
   registerUserRequestFailed: false,
 };
 
-export function passwordReducer( state = initialState, action ) {
+export function passwordReducer( state = initialState, action: TRegisterActions ) {
   switch(action.type) {
     case REGISTER_USER_REQUEST: {
       return {

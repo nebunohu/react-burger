@@ -1,6 +1,10 @@
-import { UPDATE_CURRENT_TAB } from "../actions/constructor-tab-actions";
+import { TTabActions, UPDATE_CURRENT_TAB } from "../actions/constructor-tab-actions";
 
-const initialState = {
+type TTabState = {
+  tabs: Array<{id: string, title: string, ratio: number}>;
+};
+
+const initialState: TTabState = {
   tabs: [
     {
       id: 'bun',
@@ -20,7 +24,7 @@ const initialState = {
   ]
 }
 
-export default function constructorTabReducer (state = initialState, action) {
+export default const constructorTabReducer = (state = initialState, action: TTabActions): TTabState {
   switch(action.type) {
     case UPDATE_CURRENT_TAB: {
       const tempState = {...state};

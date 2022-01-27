@@ -5,10 +5,21 @@ import {
   FORGOT_PASSWORD_REDIRECT_CLEAR,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_REQUEST_SUCCESS,
-  RESET_PASSWORD_REQUEST_FAILED
+  RESET_PASSWORD_REQUEST_FAILED,
+  TPasswordActions
 } from '../actions/password-actions.js'
 
-const initialState ={
+type TPasswordState = {
+  forgotPasswordRequest: boolean;
+  forgotPasswordRequestFailed: boolean;
+  fromForgotPasswordRedirect: boolean;
+
+  resetPasswordRequest: boolean;
+  resetPasswordRequestFailed: boolean;
+  fromresetPasswordRedirect: boolean;
+};
+
+const initialState: TPasswordState ={
   forgotPasswordRequest: false,
   forgotPasswordRequestFailed: false,
   fromForgotPasswordRedirect: false,
@@ -18,7 +29,7 @@ const initialState ={
   fromresetPasswordRedirect: false,
 };
 
-export function passwordReducer( state = initialState, action ) {
+export function passwordReducer( state = initialState, action: TPasswordActions) {
   switch(action.type) {
     case FORGOT_PASSWORD_REQUEST: {
       return {

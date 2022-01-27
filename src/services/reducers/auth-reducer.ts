@@ -7,9 +7,21 @@ import {
   LOGIN_REQUEST,
   LOGIN_REQUEST_REQUEST_SUCCESS,
   LOGIN_REQUEST_REQUEST_FAILED,
+  TAuthActions,
 } from '../actions/auth-actions.js';
 
-const initialState ={
+type TAuthState = {
+  isAuth: boolean;
+
+  refreshTokenRequest: boolean;
+  refreshTokenRequestFailed: boolean;
+
+  loginRequest: boolean;
+  loginRequestFailed: boolean;
+  fromLoginRedirect: boolean;
+};
+
+const initialState: TAuthState ={
   isAuth: false,
 
   refreshTokenRequest: false,
@@ -21,7 +33,7 @@ const initialState ={
 
 };
 
-export function authReducer(state = initialState, action) {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState {
   switch(action.type) {
     case SET_IS_AUTH: {
       return {

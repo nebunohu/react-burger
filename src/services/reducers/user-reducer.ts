@@ -5,10 +5,19 @@ import {
   GET_USER_REQUEST_SUCCESS,
   GET_USER_REQUEST_FAILED,
   SET_IS_USER_LOADED,
-  RESET_IS_USER_LOADED 
+  RESET_IS_USER_LOADED, 
+  TUserActions
  } from '../actions/user-actions.js';
 
-const initialState ={
+ type TUserState = {
+  getUserRequest: boolean;
+  getUserRequestFailed: boolean;
+  isUserLoaded: boolean;
+  name: string;
+  email: string;
+};
+
+const initialState: TUserState = {
   getUserRequest: false,
   getUserRequestFailed: false,
   isUserLoaded: false,
@@ -16,7 +25,7 @@ const initialState ={
   email: ''
 };
 
-export function userReducer(state = initialState, action) {
+export function userReducer(state = initialState, action: TUserActions) {
   switch(action.type) {
     case SET_USER: {
       return {

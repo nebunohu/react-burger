@@ -18,7 +18,61 @@ export const LOGOUT_REQUEST: 'LOGOUT_REQUEST' = 'LOGOUT_REQUEST';
 export const LOGOUT_REQUEST_REQUEST_SUCCESS: 'LOGOUT_REQUEST_REQUEST_SUCCESS' = 'LOGOUT_REQUEST_REQUEST_SUCCESS';
 export const LOGOUT_REQUEST_REQUEST_FAILED: 'LOGOUT_REQUEST_REQUEST_FAILED' = 'LOGOUT_REQUEST_REQUEST_FAILED';
 
+export interface ISetIsAuth {
+  readonly type: typeof SET_IS_AUTH;
+};
 
+export interface IResetIsAuth {
+  readonly type: typeof RESET_IS_AUTH;
+};
+
+export interface IRefreshTokenRequest {
+  readonly type: typeof REFRESH_TOKEN_REQUEST;
+};
+
+export interface IRefreshTokenRequestSuccess {
+  readonly type: typeof REFRESH_TOKEN_REQUEST_SUCCESS;
+};
+
+export interface IRefreshTokenRequestFailed {
+  readonly type: typeof REFRESH_TOKEN_REQUEST_FAILED;
+};
+
+export interface ILoginRequest {
+  readonly type: typeof LOGIN_REQUEST;
+};
+
+export interface ILoginRequestSuccess {
+  readonly type: typeof LOGIN_REQUEST_REQUEST_SUCCESS;
+};
+
+export interface ILoginRequestFailed {
+  readonly type: typeof LOGIN_REQUEST_REQUEST_FAILED;
+};
+
+export interface ILogoutRequest {
+  readonly type: typeof LOGOUT_REQUEST;
+};
+
+export interface ILogoutRequestSuccess {
+  readonly type: typeof LOGOUT_REQUEST_REQUEST_SUCCESS;
+};
+
+export interface ILogoutRequestFailed {
+  readonly type: typeof LOGOUT_REQUEST_REQUEST_FAILED;
+};
+
+export type TLoginActions = ISetIsAuth |
+  IResetIsAuth |
+  IRefreshTokenRequest |
+  IRefreshTokenRequestSuccess |
+  IRefreshTokenRequestFailed |
+  ILoginRequest |
+  ILoginRequestSuccess |
+  ILoginRequestFailed |
+  ILogoutRequest |
+  ILogoutRequestSuccess |
+  ILogoutRequestFailed;
 
 export const refreshToken = (body) => async (dispatch: AppThunk) => {
     try {
