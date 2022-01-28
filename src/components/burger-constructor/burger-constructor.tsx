@@ -72,7 +72,7 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
 
       }
 
-        {!!burger.bun.name && 
+        {!!bunName && 
           <div className={constructorStyles.bunConstructor+' mb-2 ml-8 mr-4'}>
             <ConstructorElement
               type="top"
@@ -89,7 +89,7 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
           </div>
         }
         
-        {!!burger.bun.name && 
+        {!!bunName && 
           <div className={constructorStyles.bunConstructor+' mt-2 ml-8 mr-4'}>
             <ConstructorElement
               type="bottom"
