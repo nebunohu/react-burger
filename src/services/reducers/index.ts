@@ -34,7 +34,7 @@ export type TBurgerState = {
   totalPrice: number;
 };
 
-type TState = {
+export type TState = {
   ingredients: Array<DATA_TYPE>;
   burger: TBurgerState;
   currentIngredient: DATA_TYPE | null;

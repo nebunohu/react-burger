@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "../../types";
 import { API_URL } from "../../utils/url";
 //import { useHistory } from 'react-router-dom';
 
@@ -46,7 +47,7 @@ export type TPasswordActions = IForgotPasswordRequest |
   IResetPasswordRequestFailed |
   IResetPasswordRequestSuccess;
 
-export const forgotPasswordRequest = (email) => async (dispatch) => {
+export const forgotPasswordRequest: AppThunk = (email: string) => async (dispatch: AppDispatch) => {
     //const history = useHistory();
 
     dispatch({type: FORGOT_PASSWORD_REQUEST});
@@ -69,7 +70,7 @@ export const forgotPasswordRequest = (email) => async (dispatch) => {
   }
 
 
-export const resetPasswordRequest = (body) => async (dispatch) => {
+export const resetPasswordRequest:AppThunk = (body: string) => async (dispatch: AppDispatch) => {
     //const history = useHistory();
 
     dispatch({type: RESET_PASSWORD_REQUEST});

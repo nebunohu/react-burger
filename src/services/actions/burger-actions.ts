@@ -1,5 +1,6 @@
 import { API_URL } from "../../utils/url";
 import { DATA_TYPE } from '../../react-burger-env';
+import { AppDispatch, AppThunk } from "../../types";
 
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT: 'DELETE_INGREDIENT' = 'DELETE_INGREDIENT';
@@ -70,7 +71,6 @@ export interface IPostOrderRequestSuccess {
 
 export interface IPostOrderRequestFailed {
   readonly type: typeof POST_ORDER_REQUEST_FAILED;
-  readonly orderNumber: number;
 };
 
 export interface IOpenIngredientsModal {
@@ -101,7 +101,7 @@ export type TBurgerActions =
   IOpenOrderModal |
   ICloseModal ;
 
-export const getIngredients = () => async (dispatch) => {
+export const getIngredients: AppThunk = () => async (dispatch: AppDispatch) => {
   dispatch({type: GET_INGREDIENTS_API_REQUEST});
   const headers = new Headers({"content-type": "application/json"})
   try {
@@ -119,17 +119,17 @@ export const getIngredients = () => async (dispatch) => {
 }
 
 
-export const postOrder = (burger) => async (dispatch) => {
+export const postOrder: AppThunk = (burger) => async (dispatch: AppDispatch) => {
   dispatch({type: POST_ORDER_REQUEST});
   try {
     const headers = new Headers({"content-type": "application/json"});
-    let fetchData = [];
+    let fetchData: Array<DATA_TYPE> = [];
     fetchData.push(burger.bun._id);
     if(burger.ingredients.length > 0) {
-      fetchData = fetchData.concat(burger.ingredients.map(el => el.item._id));
+      fetchData = fetchData.concat(burger.ingredients.map((el: {index: number, item: DATA_TYPE} ) => el.item._id));
     }
-    fetchData = JSON.stringify({ingredients: fetchData});
-    const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body: fetchData});
+    const body: string = JSON.stringify({ingredients: fetchData});
+    const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body});
     if (res.ok) {
       const data = await res.json();
       if(data.success) {

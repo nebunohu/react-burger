@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "../../types";
 import { API_URL } from "../../utils/url";
 
 export const SET_USER: "SET_USER" = "SET_USER";
@@ -15,6 +16,7 @@ export const RESET_IS_USER_LOADED: 'RESET_IS_USER_LOADED' = 'RESET_IS_USER_LOADE
 
 export interface ISetUser {
   readonly type: typeof SET_USER;
+  readonly user: {name: string, email: string};
 };
 
 export interface IResetUser {
@@ -64,7 +66,7 @@ export type TUserActions = ISetUser |
   ISetIsUserLoaded |
   IResetIsUserLoaded;
 
-export const getUser = (token) => async (dispatch) => {
+export const getUser: AppThunk = (token) => async (dispatch: AppDispatch) => {
     dispatch({type: GET_USER_REQUEST});
     try {
       const headers = new Headers({
@@ -89,7 +91,7 @@ export const getUser = (token) => async (dispatch) => {
     }
   }
 
-export const editUser = (body, token) => async (dispatch) => {
+export const editUser: AppThunk = (body, token) => async (dispatch: AppDispatch) => {
     dispatch({type: GET_USER_REQUEST});
     try {
       const headers = new Headers({

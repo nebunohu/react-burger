@@ -2,6 +2,7 @@ import { API_URL } from "../../utils/url";
 import { setCookie } from "../../utils/cookie";
 
 import { SET_USER, RESET_USER } from "./user-actions";
+import { AppDispatch, AppThunk } from "../../types";
 
 export const SET_IS_AUTH: "SET_IS_AUTH" = "SET_IS_AUTH";
 export const RESET_IS_AUTH: "RESET_IS_AUTH" = "RESET_IS_AUTH";
@@ -20,6 +21,7 @@ export const LOGOUT_REQUEST_REQUEST_FAILED: 'LOGOUT_REQUEST_REQUEST_FAILED' = 'L
 
 export interface ISetIsAuth {
   readonly type: typeof SET_IS_AUTH;
+  readonly accessToken: string;
 };
 
 export interface IResetIsAuth {
@@ -74,7 +76,7 @@ export type TAuthActions = ISetIsAuth |
   ILogoutRequestSuccess |
   ILogoutRequestFailed;
 
-export const refreshToken = (body) => async (dispatch: AppThunk) => {
+export const refreshToken: AppThunk = (body) => async (dispatch: AppDispatch) => {
     try {
       dispatch({ type: REFRESH_TOKEN_REQUEST });
       const headers = new Headers({
@@ -87,7 +89,7 @@ export const refreshToken = (body) => async (dispatch: AppThunk) => {
       const data = await res.json();
       if (data.success) {
         dispatch({ type: REFRESH_TOKEN_REQUEST_SUCCESS });
-        document.cookie = setCookie('token', data.refreshToken);
+        setCookie('token', data.refreshToken);
         dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
       } else {
         throw new Error(data.message);
@@ -98,10 +100,9 @@ export const refreshToken = (body) => async (dispatch: AppThunk) => {
       console.log( e );
     }
   }
-}
 
-export function loginRequest(body) {
-  return async function(dispatch) {
+
+export const loginRequest: AppThunk = (body) => async (dispatch: AppDispatch) => {
     //const history = useHistory();
 
     dispatch({type: LOGIN_REQUEST});
@@ -112,7 +113,7 @@ export function loginRequest(body) {
         const data = await res.json();
         if(data.success) {
           dispatch({ type: LOGIN_REQUEST_REQUEST_SUCCESS });
-          document.cookie = setCookie('token', data.refreshToken);
+          setCookie('token', data.refreshToken);
           dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
           dispatch({ type: SET_USER, user: data.user});
         }  
@@ -125,10 +126,9 @@ export function loginRequest(body) {
       dispatch({type: LOGIN_REQUEST_REQUEST_FAILED});
     }
   }
-}
 
-export function logoutRequest(body) {
-  return async function(dispatch) {
+
+export const logoutRequest: AppThunk = (body) => async (dispatch: AppDispatch) => {
     //const history = useHistory();
 
     dispatch({type: LOGOUT_REQUEST});
@@ -152,4 +152,3 @@ export function logoutRequest(body) {
       dispatch({type: LOGOUT_REQUEST_REQUEST_FAILED});
     }
   }
-}

@@ -1,8 +1,14 @@
 import { TTabActions, UPDATE_CURRENT_TAB } from "../actions/constructor-tab-actions";
 
-type TTabState = {
-  tabs: Array<{id: string, title: string, ratio: number}>;
-};
+type TTabElement = {
+  id: string;
+  title: string;
+  ratio: number;
+}
+
+export type TTabState = {
+  tabs: Array<TTabElement> ;
+} ;
 
 const initialState: TTabState = {
   tabs: [
@@ -24,11 +30,11 @@ const initialState: TTabState = {
   ]
 }
 
-export default const constructorTabReducer = (state = initialState, action: TTabActions): TTabState {
+const constructorTabReducer = (state = initialState, action: TTabActions): TTabState => {
   switch(action.type) {
     case UPDATE_CURRENT_TAB: {
       const tempState = {...state};
-      const index = state.tabs.indexOf(state.tabs.find(el => el.id === action.id));
+      const index = state.tabs.indexOf(state.tabs.find((el: TTabElement) => el.id === action.id)!);
       tempState.tabs[index].ratio = action.ratio;
       return {
         ...tempState
@@ -37,4 +43,6 @@ export default const constructorTabReducer = (state = initialState, action: TTab
     default:
       return state;
   }
-}
+};
+
+export default constructorTabReducer;
