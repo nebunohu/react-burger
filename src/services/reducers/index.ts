@@ -5,6 +5,7 @@ import constructorTabReducer from "./constuctor-tab-reducer";
 import { passwordReducer } from "./password-reducer";
 import { userReducer } from "./user-reducer";
 import { authReducer } from "./auth-reducer";
+import { registerReducer } from "./register-reducer";
 
 // Actions
 import {
@@ -25,6 +26,7 @@ import {
   TBurgerActions
 } from '../actions/burger-actions';
 import { DATA_TYPE } from "../../react-burger-env";
+
 
 export type TBurgerState = {
   bun: DATA_TYPE | null;
@@ -270,7 +272,8 @@ const rootReducer = combineReducers({
   tabsState: constructorTabReducer,
   password: passwordReducer, 
   user: userReducer,
-  auth: authReducer
+  auth: authReducer,
+  register: registerReducer
 });
 
 export default rootReducer;

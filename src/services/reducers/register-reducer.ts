@@ -15,7 +15,7 @@ const initialState: TRegisterState ={
   registerUserRequestFailed: false,
 };
 
-export function passwordReducer( state = initialState, action: TRegisterActions ): TRegisterState {
+export function registerReducer( state = initialState, action: TRegisterActions ): TRegisterState {
   switch(action.type) {
     case REGISTER_USER_REQUEST: {
       return {
