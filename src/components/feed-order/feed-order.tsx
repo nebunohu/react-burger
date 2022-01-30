@@ -34,8 +34,8 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
         <div className={`${feedOrderStyles.burgerStack}`}>
           {order.ingredients.map((ingredId:string, index: number) => {
             const currentIngredient = ingredients.find((el: DATA_TYPE) => el._id === ingredId);
-            totalCost = currentIngredient?.price;
-            return (<OrdersIngredientImage src={currentIngredient?.image_mobile} key={index}/>)
+            totalCost = currentIngredient?.type === 'bun' ? currentIngredient?.price*2 : currentIngredient?.price;
+            return (<OrdersIngredientImage src={currentIngredient?.image} key={index}/>)
           })}
         </div>
         <div className={`${feedOrderStyles.totalCost} text text_type_digits-default`}>
