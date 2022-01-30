@@ -6,6 +6,7 @@
 .wrapper {
   display: flex;
   flex-flow: row nowrap;
+  height: 100vh;
 }
 
 .feedHeader {
@@ -14,4 +15,61 @@
 
 .number {
   text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.ordersFeedWrapper {
+  width: max-content;
+}
+
+.ordersListsWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+}
+
+.readyOrdersWrapper {
+  width: 50%;
+}
+
+.readyOrdersListItems {
+  color: #00CCCC;
+}
+
+.inProgressOrdersWrapper {
+  composes: readyOrdersWrapper;
+}
+
+.scrolledWindow {
+  overflow-y: auto;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /*height: 900px;
+  scrollbar-color: #d4aa70 #e4e4e4;
+  scrollbar-width: thin;*/
+}
+
+.scrolledWindow::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrolledWindow::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+  /*border-radius: 100px;*/
+}
+
+.scrolledWindow::-webkit-scrollbar-thumb {
+  /*border-radius: 100px;*/
+  background-color: #8585AD;
+  height: 90%;
+  /*box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);*/
+}
+
+.readyOrderslist {
+  composes: scrolledWindow;
+  height: 160px;
+}
+
+.inProgressOrderslist {
+  composes: readyOrderslist;
 }

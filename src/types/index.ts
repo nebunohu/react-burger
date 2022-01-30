@@ -7,9 +7,19 @@ import { TUserActions } from "../services/actions/user-actions";
 import { store } from '../index';
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
+import { TOrderActions } from "../services/actions/order-actions";
+import { TWsActions } from "../services/actions/ws-actions";
 
 export type TRootState = ReturnType<typeof store.getState>;
-export type TApplicationActions = TAuthActions | TBurgerActions | TTabActions | TPasswordActions | TUserActions | TRegisterActions;
+export type TApplicationActions = 
+  TAuthActions | 
+  TBurgerActions | 
+  TTabActions | 
+  TPasswordActions | 
+  TUserActions | 
+  TRegisterActions |
+  TOrderActions |
+  TWsActions;
 
 export type AppThunk<ReturnType = void> = ActionCreator<
   ThunkAction<ReturnType, Action, TRootState, TApplicationActions>

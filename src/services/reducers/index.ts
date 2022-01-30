@@ -1,3 +1,4 @@
+
 import { combineReducers } from "redux";
 
 // Reducers
@@ -6,6 +7,8 @@ import { passwordReducer } from "./password-reducer";
 import { userReducer } from "./user-reducer";
 import { authReducer } from "./auth-reducer";
 import { registerReducer } from "./register-reducer";
+import orderReducer from "./order-reducer";
+import { wsReducer } from './ws-reducer';
 
 // Actions
 import {
@@ -273,7 +276,9 @@ const rootReducer = combineReducers({
   password: passwordReducer, 
   user: userReducer,
   auth: authReducer,
-  register: registerReducer
+  register: registerReducer,
+  order: orderReducer,
+  ws: wsReducer
 });
 
 export default rootReducer;

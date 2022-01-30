@@ -44,7 +44,7 @@ const ConstructorPage: FC = () => {
   const openOrderModal = () => {
     
     if ( getCookie('token') ) {
-      dispatch(postOrder(state.burger));
+      dispatch(postOrder(state.burger, auth.accessToken));
       dispatch({type: OPEN_ORDER_MODAL});  
     } else {
       navigate('/login', { state: {from: location.pathname}});

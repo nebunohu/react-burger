@@ -119,10 +119,13 @@ export const getIngredients: AppThunk = () => async (dispatch: AppDispatch) => {
 }
 
 
-export const postOrder: AppThunk = (burger) => async (dispatch: AppDispatch) => {
+export const postOrder: AppThunk = (burger, token) => async (dispatch: AppDispatch) => {
   dispatch({type: POST_ORDER_REQUEST});
   try {
-    const headers = new Headers({"content-type": "application/json"});
+    const headers = new Headers({
+      "content-type": "application/json",
+      "authorization": token
+    });
     let fetchData: Array<DATA_TYPE> = [];
     fetchData.push(burger.bun._id);
     if(burger.ingredients.length > 0) {
@@ -138,7 +141,9 @@ export const postOrder: AppThunk = (burger) => async (dispatch: AppDispatch) => 
         dispatch({type: POST_ORDER_REQUEST_SUCCESS, orderNumber: data.order.number});
         //setOrder({...order, number: data.order.number});
         //props.openModal();
-      }  
+      } else {
+        
+      }
     } else {
       throw new Error('Post order fetch error');
     }

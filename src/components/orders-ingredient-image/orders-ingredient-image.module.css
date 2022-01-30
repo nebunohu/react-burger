@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: -30px;
+  width: 64px;
+  height: 64px;
+  background: #131316;
+  border-radius: 50%;
+  border: 2px solid #801AB2;
+  overflow: hidden;
+  z-index: 101;
+}
+
+.image {
+  z-index: 100;
+  height: 56px;
+}

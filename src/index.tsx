@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router} from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -11,6 +11,8 @@ import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 
 import rootReducer from './services/reducers';
+import { socketMiddleware } from './redux/middleware/socket-middleware';
+import { WS_API_URL } from './utils/url';
 
 /*declare global {
   interface Window {
@@ -25,9 +27,10 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));*/
 
-const enhancer = composeWithDevTools(applyMiddleware(thunk));
+const enhancers = [thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders/all`)];
+const composedEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders/all`)));
 
-export const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, composedEnhancers);
 
 
 ReactDOM.render(
