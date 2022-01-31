@@ -6,11 +6,7 @@
 .wrapper {
   display: flex;
   flex-flow: row nowrap;
-  height: 100vh;
-}
-
-.feedHeader {
-  
+  height: calc(100vh - 178px);
 }
 
 .number {
@@ -19,6 +15,10 @@
 
 .ordersFeedWrapper {
   width: max-content;
+}
+
+.ordersInfoWrapper {
+  max-height: calc(100vh - 178px);
 }
 
 .ordersListsWrapper {
@@ -41,7 +41,7 @@
 
 .scrolledWindow {
   overflow-y: auto;
-  height: 100%;
+  height: calc(100vh - 178px);
   margin: 0;
   padding: 0;
   /*height: 900px;

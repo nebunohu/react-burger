@@ -76,7 +76,7 @@ const App: FC = () => {
           path='/profile/orders' 
           element={
             <ProtectedRoute>
-              <OrdersPage />
+              <ProfilePage />
             </ProtectedRoute>
           } 
         />

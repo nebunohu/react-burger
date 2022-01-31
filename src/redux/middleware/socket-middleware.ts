@@ -28,6 +28,10 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                     const data = JSON.parse(event.data);
                     dispatch({ type: WS_GET_MESSAGE, payload: data});
                 }
+
+                socket.onclose = (event: Event) => {
+                    console.log('WS connection closed');
+                }
             }
             next(action);
         }

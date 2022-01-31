@@ -1,0 +1,56 @@
+.propertiesFormWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 200px;
+}
+
+.form {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.menuWrapper {
+list-style: none;
+padding: 0;
+margin-top: 0;
+}
+
+.listItem {
+width: 320px;
+height: 64px;
+color: #8585AD;
+font-family: JetBrains Mono, Arial, Sans-serif;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 30px;
+}
+
+.activeListItem {
+color: #F2F2F3;
+}
+
+.itemLink {
+color: #8585AD;
+text-decoration: none;
+}
+
+.itemLink:hover {
+color: #F2F2F3;
+}
+
+.note {
+width: 320px;
+color: #2F2F37;
+font-family: JetBrains Mono;
+font-size: 16px;
+line-height: 24px;
+}
+
+.buttonsWrapper { 
+display: flex;
+justify-content: space-between;
+width: 100%;
+
+}
