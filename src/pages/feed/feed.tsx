@@ -48,7 +48,7 @@ const FeedPage: FC = () => {
                 В работе:
               </div>
               <ul className={`${feedPageStyles.inProgressOrderslist} mr-6`}>
-                {orders.filter((el: TOrder) => el.status === 'progress').map((el,index) => {return <li className={`text text_type_digits-default`} key={index}>{el.number}</li>})}
+                {orders.filter((el: TOrder) => el.status === 'pending').map((el,index) => {return <li className={`text text_type_digits-default`} key={index}>{el.number}</li>})}
               </ul>
             </div>
           </div>

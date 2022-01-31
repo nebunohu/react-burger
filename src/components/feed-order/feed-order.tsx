@@ -17,6 +17,18 @@ type TFeedOrdrProps = {
 const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
   const ingredients = useSelector(store => store.state.ingredients);
   let totalCost: number | undefined = 0;
+
+  const displayStatus = (status: string): string => {
+    let returnString = '';
+    switch (status) {
+      case 'done': 
+        returnString = 'Выполнен';
+      break;
+      default: 
+        returnString = 'Содан';
+    }
+    return returnString;
+  }
   return (
     <div className={`${feedOrderStyles.wrapper} p-6 mr-2 mb-4`}>
       <div className={`${feedOrderStyles.header}`}>
@@ -29,6 +41,9 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
       </div>
       <div className={`${feedOrderStyles.name} text text_type_main-default mt-6`}>
         {order.name}
+      </div>
+      <div className={`${feedOrderStyles.status} text text_type_main-small`}>
+        {displayStatus(order.status)}
       </div>
       <div className={`${feedOrderStyles.burgerInfo} mt-6`}>
         <div className={`${feedOrderStyles.burgerStack}`}>

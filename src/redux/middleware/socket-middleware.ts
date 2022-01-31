@@ -9,13 +9,16 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
         return next => (action: TWsActions) => {
             const {dispatch, getState} = store;
             const { type, payload } = action;
+            const { auth } = getState();
 
             if (type === 'WS_CONNECTION_START') {
                 // объект класса WebSocket
                 socket = new WebSocket(wsUrl);
             }
-
-
+            
+            if (type === 'WS_CONNECTION_START_WITH_TOKEN') {
+                socket = new WebSocket(`${wsUrl}?token=${auth.accessToken}`);
+            }
 
             if ( socket ) {
                 if(type === 'WS_CONNECTION_CLOSE') socket.close(1000, 'Closed by user');
