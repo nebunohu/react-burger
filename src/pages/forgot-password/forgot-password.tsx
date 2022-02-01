@@ -1,5 +1,5 @@
 import { useState, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 // Styles
 import forgotPassStyles from './forgot-password.module.css';
@@ -12,7 +12,6 @@ import { TLocationWithState } from '../../react-burger-env';
 const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: ''});
-  // @ts-ignore
   const { password }= useSelector(store => store);
   const navigate = useNavigate();
   const location = useLocation() as TLocationWithState;

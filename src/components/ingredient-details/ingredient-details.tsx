@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { useLocation } from "react-router-dom";
 
 // Styles
@@ -15,7 +15,6 @@ import { DATA_TYPE } from "../../react-burger-env";
 
 const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
-  // @ts-ignore
   const { ingredients, currentIngredient } = useSelector(store => store.state);
   const location = useLocation();
   const urlId = location.pathname.split('/')[2];
@@ -23,7 +22,7 @@ const IngredientDetails: FC = () => {
   useEffect( () => {
     const setCurrentIngredient = () => {
     if(typeof currentIngredient !== 'undefined') {
-      if(Object.keys(currentIngredient).length === 0 && ingredients.length !== 0) {
+      if(Object.keys({...currentIngredient}).length === 0 && ingredients.length !== 0) {
         dispatch({ type: SET_CURRENT_INGREDIENT, ingredient: ingredients.find((el: DATA_TYPE) => el._id === urlId)});
         return null;
       }
@@ -40,10 +39,10 @@ const IngredientDetails: FC = () => {
   return (
     <>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>
-        <img src={currentIngredient.image_large} alt='ингредиент' />
+        <img src={currentIngredient!.image_large} alt='ингредиент' />
       </div>
       <div className={ingredientdDetailsStyles.nameWrapper+' mb-8'}>
-        <span className="text text_type_main-medium">{currentIngredient.name}</span>
+        <span className="text text_type_main-medium">{currentIngredient!.name}</span>
       </div>
       <ul className={ingredientdDetailsStyles.infoWrapper+' mb-15'}>
         <li className={`${ingredientdDetailsStyles.caloriesWrapper} ${ingredientdDetailsStyles.li}`}>
@@ -51,7 +50,7 @@ const IngredientDetails: FC = () => {
             Калории, ккал
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-            {currentIngredient.calories}
+            {currentIngredient!.calories}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>
@@ -59,7 +58,7 @@ const IngredientDetails: FC = () => {
             Белки, г
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-          {currentIngredient.proteins}
+          {currentIngredient!.proteins}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>
@@ -67,7 +66,7 @@ const IngredientDetails: FC = () => {
             Жиры, г
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-          {currentIngredient.fat}
+          {currentIngredient!.fat}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>
@@ -75,7 +74,7 @@ const IngredientDetails: FC = () => {
             Углеводы, г
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-          {currentIngredient.carbohydrates}
+          {currentIngredient!.carbohydrates}
           </span>
         </li>
       </ul>

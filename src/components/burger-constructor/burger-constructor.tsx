@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent } from "react";
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { useDrop } from "react-dnd";
 
 // Components
@@ -20,9 +20,7 @@ import { ADD_INGREDIENT } from '../../services/actions/burger-actions';
 
 
 const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent) => void)}> = ({ openOrderModal }) => {
-  // @ts-ignore
   const data = useSelector(store => store.state.ingredients);
-  // @ts-ignore
   const burger = useSelector(store => store.state.burger);
   
   let bunName, bunPrice, bunImage;

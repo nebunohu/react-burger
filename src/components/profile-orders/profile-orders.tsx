@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks/hooks";
 import { WS_CONNECTION_START_WITH_TOKEN, WS_CONNECTION_CLOSE } from "../../services/actions/ws-actions";
 import { TOrder } from "../../types/orders";
@@ -17,6 +16,7 @@ const ProfileOrders: FC = () => {
     return () => {
       dispatch({type: WS_CONNECTION_CLOSE, payload: ''})
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if(typeof orders !== 'undefined') {
     return (

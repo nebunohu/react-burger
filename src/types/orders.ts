@@ -2,10 +2,10 @@ export type TOrder = {
     _id: string;
     ingredients: Array<string>;
     status: string;
-    createdAt: Date;
+    createdAt: string;
     name: string;
     number: number;
-    updatedAt: Date;
+    updatedAt: string;
   };
   
  export type TWSMessage = {

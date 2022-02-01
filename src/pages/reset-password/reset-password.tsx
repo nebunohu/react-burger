@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import { FORGOT_PASSWORD_REDIRECT_CLEAR, resetPasswordRequest } from '../../services/actions/password-actions';
 
@@ -15,7 +15,6 @@ const ResetPasswordPage: FC = () => {
   const [ formState, setFormState ] = useState({ token: '', password: ''});
   const navigate = useNavigate();
   const location = useLocation();
-  // @ts-ignore
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
   useEffect(() => {

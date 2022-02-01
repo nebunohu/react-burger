@@ -22,7 +22,10 @@ const FeedPage: FC = () => {
     return () => {
       dispatch({type: WS_CONNECTION_CLOSE, payload: ''})
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (!orders.length) return null;
 
   return (
     <div className={`${feedPageStyles.container}`}>

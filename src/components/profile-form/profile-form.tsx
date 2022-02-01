@@ -23,7 +23,7 @@ const ProfileForm: FC = () => {
 
   useEffect(() => {
     setFormState({ 'name': user.name, 'email': user.email, password: '123456' })
-  }, []);
+  }, [user]);
 
   function onFocusHandler(e: React.FocusEvent<HTMLFormElement>): void {
     e.preventDefault();

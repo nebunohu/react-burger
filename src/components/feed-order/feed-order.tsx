@@ -18,9 +18,10 @@ type TFeedOrdrProps = {
 
 const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
   const ingredients = useSelector(store => store.state.ingredients);
-  let totalCost: number | undefined = 0;
   const navigate = useNavigate();
   const location = useLocation();
+
+  const orderTime = new Date(order.createdAt);
 
   const displayStatus = (status: string): string => {
     let returnString = '';
@@ -28,11 +29,20 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
       case 'done': 
         returnString = 'Выполнен';
       break;
+      case 'pending': 
+        returnString = 'Готовится';
+      break;
       default: 
-        returnString = 'Содан';
+        returnString = 'Создан';
     }
     return returnString;
   }
+
+  const totalCost = order.ingredients.reduce((prev, currEl) => {
+    const foundIngredient = ingredients.find((el) => currEl === el._id);
+    if(foundIngredient!.type === 'bun') return prev + (foundIngredient!.price*2);
+    else return prev + foundIngredient!.price; 
+  }, 0);
 
   function clickHandler(e: React.MouseEvent<HTMLDivElement> ) {
     navigate(`${location.pathname}/${order.number}`, {state: {background: location}});
@@ -45,21 +55,20 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
           #{order.number}
         </span>
         <span className={`${feedOrderStyles.date} text text_type_main-small text_color_inactive`}>
-          {order.createdAt}
+          {orderTime.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'})}
         </span>
       </div>
       <div className={`${feedOrderStyles.name} text text_type_main-default mt-6`}>
         {order.name}
       </div>
-      <div className={`${feedOrderStyles.status} text text_type_main-small`}>
+      <div className={`${feedOrderStyles.status} text text_type_main-small ${feedOrderStyles[order.status]}`}>
         {displayStatus(order.status)}
       </div>
       <div className={`${feedOrderStyles.burgerInfo} mt-6`}>
         <div className={`${feedOrderStyles.burgerStack}`}>
           {order.ingredients.map((ingredId:string, index: number) => {
             const currentIngredient = ingredients.find((el: DATA_TYPE) => el._id === ingredId);
-            totalCost = currentIngredient?.type === 'bun' ? currentIngredient?.price*2 : currentIngredient?.price;
-            return (<OrdersIngredientImage src={currentIngredient?.image} key={index}/>)
+            return (<OrdersIngredientImage zIndex={index} src={currentIngredient?.image} remainCount={order.ingredients.length - index - 1} key={index}/>)
           })}
         </div>
         <div className={`${feedOrderStyles.totalCost} text text_type_digits-default`}>

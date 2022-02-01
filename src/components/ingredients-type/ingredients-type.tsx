@@ -1,5 +1,5 @@
 import React, { FC, RefObject } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { useInView } from "react-intersection-observer";
 
 // Components
@@ -23,7 +23,6 @@ type TIngredientsTypeProps = {
 const IngredientsType: FC<TIngredientsTypeProps> = (props) => {
   //const { data } = React.useContext(AppContext);
   const dispatch = useDispatch();
-  // @ts-ignore
   const data = useSelector(store => store.state.ingredients);
   const arrayOfElements: Array<DATA_TYPE> = [];
   if(data) {

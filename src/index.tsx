@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router} from 'react-router-dom';
@@ -14,20 +14,6 @@ import rootReducer from './services/reducers';
 import { socketMiddleware } from './redux/middleware/socket-middleware';
 import { WS_API_URL } from './utils/url';
 
-/*declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-
-const composeEnhancers = 
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
-
-const enhancer = composeEnhancers(applyMiddleware(thunk));*/
-
-const enhancers = [thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders/all`)];
 const composedEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders`)));
 
 export const store = createStore(rootReducer, composedEnhancers);

@@ -16,7 +16,6 @@ import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
-import OrdersPage from '../../pages/orders/orders';
 import FeedPage from '../../pages/feed/feed';
 import IngredientPage from '../../pages/ingredient/ingredient';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -113,7 +112,16 @@ const App: FC = () => {
             <OrderDetailsPage />
           </Modal>
         } />
-      </Routes>}
+        <Route path='/feed/:id' element={
+          <Modal
+            title=''
+            closeModal={closeModal}
+          >
+            <OrderDetailsPage />
+          </Modal>
+        } />
+      </Routes>
+      }
       
     </>
   );

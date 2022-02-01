@@ -1,5 +1,5 @@
 import { Middleware, MiddlewareAPI } from "redux";
-import { AppDispatch, TApplicationActions, TRootState } from "../../types";
+import { AppDispatch, TRootState } from "../../types";
 import { TWsActions, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../../services/actions/ws-actions";
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
@@ -8,7 +8,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
         return next => (action: TWsActions) => {
             const {dispatch, getState} = store;
-            const { type, payload } = action;
+            const { type } = action;
             const { auth } = getState();
 
             if (type === 'WS_CONNECTION_START') {
@@ -33,7 +33,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                 }
 
                 socket.onclose = (event: Event) => {
-                    console.log('WS connection closed');
+                    //console.log('WS connection closed');
                 }
             }
             next(action);

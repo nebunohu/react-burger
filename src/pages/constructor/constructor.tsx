@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -20,7 +20,6 @@ import { getCookie } from "../../utils/cookie";
 //import { refreshToken } from "../../services/actions/auth-actions";
 
 const ConstructorPage: FC = () => {
-  // @ts-ignore
   const { state, auth } = useSelector(store => store);
   const navigate = useNavigate();
   const location = useLocation();

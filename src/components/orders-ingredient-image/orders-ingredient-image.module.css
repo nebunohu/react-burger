@@ -1,4 +1,7 @@
 .wrapper {
+  position: absolute;
+  top: auto;
+  bottom: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,10 +12,53 @@
   border-radius: 50%;
   border: 2px solid #801AB2;
   overflow: hidden;
-  z-index: 101;
+}
+
+.zIndex1 {
+  z-index: 6;
+  left: 0;
+}
+
+.zIndex2 {
+  z-index: 5;
+  left: 48px;
+}
+
+.zIndex3 {
+  z-index: 4;
+  left: 96px;
+}
+
+.zIndex4 {
+  z-index: 3;
+  left: 144px;
+}
+
+.zIndex5 {
+  z-index: 2;
+  left: 192px;
+}
+
+.zIndex6 {
+  z-index: 1;
+  left: 240px;
+  
+}
+
+.overlay {
+  display:  flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(28, 28, 33, 0.6);
+  z-index: 1;
 }
 
 .image {
-  z-index: 100;
+  z-index: -1;
   height: 56px;
 }

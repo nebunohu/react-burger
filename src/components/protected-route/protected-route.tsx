@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { useLocation } from 'react-router';
 import { Navigate } from 'react-router-dom';
 import { SET_IS_AUTH } from '../../services/actions/auth-actions';
@@ -7,7 +7,6 @@ import { getUser } from '../../services/actions/user-actions';
 
 export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
-  // @ts-ignore
   const { user, auth } = useSelector((store) => store);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const location = useLocation();
