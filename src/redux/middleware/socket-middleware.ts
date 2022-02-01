@@ -13,11 +13,11 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
             if (type === 'WS_CONNECTION_START') {
                 // объект класса WebSocket
-                socket = new WebSocket(wsUrl);
+                socket = new WebSocket(`${wsUrl}/all`);
             }
             
             if (type === 'WS_CONNECTION_START_WITH_TOKEN') {
-                socket = new WebSocket(`${wsUrl}?token=${auth.accessToken}`);
+                socket = new WebSocket(`${wsUrl}?token=${auth.accessToken.split(' ')[1]}`);
             }
 
             if ( socket ) {

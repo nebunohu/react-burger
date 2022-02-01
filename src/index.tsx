@@ -28,7 +28,7 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk));*/
 
 const enhancers = [thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders/all`)];
-const composedEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders/all`)));
+const composedEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware, socketMiddleware(`${WS_API_URL}/orders`)));
 
 export const store = createStore(rootReducer, composedEnhancers);
 

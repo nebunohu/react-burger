@@ -3,10 +3,12 @@ import React, { FC } from "react";
 import { useSelector } from "../../hooks/hooks";
 import { DATA_TYPE } from "../../react-burger-env";
 import { TOrder } from "../../types/orders";
+import { useNavigate } from "react-router";
 
 // Styles
 import feedOrderStyles from '../feed-order/feed-order.module.css';
 import OrdersIngredientImage from "../orders-ingredient-image/orders-ingredient-image";
+import { useLocation } from "react-router";
 
 // Utils
 
@@ -17,6 +19,8 @@ type TFeedOrdrProps = {
 const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
   const ingredients = useSelector(store => store.state.ingredients);
   let totalCost: number | undefined = 0;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const displayStatus = (status: string): string => {
     let returnString = '';
@@ -29,8 +33,13 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
     }
     return returnString;
   }
+
+  function clickHandler(e: React.MouseEvent<HTMLDivElement> ) {
+    navigate(`${location.pathname}/${order.number}`, {state: {background: location}});
+  }
+
   return (
-    <div className={`${feedOrderStyles.wrapper} p-6 mr-2 mb-4`}>
+    <div className={`${feedOrderStyles.wrapper} p-6 mr-2 mb-4`} onClick={clickHandler}>
       <div className={`${feedOrderStyles.header}`}>
         <span className={`${feedOrderStyles.number} text text_type_main-small`}>
           #{order.number}

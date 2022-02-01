@@ -23,6 +23,8 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
+import OrderDetailsPage from '../../pages/order-details-page/order-details-page';
+
 // Actions
 import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
 import { refreshToken } from '../../services/actions/auth-actions';
@@ -53,7 +55,7 @@ const App: FC = () => {
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
-    navigate('/');
+    navigate(state.background);
   }
 
   return (
@@ -80,6 +82,14 @@ const App: FC = () => {
             </ProtectedRoute>
           } 
         />
+        <Route 
+          path='/profile/orders/:id' 
+          element={
+            <ProtectedRoute>
+              <OrderDetailsPage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path='/ingredients/:id' element={<IngredientPage />} />
         <Route path='/feed' element={<FeedPage />} />
         
@@ -93,6 +103,14 @@ const App: FC = () => {
             closeModal={closeModal}
           >
             <IngredientDetails />
+          </Modal>
+        } />
+        <Route path='/profile/orders/:id' element={
+          <Modal
+            title=''
+            closeModal={closeModal}
+          >
+            <OrderDetailsPage />
           </Modal>
         } />
       </Routes>}
