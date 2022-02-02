@@ -30,7 +30,7 @@ const FeedPage: FC = () => {
   return (
     <div className={`${feedPageStyles.container}`}>
       <div className={`${feedPageStyles.feedHeader} text text_type_main-large pt-8 mb-4`}>Лента заказов</div>
-      <div className={`${feedPageStyles.wrapper} mr-15`}>
+      <div className={`${feedPageStyles.wrapper}`}>
         <section className={`${feedPageStyles.scrolledWindow}`}>
           {orders.map((el: TOrder, index: number) => <FeedOrder order={el} key={index}/>)}
         </section>  

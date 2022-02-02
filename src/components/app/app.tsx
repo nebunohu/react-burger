@@ -29,6 +29,7 @@ import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actio
 import { refreshToken } from '../../services/actions/auth-actions';
 
 //Styles
+import styles from './app.module.css';
 
 // Utils
 import { getCookie } from '../../utils/cookie';
@@ -58,7 +59,7 @@ const App: FC = () => {
   }
 
   return (
-    <>
+    <div className={`${styles.root}`}>
       <AppHeader />
       <Routes location={background || location}>
         <Route path='/login' element={<LoginPage />} />
@@ -91,6 +92,7 @@ const App: FC = () => {
         />
         <Route path='/ingredients/:id' element={<IngredientPage />} />
         <Route path='/feed' element={<FeedPage />} />
+        <Route path='/feed/:id' element={<OrderDetailsPage />} />
         
         <Route path="/" element={<ConstructorPage />} />
         <Route element={<NotFound404 />} />
@@ -123,7 +125,7 @@ const App: FC = () => {
       </Routes>
       }
       
-    </>
+    </div>
   );
 }
 

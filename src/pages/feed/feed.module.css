@@ -1,11 +1,12 @@
 .container {
   max-width: 1240px;
-  margin: 88px auto 0px;
+  margin: 0px auto;
 }
 
 .wrapper {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-between;
   height: calc(100vh - 178px);
 }
 
@@ -19,6 +20,7 @@
 
 .ordersInfoWrapper {
   max-height: calc(100vh - 178px);
+  width: 580px;
 }
 
 .ordersListsWrapper {
@@ -43,7 +45,8 @@
   overflow-y: auto;
   height: calc(100vh - 178px);
   margin: 0;
-  padding: 0;
+  padding: 0 8px 0 0;
+  width: 600px;
   /*height: 900px;
   scrollbar-color: #d4aa70 #e4e4e4;
   scrollbar-width: thin;*/
@@ -66,8 +69,18 @@
 }
 
 .readyOrderslist {
-  composes: scrolledWindow;
-  height: 160px;
+  /*composes: scrolledWindow;*/
+  height: 240px;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.readyOrderslist li {
+  list-style: none;
+  margin-right: 20px;
 }
 
 .inProgressOrderslist {

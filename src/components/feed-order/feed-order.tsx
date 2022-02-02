@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import feedOrderStyles from '../feed-order/feed-order.module.css';
 import OrdersIngredientImage from "../orders-ingredient-image/orders-ingredient-image";
 import { useLocation } from "react-router";
+import StatusComponent from "../status-component/status-component";
 
 // Utils
 
@@ -23,20 +24,7 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
 
   const orderTime = new Date(order.createdAt);
 
-  const displayStatus = (status: string): string => {
-    let returnString = '';
-    switch (status) {
-      case 'done': 
-        returnString = 'Выполнен';
-      break;
-      case 'pending': 
-        returnString = 'Готовится';
-      break;
-      default: 
-        returnString = 'Создан';
-    }
-    return returnString;
-  }
+  
 
   const totalCost = order.ingredients.reduce((prev, currEl) => {
     const foundIngredient = ingredients.find((el) => currEl === el._id);
@@ -61,14 +49,12 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
       <div className={`${feedOrderStyles.name} text text_type_main-default mt-6`}>
         {order.name}
       </div>
-      <div className={`${feedOrderStyles.status} text text_type_main-small ${feedOrderStyles[order.status]}`}>
-        {displayStatus(order.status)}
-      </div>
+      <StatusComponent status={order.status} />
       <div className={`${feedOrderStyles.burgerInfo} mt-6`}>
         <div className={`${feedOrderStyles.burgerStack}`}>
           {order.ingredients.map((ingredId:string, index: number) => {
             const currentIngredient = ingredients.find((el: DATA_TYPE) => el._id === ingredId);
-            return (<OrdersIngredientImage zIndex={index} src={currentIngredient?.image} remainCount={order.ingredients.length - index - 1} key={index}/>)
+            return (<OrdersIngredientImage zIndex={index} src={currentIngredient!.image} remainCount={order.ingredients.length - index - 1} key={index}/>)
           })}
         </div>
         <div className={`${feedOrderStyles.totalCost} text text_type_digits-default`}>

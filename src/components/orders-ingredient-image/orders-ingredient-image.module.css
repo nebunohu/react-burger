@@ -14,6 +14,12 @@
   overflow: hidden;
 }
 
+.wrapperBlock {
+  composes: wrapper;
+  position: relative;
+  z-index: 100;
+}
+
 .zIndex1 {
   z-index: 6;
   left: 0;
