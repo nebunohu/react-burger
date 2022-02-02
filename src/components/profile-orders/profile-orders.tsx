@@ -8,7 +8,7 @@ import FeedOrder from "../feed-order/feed-order";
 import profileOrdersStyles from './profile-orders.module.css';
 
 const ProfileOrders: FC = () => {
-  const { orders } = useSelector(store => store.ws);
+  const { orders, wsConnected } = useSelector(store => store.ws);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,13 +18,14 @@ const ProfileOrders: FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  if(typeof orders !== 'undefined') {
+  if(typeof orders !== 'undefined' && orders.length) {
     return (
       <div className={`${profileOrdersStyles.scrolledWindow}`}>
         {[...orders].reverse().map((el: TOrder, index: number) => <FeedOrder order={el} key={index} />)}
       </div>
     )
   } else {
+    if(!wsConnected) dispatch({type: WS_CONNECTION_START_WITH_TOKEN, payload: ''});
     return null;
   }
 };

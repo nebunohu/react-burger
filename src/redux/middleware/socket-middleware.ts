@@ -25,6 +25,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
                 socket.onopen = (event: Event) => {
                     dispatch({type: WS_CONNECTION_SUCCESS, payload: event});
+                    console.log('WS connection opened');
                 }
 
                 socket.onmessage = (event: MessageEvent) => {
@@ -33,7 +34,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                 }
 
                 socket.onclose = (event: Event) => {
-                    //console.log('WS connection closed');
+                    console.log('WS connection closed');
                 }
             }
             next(action);
