@@ -1,5 +1,6 @@
 import { AppDispatch, AppThunk } from "../../types";
 import { API_URL } from "../../utils/url";
+import { SET_IS_AUTH } from "./auth-actions";
 
 export const SET_USER: "SET_USER" = "SET_USER";
 export const RESET_USER: 'RESET_USER' = 'RESET_USER';
@@ -79,6 +80,7 @@ export const getUser: AppThunk = (token) => async (dispatch: AppDispatch) => {
         if(data.success) {
           dispatch({type: GET_USER_REQUEST_SUCCESS});
           dispatch({ type: SET_USER, user: data.user});
+          dispatch({ type: SET_IS_AUTH });
         } else {
           
           throw new Error(data.message);

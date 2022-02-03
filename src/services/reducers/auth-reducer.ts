@@ -41,7 +41,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
       return {
         ...state,
         isAuth: true,
-        accessToken: action.accessToken
+        //accessToken: action.accessToken
       }
     }
 

@@ -1,6 +1,7 @@
 import { API_URL } from "../../utils/url";
 import { DATA_TYPE } from '../../react-burger-env';
 import { AppDispatch, AppThunk } from "../../types";
+import { refreshToken } from "../../utils/token";
 
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT: 'DELETE_INGREDIENT' = 'DELETE_INGREDIENT';
@@ -133,19 +134,31 @@ export const postOrder: AppThunk = (burger, token) => async (dispatch: AppDispat
     }
     const body: string = JSON.stringify({ingredients: fetchData});
     const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body});
-    if (res.ok) {
-      const data = await res.json();
-      if(data.success) {
-        //setBurger({...burger, name: data.name});
-        dispatch({type: SET_BURGER_NAME, name: data.name});
-        dispatch({type: POST_ORDER_REQUEST_SUCCESS, orderNumber: data.order.number});
-        //setOrder({...order, number: data.order.number});
-        //props.openModal();
-      } else {
-        
-      }
+
+    const data = await res.json();
+    if(data.success) {
+      //setBurger({...burger, name: data.name});
+      dispatch({type: SET_BURGER_NAME, name: data.name});
+      dispatch({type: POST_ORDER_REQUEST_SUCCESS, orderNumber: data.order.number});
+      //setOrder({...order, number: data.order.number});
+      //props.openModal();
+      
     } else {
-      throw new Error('Post order fetch error');
+      if (data.message === 'jwt expired') {
+        if(await refreshToken()) {
+          const res = await fetch(`${API_URL}/orders`, {method: 'POST', mode: 'cors', headers, body});
+
+          const data = await res.json();
+          if(data.success) {
+            //setBurger({...burger, name: data.name});
+            dispatch({type: SET_BURGER_NAME, name: data.name});
+            dispatch({type: POST_ORDER_REQUEST_SUCCESS, orderNumber: data.order.number});
+          }
+        }
+      
+      } else {
+        throw new Error('Post order fetch error');
+      }
     }
     
   } catch(e) {

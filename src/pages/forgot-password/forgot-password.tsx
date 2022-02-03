@@ -5,7 +5,6 @@ import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import forgotPassStyles from './forgot-password.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPasswordRequest } from '../../services/actions/password-actions';
-import { getCookie } from '../../utils/cookie';
 
 import { TLocationWithState } from '../../react-burger-env';
 
@@ -25,7 +24,7 @@ const ForgotPasswordPage: FC = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
-  if(getCookie('token')) {
+  if(localStorage.getItem('token')/*getCookie('token')*/) {
     navigate('/');
     return null;
   }

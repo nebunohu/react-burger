@@ -15,26 +15,12 @@ import { CLOSE_MODAL, OPEN_ORDER_MODAL, postOrder } from "../../services/actions
 
 // Styles
 import cnstructorStyles from './constructor.module.css'
-import { getUser } from "../../services/actions/user-actions";
-import { getCookie } from "../../utils/cookie";
-//import { refreshToken } from "../../services/actions/auth-actions";
 
 const ConstructorPage: FC = () => {
-  const { state, auth } = useSelector(store => store);
+  const { state } = useSelector(store => store);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  /*React.useEffect(() => {
-    const token = getCookie('token');
-    dispatch( refreshToken( { token } ) );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
-
-  React.useEffect( () => {
-    if(typeof auth.accessToken === 'string' && auth.accessToken !== '') dispatch( getUser( auth.accessToken ) );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.accessToken]);
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
@@ -42,8 +28,8 @@ const ConstructorPage: FC = () => {
 
   const openOrderModal = () => {
     
-    if ( getCookie('token') ) {
-      dispatch(postOrder(state.burger, auth.accessToken));
+    if ( localStorage.getItem('accessToken') ) {
+      dispatch(postOrder(state.burger, localStorage.getItem('accessToken')));
       dispatch({type: OPEN_ORDER_MODAL});  
     } else {
       navigate('/login', { state: {from: location.pathname}});

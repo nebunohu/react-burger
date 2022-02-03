@@ -6,7 +6,6 @@ import { useLocation } from 'react-router';
 // Styles
 import profileStyles from './profile.module.css';
 import { logoutRequest } from '../../services/actions/auth-actions';
-import { getCookie } from '../../utils/cookie';
 import ProfileForm from '../../components/profile-form/profile-form';
 import ProfileOrders from '../../components/profile-orders/profile-orders';
 
@@ -16,7 +15,7 @@ const ProfilePage: FC = () => {
   const isOrders = location.pathname.split('/')[2] === 'orders';
 
   function logoutHandler(e: React.MouseEvent<HTMLAnchorElement>): void {
-    const token = getCookie('token');
+    const token = localStorage.getItem('refreshToken')//getCookie('token');
     e.preventDefault();
     dispatch(logoutRequest({ "token": token }));
   }

@@ -26,13 +26,13 @@ import OrderDetailsPage from '../../pages/order-details-page/order-details-page'
 
 // Actions
 import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
-import { refreshToken } from '../../services/actions/auth-actions';
+//import { refreshToken } from '../../services/actions/auth-actions';
 
 //Styles
 import styles from './app.module.css';
+import { checkAuth } from '../../services/actions/auth-actions';
 
 // Utils
-import { getCookie } from '../../utils/cookie';
 
 interface ILocationState {
   background: string;
@@ -46,10 +46,11 @@ const App: FC = () => {
   const dispatch = useDispatch();
 
   useEffect( () => {
-    const token = getCookie('token');
+    //const token = localStorage.getItem('token');//getCookie('token');
 
     dispatch(getIngredients());
-    if(token) dispatch(refreshToken({token}));
+    dispatch(checkAuth());
+    //if(token) dispatch(refreshToken({token}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 

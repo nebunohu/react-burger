@@ -8,9 +8,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: TMiddlewareWsActions)
         let socket: WebSocket | null = null;
 
         return next => (action: TWsActions) => {
-            const {dispatch, getState} = store;
+            const {dispatch} = store;
             const { type } = action;
-            const { auth } = getState();
             const { wsInit, wsInitWithToken, wsClose, onOpen, onMessage } = wsActions;
 
             if (type === wsInit) {
@@ -19,7 +18,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TMiddlewareWsActions)
             }
             
             if (type === wsInitWithToken) {
-                socket = new WebSocket(`${wsUrl}?token=${auth.accessToken.split(' ')[1]}`);
+                socket = new WebSocket(`${wsUrl}?token=${localStorage.getItem('accessToken')!.split(' ')[1]}`);
             }
 
             if ( socket ) {

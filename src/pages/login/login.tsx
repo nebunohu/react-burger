@@ -27,7 +27,7 @@ const LoginPage: FC = () => {
 
   // location.state.from
   return (
-    auth.fromLoginRedirect /*|| getCookie('token')*/ ?
+    auth.fromLoginRedirect || localStorage.getItem('refreshToken') ?
       <Navigate to={location.state.from} replace/>
     :
       <div className={loginStyles.loginFormWrapper}>

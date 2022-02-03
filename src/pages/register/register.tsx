@@ -1,14 +1,14 @@
-import { FC, useState } from 'react';
-import { useDispatch } from '../../hooks/hooks';
+import { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { Link, useNavigate } from 'react-router-dom';
 // Styles
 import registerStyles from './register.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registerUserRequest } from '../../services/actions/register-actions';
-import { getCookie } from '../../utils/cookie';
 
 const RegisterPage: FC = () => {
   const dispatch = useDispatch();
+  const { isAuth } = useSelector(store => store.auth);
   const [ formState, setFormState ] = useState({ email: '', name: '', password: ''});
   const navigate = useNavigate();
 
@@ -21,8 +21,15 @@ const RegisterPage: FC = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
-  if ( getCookie('token') ) {
-    navigate('/');
+
+  useEffect(() => {
+    if ( localStorage.getItem('accessToken') ) {
+      navigate('/');
+    }
+    
+  },[navigate, isAuth]);
+
+  if ( localStorage.getItem('accessToken')/*getCookie('token')*/ ) {
     return null;
   }
 

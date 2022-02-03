@@ -16,7 +16,7 @@ interface IFormState {
 
 const ProfileForm: FC = () => {
   const dispatch = useDispatch();
-  const { user, auth } = useSelector(store => store);
+  const { user } = useSelector(store => store);
   const [isEdit, setIsEdit] = useState(false);
   const [formState, setFormState] = useState<IFormState>({ 'name': user.name, 'email': user.email, 'password': '123456' });
   const [changedFormElements, setChangedFormElements] = useState<Array<string>>([]);
@@ -45,7 +45,7 @@ const ProfileForm: FC = () => {
     
     setChangedFormElements([]);
     setIsEdit(false);
-    dispatch(editUser(body, auth.accessToken));
+    dispatch(editUser(body, localStorage.getItem('accessToken')));
   }
 
   function onCancelClickHandler(e: React.SyntheticEvent<Element, Event>): void {

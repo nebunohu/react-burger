@@ -1,7 +1,5 @@
 
 import { API_URL } from "../../utils/url";
-//import { useHistory } from 'react-router-dom';
-import { setCookie } from "../../utils/cookie";
 import { SET_IS_AUTH } from "./auth-actions";
 import { SET_USER } from "./user-actions";
 import { AppDispatch, AppThunk } from "../../types";
@@ -33,8 +31,10 @@ export const registerUserRequest: AppThunk = (body) => async (dispatch: AppDispa
       const data = await res.json();
       if(data.success) {
         dispatch({type: REGISTER_USER_REQUEST_SUCCESS});
-        setCookie('token', data.refreshToken);
-        dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken, tokenExp: 1200 });
+        //setCookie('token', data.refreshToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        dispatch({ type: SET_IS_AUTH });
         dispatch({ type: SET_USER, user: data.user});
       }  
     } else {

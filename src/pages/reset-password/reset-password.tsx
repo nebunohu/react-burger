@@ -7,7 +7,6 @@ import { FORGOT_PASSWORD_REDIRECT_CLEAR, resetPasswordRequest } from '../../serv
 // Styles
 import resetPassStyles from './reset-password.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getCookie } from '../../utils/cookie';
 
 
 const ResetPasswordPage: FC = () => {
@@ -30,7 +29,7 @@ const ResetPasswordPage: FC = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
-  if(getCookie('token')) {
+  if(localStorage.getItem('token')/*getCookie('token')*/) {
     navigate('/');
     return null;
   }

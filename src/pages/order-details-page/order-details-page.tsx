@@ -1,11 +1,10 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useLocation } from 'react-router';
 import BurgerCompositionElement from '../../components/burger-composition-element/burger-composition-enement';
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 import StatusComponent from '../../components/status-component/status-component';
-import { useDispatch, useSelector } from '../../hooks/hooks';
-import { WS_CONNECTION_CLOSE, WS_CONNECTION_START } from '../../services/actions/ws-actions';
+import { useSelector } from '../../hooks/hooks';
 
 // Styles
 import styles from './order-details-page.module.css';
@@ -14,7 +13,6 @@ import styles from './order-details-page.module.css';
 import { dateOutput } from '../../utils/time';
 
 const OrderDetailsPage: FC = () => {
-  const dispatch = useDispatch();
   const { orders } = useSelector(store => store.ws);
   const ingredientsAll = useSelector(store => store.state.ingredients);
   const location = useLocation();
@@ -44,15 +42,17 @@ const OrderDetailsPage: FC = () => {
 
   const ingredients = !!currentOrder ? uniqueItemsOf(currentOrder.ingredients) : undefined;
 
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch({type: WS_CONNECTION_START, payload: ''});
     return () => {
       dispatch({type: WS_CONNECTION_CLOSE, payload: ''});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[])*/
 
-  if (!currentOrder || !ingredients) return null;
+  if (!currentOrder || !ingredients) {
+    return null;
+  }
   return (
     <div className={`${styles.wrapper} mt-15 mb-15 pl-10 mr-10`}>
       <div className={`${styles.nunber} text text_type_digits-default mb-10`}>#{currentOrder.number}</div>

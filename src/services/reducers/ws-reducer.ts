@@ -27,7 +27,6 @@ export const wsReducer = (state = initialState, action: TWsActions): TWsState =>
             return {
                 ...state,
                 wsConnected: false,
-                orders: []
             }
         }
         case WS_GET_MESSAGE: {

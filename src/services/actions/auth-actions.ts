@@ -1,5 +1,4 @@
 import { API_URL } from "../../utils/url";
-import { setCookie } from "../../utils/cookie";
 
 import { SET_USER, RESET_USER } from "./user-actions";
 import { AppDispatch, AppThunk } from "../../types";
@@ -21,7 +20,6 @@ export const LOGOUT_REQUEST_REQUEST_FAILED: 'LOGOUT_REQUEST_REQUEST_FAILED' = 'L
 
 export interface ISetIsAuth {
   readonly type: typeof SET_IS_AUTH;
-  readonly accessToken: string;
 };
 
 export interface IResetIsAuth {
@@ -76,7 +74,7 @@ export type TAuthActions = ISetIsAuth |
   ILogoutRequestSuccess |
   ILogoutRequestFailed;
 
-export const refreshToken: AppThunk = (body) => async (dispatch: AppDispatch) => {
+/*export const refreshToken: AppThunk = (body) => async (dispatch: AppDispatch) => {
     try {
       dispatch({ type: REFRESH_TOKEN_REQUEST });
       const headers = new Headers({
@@ -89,7 +87,8 @@ export const refreshToken: AppThunk = (body) => async (dispatch: AppDispatch) =>
       const data = await res.json();
       if (data.success) {
         dispatch({ type: REFRESH_TOKEN_REQUEST_SUCCESS });
-        setCookie('token', data.refreshToken);
+        //setCookie('token', data.refreshToken, {'path': '/'});
+        localStorage.setItem('token', data.refreshToken);
         dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
       } else {
         throw new Error(data.message);
@@ -99,11 +98,12 @@ export const refreshToken: AppThunk = (body) => async (dispatch: AppDispatch) =>
       dispatch({ type: REFRESH_TOKEN_REQUEST_FAILED });
       console.log( e );
     }
-  }
-
+  }*/
+export const checkAuth: AppThunk = () => async (dispatch: AppDispatch) => {
+  if(localStorage.getItem('refreshToken')) dispatch({type: SET_IS_AUTH});
+}
 
 export const loginRequest: AppThunk = (body) => async (dispatch: AppDispatch) => {
-    //const history = useHistory();
 
     dispatch({type: LOGIN_REQUEST});
     try {
@@ -112,9 +112,10 @@ export const loginRequest: AppThunk = (body) => async (dispatch: AppDispatch) =>
       if (res.ok) {
         const data = await res.json();
         if(data.success) {
-          dispatch({ type: LOGIN_REQUEST_REQUEST_SUCCESS });
-          setCookie('token', data.refreshToken);
-          dispatch({ type: SET_IS_AUTH, accessToken: data.accessToken });
+          localStorage.setItem('refreshToken', data.refreshToken);
+          localStorage.setItem('accessToken', data.accessToken);
+          dispatch({type: LOGIN_REQUEST_REQUEST_SUCCESS});
+          dispatch({ type: SET_IS_AUTH });
           dispatch({ type: SET_USER, user: data.user});
         }  
       } else {
@@ -129,7 +130,6 @@ export const loginRequest: AppThunk = (body) => async (dispatch: AppDispatch) =>
 
 
 export const logoutRequest: AppThunk = (body) => async (dispatch: AppDispatch) => {
-    //const history = useHistory();
 
     dispatch({type: LOGOUT_REQUEST});
     try {
@@ -139,7 +139,8 @@ export const logoutRequest: AppThunk = (body) => async (dispatch: AppDispatch) =
         const data = await res.json();
         if(data.success) {
           dispatch({ type: LOGOUT_REQUEST_REQUEST_SUCCESS });
-          setCookie('token', '', { 'max-age': -1 });
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
           dispatch({ type: RESET_IS_AUTH });
           dispatch({ type: RESET_USER });
         }  
