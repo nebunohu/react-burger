@@ -12,6 +12,7 @@ import { useLocation } from "react-router";
 import StatusComponent from "../status-component/status-component";
 
 // Utils
+import { dateOutput } from '../../utils/time';
 
 type TFeedOrdrProps = {
   order: TOrder;
@@ -22,14 +23,11 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const orderTime = new Date(order.createdAt);
-
-  
-
   const totalCost = order.ingredients.reduce((prev, currEl) => {
     const foundIngredient = ingredients.find((el) => currEl === el._id);
-    if(foundIngredient!.type === 'bun') return prev + (foundIngredient!.price*2);
-    else return prev + foundIngredient!.price; 
+    if(!foundIngredient) return 0;
+    if(foundIngredient.type === 'bun') return prev + (foundIngredient!.price*2);
+    else return prev + foundIngredient.price; 
   }, 0);
 
   function clickHandler(e: React.MouseEvent<HTMLDivElement> ) {
@@ -43,7 +41,7 @@ const FeedOrder: FC<TFeedOrdrProps> = ({order}) => {
           #{order.number}
         </span>
         <span className={`${feedOrderStyles.date} text text_type_main-small text_color_inactive`}>
-          {orderTime.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'})}
+          {dateOutput(order.createdAt)/*orderTime.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'})*/}
         </span>
       </div>
       <div className={`${feedOrderStyles.name} text text_type_main-default mt-6`}>

@@ -10,6 +10,9 @@ import { WS_CONNECTION_CLOSE, WS_CONNECTION_START } from '../../services/actions
 // Styles
 import styles from './order-details-page.module.css';
 
+// Utils
+import { dateOutput } from '../../utils/time';
+
 const OrderDetailsPage: FC = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector(store => store.ws);
@@ -17,7 +20,7 @@ const OrderDetailsPage: FC = () => {
   const location = useLocation();
   const orderNumber = parseInt(location.pathname.split('/')[location.pathname.split('/').length-1]);
   const currentOrder = orders.find((el) => el.number === orderNumber);
-  const orderTime = !!currentOrder ? new Date(currentOrder.createdAt) : undefined;
+  //const orderTime = !!currentOrder ? new Date(currentOrder.createdAt) : undefined;
 
   const totalCost = currentOrder?.ingredients.reduce((prev, currEl) => {
     const foundIngredient = ingredientsAll.find((el) => currEl === el._id);
@@ -63,7 +66,7 @@ const OrderDetailsPage: FC = () => {
       </div>
       <div className={`${styles.footer} mt-10`}> 
         <div className={`text text_type_main-default text_color_inactive`}>
-          {orderTime!.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'})}
+          {dateOutput(currentOrder.createdAt)}
         </div>
         <div className={`${styles.totalCost} text text_type_digits-default`}>
           <span className='mr-2'>{totalCost}</span><CurrencyIcon type='primary' />

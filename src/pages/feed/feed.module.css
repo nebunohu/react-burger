@@ -35,6 +35,8 @@
 
 .readyOrdersListItems {
   color: #00CCCC;
+  list-style: none;
+  margin-right: 35px;
 }
 
 .inProgressOrdersWrapper {
@@ -78,10 +80,6 @@
   padding: 0;
 }
 
-.readyOrderslist li {
-  list-style: none;
-  margin-right: 20px;
-}
 
 .inProgressOrderslist {
   composes: readyOrderslist;

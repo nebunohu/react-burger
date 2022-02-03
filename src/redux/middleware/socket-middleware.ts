@@ -35,7 +35,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TMiddlewareWsActions)
                 }
 
                 socket.onclose = (event: Event) => {
-                    //console.log('WS connection closed');
+                    console.log('WS connection closed');
                 }
             }
             next(action);

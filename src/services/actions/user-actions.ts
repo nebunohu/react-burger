@@ -80,6 +80,7 @@ export const getUser: AppThunk = (token) => async (dispatch: AppDispatch) => {
           dispatch({type: GET_USER_REQUEST_SUCCESS});
           dispatch({ type: SET_USER, user: data.user});
         } else {
+          
           throw new Error(data.message);
         }
       //} else {
