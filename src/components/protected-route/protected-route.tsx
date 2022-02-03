@@ -13,13 +13,16 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   
   //const { isAuth, accessToken } = useSelector(store => store.auth.isAuth);
   
-  const init = useCallback(() => {
+  const init= useCallback(() => {
     if(auth.accessToken) {
       dispatch(getUser(auth.accessToken));
-    }
+    } /*else {
+      const token = getCookie('token');
+      if(token) dispatch(refreshToken({token}));
+      return;
+    }*/
     //dispatch({ type: SET_IS_USER_LOADED });
     if(isUserLoaded) return;
-    setIsUserLoaded(true);
     if(user.name && auth.accessToken) dispatch({ type: SET_IS_AUTH, accessToken: auth.accessToken });
   }, [isUserLoaded, auth.accessToken, dispatch, user.name]);
 
@@ -28,6 +31,10 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   }, [init])
 
   if ( !isUserLoaded ) {
+    if(user.name) setIsUserLoaded(true);
+    if(!auth.accessToken) {
+      return <Navigate to='/login' state={{from: location}} replace />
+    }
     return null;
   }
 

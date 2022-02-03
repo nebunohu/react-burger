@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/hooks';
 import { Link, useNavigate } from 'react-router-dom';
 // Styles
 import registerStyles from './register.module.css';

@@ -1,8 +1,9 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, TRootState } from "../../types";
-import { TWsActions, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../../services/actions/ws-actions";
+import { TWsActions } from "../../services/actions/ws-actions";
+import { TMiddlewareWsActions } from "../../types/ws";
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TMiddlewareWsActions): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, TRootState>) => {
         let socket: WebSocket | null = null;
 
@@ -10,26 +11,27 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
             const {dispatch, getState} = store;
             const { type } = action;
             const { auth } = getState();
+            const { wsInit, wsInitWithToken, wsClose, onOpen, onMessage } = wsActions;
 
-            if (type === 'WS_CONNECTION_START') {
+            if (type === wsInit) {
                 // объект класса WebSocket
                 socket = new WebSocket(`${wsUrl}/all`);
             }
             
-            if (type === 'WS_CONNECTION_START_WITH_TOKEN') {
+            if (type === wsInitWithToken) {
                 socket = new WebSocket(`${wsUrl}?token=${auth.accessToken.split(' ')[1]}`);
             }
 
             if ( socket ) {
-                if(type === 'WS_CONNECTION_CLOSE') socket.close(1000, 'Closed by user');
+                if(type === wsClose) socket.close(1000, 'Closed by user');
 
                 socket.onopen = (event: Event) => {
-                    dispatch({type: WS_CONNECTION_SUCCESS, payload: event});
+                    dispatch({type: onOpen, payload: event});
                 }
 
                 socket.onmessage = (event: MessageEvent) => {
                     const data = JSON.parse(event.data);
-                    dispatch({ type: WS_GET_MESSAGE, payload: data});
+                    dispatch({ type: onMessage, payload: data});
                 }
 
                 socket.onclose = (event: Event) => {

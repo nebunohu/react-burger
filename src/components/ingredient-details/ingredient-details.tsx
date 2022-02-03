@@ -32,17 +32,17 @@ const IngredientDetails: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ingredients, currentIngredient]);
 
-  if(ingredients.length === 0 || typeof currentIngredient === 'undefined') {
+  if(ingredients.length === 0 || currentIngredient === null) {
     return null;
   }
 
   return (
     <>
       <div className={ingredientdDetailsStyles.imageWrapper+' mb-4'}>
-        <img src={currentIngredient!.image_large} alt='ингредиент' />
+        <img src={currentIngredient.image_large} alt='ингредиент' />
       </div>
       <div className={ingredientdDetailsStyles.nameWrapper+' mb-8'}>
-        <span className="text text_type_main-medium">{currentIngredient!.name}</span>
+        <span className="text text_type_main-medium">{currentIngredient.name}</span>
       </div>
       <ul className={ingredientdDetailsStyles.infoWrapper+' mb-15'}>
         <li className={`${ingredientdDetailsStyles.caloriesWrapper} ${ingredientdDetailsStyles.li}`}>
@@ -50,7 +50,7 @@ const IngredientDetails: FC = () => {
             Калории, ккал
           </span>
           <span className={ingredientdDetailsStyles.count+' text text_type_digits-default'}>
-            {currentIngredient!.calories}
+            {currentIngredient.calories}
           </span>
         </li>
         <li className={ingredientdDetailsStyles.li}>

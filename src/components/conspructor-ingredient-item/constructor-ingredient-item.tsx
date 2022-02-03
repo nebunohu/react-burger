@@ -2,7 +2,7 @@ import { FC, useCallback, useRef } from "react";
 import { useSelector } from "../../hooks/hooks";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../hooks/hooks';
 import update from 'immutability-helper';
 
 
