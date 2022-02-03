@@ -33,7 +33,7 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   if ( !isUserLoaded ) {
     if(user.name) setIsUserLoaded(true);
     if(!auth.accessToken) {
-      return <Navigate to='/login' state={{from: location}} replace />
+      //return <Navigate to='/login' state={{from: location}} replace />
     }
     return null;
   }
