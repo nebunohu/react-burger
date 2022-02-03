@@ -6,7 +6,7 @@ import { TLocationWithState } from '../../react-burger-env';
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginRequest } from '../../services/actions/auth-actions';
-import { getCookie } from '../../utils/cookie';
+//import { getCookie } from '../../utils/cookie';
 
 const LoginPage: FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const LoginPage: FC = () => {
 
   // location.state.from
   return (
-    auth.fromLoginRedirect || getCookie('token') ?
+    auth.fromLoginRedirect /*|| getCookie('token')*/ ?
       <Navigate to={location.state.from} replace/>
     :
       <div className={loginStyles.loginFormWrapper}>
