@@ -1,0 +1,26 @@
+.scrolledContainer {
+  overflow-y: auto;
+  /*height: calc(100vh - 178px);*/
+  max-height: 35vh;
+  margin: 0;
+  padding: 0;
+  /*height: 900px;
+  scrollbar-color: #d4aa70 #e4e4e4;
+  scrollbar-width: thin;*/
+}
+
+.scrolledContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrolledContainer::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+  /*border-radius: 100px;*/
+}
+
+.scrolledContainer::-webkit-scrollbar-thumb {
+  /*border-radius: 100px;*/
+  background-color: #8585AD;
+  height: 90%;
+  /*box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);*/
+}

@@ -1,13 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import { FORGOT_PASSWORD_REDIRECT_CLEAR, resetPasswordRequest } from '../../services/actions/password-actions';
 
 // Styles
 import resetPassStyles from './reset-password.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getCookie } from '../../utils/cookie';
 
 
 const ResetPasswordPage: FC = () => {
@@ -15,7 +14,6 @@ const ResetPasswordPage: FC = () => {
   const [ formState, setFormState ] = useState({ token: '', password: ''});
   const navigate = useNavigate();
   const location = useLocation();
-  // @ts-ignore
   const isRedirect = useSelector(store => store.password.fromResetPasswordRedirect);
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const ResetPasswordPage: FC = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value})
   }
 
-  if(getCookie('token')) {
+  if(localStorage.getItem('token')/*getCookie('token')*/) {
     navigate('/');
     return null;
   }

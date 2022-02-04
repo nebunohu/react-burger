@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/hooks';
 
 // Components
 import AppHeader from '../app-header/app-header';
@@ -16,20 +16,23 @@ import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
-import OrdersPage from '../../pages/orders/orders';
+import FeedPage from '../../pages/feed/feed';
 import IngredientPage from '../../pages/ingredient/ingredient';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
+import OrderDetailsPage from '../../pages/order-details-page/order-details-page';
+
 // Actions
 import { CLOSE_MODAL, getIngredients } from "../../services/actions/burger-actions";
-import { refreshToken } from '../../services/actions/auth-actions';
+//import { refreshToken } from '../../services/actions/auth-actions';
 
 //Styles
+import styles from './app.module.css';
+import { checkAuth } from '../../services/actions/auth-actions';
 
 // Utils
-import { getCookie } from '../../utils/cookie';
 
 interface ILocationState {
   background: string;
@@ -43,20 +46,21 @@ const App: FC = () => {
   const dispatch = useDispatch();
 
   useEffect( () => {
-    const token = getCookie('token');
+    //const token = localStorage.getItem('token');//getCookie('token');
 
     dispatch(getIngredients());
-    if(token) dispatch(refreshToken({token}));
+    dispatch(checkAuth());
+    //if(token) dispatch(refreshToken({token}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const closeModal = () => {
     dispatch({type: CLOSE_MODAL});
-    navigate('/');
+    navigate(state.background);
   }
 
   return (
-    <>
+    <div className={`${styles.root}`}>
       <AppHeader />
       <Routes location={background || location}>
         <Route path='/login' element={<LoginPage />} />
@@ -71,8 +75,26 @@ const App: FC = () => {
             </ProtectedRoute>
           } 
         />
+        <Route 
+          path='/profile/orders' 
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path='/profile/orders/:id' 
+          element={
+            <ProtectedRoute>
+              <OrderDetailsPage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path='/ingredients/:id' element={<IngredientPage />} />
-        <Route path='/orders' element={<OrdersPage />} />
+        <Route path='/feed' element={<FeedPage />} />
+        <Route path='/feed/:id' element={<OrderDetailsPage />} />
+        
         <Route path="/" element={<ConstructorPage />} />
         <Route element={<NotFound404 />} />
       </Routes>
@@ -85,9 +107,26 @@ const App: FC = () => {
             <IngredientDetails />
           </Modal>
         } />
-      </Routes>}
+        <Route path='/profile/orders/:id' element={
+          <Modal
+            title=''
+            closeModal={closeModal}
+          >
+            <OrderDetailsPage />
+          </Modal>
+        } />
+        <Route path='/feed/:id' element={
+          <Modal
+            title=''
+            closeModal={closeModal}
+          >
+            <OrderDetailsPage />
+          </Modal>
+        } />
+      </Routes>
+      }
       
-    </>
+    </div>
   );
 }
 

@@ -1,39 +1,34 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { useLocation } from 'react-router';
 import { Navigate } from 'react-router-dom';
-import { SET_IS_AUTH } from '../../services/actions/auth-actions';
+import { checkAuth } from '../../services/actions/auth-actions';
 import { getUser } from '../../services/actions/user-actions';
+import { TLocationWithState } from '../../react-burger-env';
+//import { refreshToken } from '../../services/actions/auth-actions';
 
 export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
-  // @ts-ignore
-  const { user, auth } = useSelector((store) => store);
-  const [isUserLoaded, setIsUserLoaded] = useState(false);
-  const location = useLocation();
+  const { auth } = useSelector((store) => store);
+  const location = useLocation() as TLocationWithState;
   
-  //const { isAuth, accessToken } = useSelector(store => store.auth.isAuth);
-  
-  const init = useCallback(() => {
-    if(auth.accessToken) {
-      dispatch(getUser(auth.accessToken));
-    }
-    //dispatch({ type: SET_IS_USER_LOADED });
-    if(isUserLoaded) return;
-    setIsUserLoaded(true);
-    if(user.name && auth.accessToken) dispatch({ type: SET_IS_AUTH, accessToken: auth.accessToken });
-  }, [isUserLoaded, auth.accessToken, dispatch, user.name]);
+  const init= useCallback(() => {
+    dispatch(checkAuth());
+    if(localStorage.getItem('accessToken')) {
+      
+      dispatch(getUser(localStorage.getItem('accessToken')));
+    } 
+    }, [dispatch]);
 
   useEffect(() => {
     init();
   }, [init])
 
-  if ( !isUserLoaded ) {
-    return null;
-  }
-
   if(!auth.isAuth) {
-    return <Navigate to='/login' state={{from: location}} replace />
+    return location.state ?
+      <Navigate to='/login' state={{from: location, backgroundProtected: location.state.background}} replace />
+    :
+      <Navigate to='/login' state={{from: location}} replace />
   }
   return children;
 } 

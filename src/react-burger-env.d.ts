@@ -2,7 +2,7 @@
 import { Location } from 'history';
 
 declare type TLocationWithState = Location & {
-  state: {from: string};
+  state: {from: string, background?: string, backgroundProtected?: string};
   pathname: string;
 };
 

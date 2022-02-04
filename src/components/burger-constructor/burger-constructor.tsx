@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent } from "react";
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { useDrop } from "react-dnd";
 
 // Components
@@ -20,9 +20,7 @@ import { ADD_INGREDIENT } from '../../services/actions/burger-actions';
 
 
 const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent) => void)}> = ({ openOrderModal }) => {
-  // @ts-ignore
   const data = useSelector(store => store.state.ingredients);
-  // @ts-ignore
   const burger = useSelector(store => store.state.burger);
   
   let bunName, bunPrice, bunImage;
@@ -72,7 +70,7 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
 
       }
 
-        {!!burger.bun.name && 
+        {!!bunName && 
           <div className={constructorStyles.bunConstructor+' mb-2 ml-8 mr-4'}>
             <ConstructorElement
               type="top"
@@ -89,7 +87,7 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
           </div>
         }
         
-        {!!burger.bun.name && 
+        {!!bunName && 
           <div className={constructorStyles.bunConstructor+' mt-2 ml-8 mr-4'}>
             <ConstructorElement
               type="bottom"

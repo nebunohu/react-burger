@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.costWrapper {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}

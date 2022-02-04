@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { useDrag } from "react-dnd";
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -19,7 +19,6 @@ type TIngredientItemProps = {
 }
 
 const IngredientsItem: FC<TIngredientItemProps> = ({item}) => {
-  // @ts-ignore
   const burgerIngredientsCounts = useSelector(store => store.state.burger.ingredientsCounts);
   const current =  burgerIngredientsCounts.find((el: {count: number, type: string, id: string}) => el.id === item._id);
   const count = current ? current.count : 0;

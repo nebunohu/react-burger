@@ -1,17 +1,16 @@
 import React, { useState, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { TLocationWithState } from '../../react-burger-env';
 // Styles
 import loginStyles from './login.module.css';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginRequest } from '../../services/actions/auth-actions';
-import { getCookie } from '../../utils/cookie';
+//import { getCookie } from '../../utils/cookie';
 
 const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const [ formState, setFormState ] = useState({ email: '', password: ''});
-  // @ts-ignore
   const auth = useSelector(store => store.auth);
   const location = useLocation() as TLocationWithState;
 
@@ -28,8 +27,11 @@ const LoginPage: FC = () => {
 
   // location.state.from
   return (
-    auth.fromLoginRedirect || getCookie('token') ?
-      <Navigate to={location.state.from} replace/>
+    auth.fromLoginRedirect || localStorage.getItem('refreshToken') ?
+      location.state.backgroundProtected ?
+        <Navigate to={location.state.from} state={{background: location.state.backgroundProtected}} replace/>
+      :
+        <Navigate to={location.state.from} replace/>
     :
       <div className={loginStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Вход</span>

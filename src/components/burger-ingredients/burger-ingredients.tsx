@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/hooks";
 
 // Styles
 import ingredientsStyles from './burger-ingredients.module.css';
@@ -12,8 +12,7 @@ import IngredientsType from "../ingredients-type/ingredients-type";
 
 const BurgerIngredients: FC = () => {
   //const [current, setCurrent] = React.useState('Булки');
-  // @ts-ignore
-  const current: any = useSelector((store: any) => store.tabsState.tabs.reduce((current, tab) => {
+  const current = useSelector((store) => store.tabsState.tabs.reduce((current, tab) => {
     return current.ratio < tab.ratio ? tab : current
   }, store.tabsState.tabs[0]).title);
   const bunRef = React.useRef<HTMLLIElement>(null);
