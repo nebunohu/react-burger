@@ -14,7 +14,6 @@ import { WS_CONNECTION_CLOSE, WS_CONNECTION_START } from "../../services/actions
 
 
 const FeedPage: FC = () => {
-  const wsConnected = useSelector(store => store.ws.wsConnected)
   const dispatch = useDispatch();
   const {orders, total, totalToday} = useSelector(store => store.ws);
   
@@ -27,7 +26,6 @@ const FeedPage: FC = () => {
   }, [])
 
   if (!orders.length) {
-    if(!wsConnected) dispatch({type: WS_CONNECTION_START, payload: ''});
     return null;
   }
 

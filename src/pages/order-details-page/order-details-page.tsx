@@ -1,10 +1,11 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import BurgerCompositionElement from '../../components/burger-composition-element/burger-composition-enement';
 import ScrolledContainer from '../../components/scrolled-container/scrolled-container';
 import StatusComponent from '../../components/status-component/status-component';
-import { useSelector } from '../../hooks/hooks';
+import { useDispatch, useSelector } from '../../hooks/hooks';
+import { WS_CONNECTION_START, WS_CONNECTION_START_WITH_TOKEN, WS_CONNECTION_CLOSE } from '../../services/actions/ws-actions';
 
 // Styles
 import styles from './order-details-page.module.css';
@@ -13,17 +14,20 @@ import styles from './order-details-page.module.css';
 import { dateOutput } from '../../utils/time';
 
 const OrderDetailsPage: FC = () => {
-  const { orders } = useSelector(store => store.ws);
+  const dispatch = useDispatch();
+  const { orders, wsConnected } = useSelector(store => store.ws);
   const ingredientsAll = useSelector(store => store.state.ingredients);
   const location = useLocation();
   const orderNumber = parseInt(location.pathname.split('/')[location.pathname.split('/').length-1]);
+  const section = location.pathname.split('/')[location.pathname.split('/').length-2];
   const currentOrder = orders.find((el) => el.number === orderNumber);
   //const orderTime = !!currentOrder ? new Date(currentOrder.createdAt) : undefined;
 
   const totalCost = currentOrder?.ingredients.reduce((prev, currEl) => {
     const foundIngredient = ingredientsAll.find((el) => currEl === el._id);
-    if(foundIngredient!.type === 'bun') return prev + (foundIngredient!.price*2);
-    else return prev + foundIngredient!.price; 
+    if(!foundIngredient) return prev;
+    if(foundIngredient.type === 'bun') return prev + (foundIngredient!.price*2);
+    else return prev + foundIngredient.price; 
   }, 0);
 
   const uniqueItemsOf = (arr: Array<string>): Array<{item: string, count: number}> => {
@@ -42,13 +46,19 @@ const OrderDetailsPage: FC = () => {
 
   const ingredients = !!currentOrder ? uniqueItemsOf(currentOrder.ingredients) : undefined;
 
-  /*useEffect(() => {
-    dispatch({type: WS_CONNECTION_START, payload: ''});
+  useEffect(() => {
+    if(!wsConnected) {
+      if(section === 'feed') {
+        dispatch({type: WS_CONNECTION_START, payload: ''});
+      } else {
+        dispatch({type: WS_CONNECTION_START_WITH_TOKEN, payload: ''});
+      }
+    }
     return () => {
-      dispatch({type: WS_CONNECTION_CLOSE, payload: ''});
+      if(wsConnected) dispatch({type: WS_CONNECTION_CLOSE, payload: ''});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])*/
+  },[])
 
   if (!currentOrder || !ingredients) {
     return null;

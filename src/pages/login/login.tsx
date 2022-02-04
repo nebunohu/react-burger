@@ -28,7 +28,10 @@ const LoginPage: FC = () => {
   // location.state.from
   return (
     auth.fromLoginRedirect || localStorage.getItem('refreshToken') ?
-      <Navigate to={location.state.from} replace/>
+      location.state.backgroundProtected ?
+        <Navigate to={location.state.from} state={{background: location.state.backgroundProtected}} replace/>
+      :
+        <Navigate to={location.state.from} replace/>
     :
       <div className={loginStyles.loginFormWrapper}>
         <span className="text text_type_main-default">Вход</span>

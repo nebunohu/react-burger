@@ -1,39 +1,34 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../hooks/hooks';
 import { useLocation } from 'react-router';
 import { Navigate } from 'react-router-dom';
-import { checkAuth, SET_IS_AUTH } from '../../services/actions/auth-actions';
+import { checkAuth } from '../../services/actions/auth-actions';
 import { getUser } from '../../services/actions/user-actions';
+import { TLocationWithState } from '../../react-burger-env';
 //import { refreshToken } from '../../services/actions/auth-actions';
 
 export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
-  const { user, auth } = useSelector((store) => store);
-  const [isUserLoaded, setIsUserLoaded] = useState(false);
-  const location = useLocation();
-  
-  //const { isAuth, accessToken } = useSelector(store => store.auth.isAuth);
+  const { auth } = useSelector((store) => store);
+  const location = useLocation() as TLocationWithState;
   
   const init= useCallback(() => {
+    dispatch(checkAuth());
     if(localStorage.getItem('accessToken')) {
-      dispatch(checkAuth());
+      
       dispatch(getUser(localStorage.getItem('accessToken')));
     } 
-      if(isUserLoaded) return;
-      if(user.name && auth.accessToken) dispatch({ type: SET_IS_AUTH, accessToken: auth.accessToken });
-    }, [isUserLoaded, auth.accessToken, dispatch, user.name]);
+    }, [dispatch]);
 
   useEffect(() => {
     init();
   }, [init])
 
-  if ( !isUserLoaded ) {
-    if(user.name) setIsUserLoaded(true);
-    return null;
-  }
-
   if(!auth.isAuth) {
-    return <Navigate to='/login' state={{from: location}} replace />
+    return location.state ?
+      <Navigate to='/login' state={{from: location, backgroundProtected: location.state.background}} replace />
+    :
+      <Navigate to='/login' state={{from: location}} replace />
   }
   return children;
 } 
