@@ -19,7 +19,7 @@ export type TPasswordState = {
   fromResetPasswordRedirect: boolean;
 };
 
-const initialState: TPasswordState ={
+export const initialState: TPasswordState ={
   forgotPasswordRequest: false,
   forgotPasswordRequestFailed: false,
   fromForgotPasswordRedirect: false,
