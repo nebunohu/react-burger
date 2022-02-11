@@ -36,12 +36,12 @@ const Modal: FC<TModalProps> = ({ closeModal, title, children}) => {
   return ReactDOM.createPortal(
     <ModalOverlay closeModal={closeModal}>
       <div className={modalStyles.modalWrapper} id='modal-wrapper' onKeyDown={escapeButtonHandler} tabIndex={-1}>
-        <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`}>
+        <div className={`${modalStyles.closeButtonWrapper} mt-15 mr-10`} data-test-id='modal-close-button'>
           <CloseIcon type='primary' onClick={closeButtonClickHandler} />
         </div>
         {
           !!title && 
-            <div className={`${modalStyles.modalHeader} text text_type_main-large mt-10 mr-10 ml-10`}>
+            <div className={`${modalStyles.modalHeader} text text_type_main-large mt-10 mr-10 ml-10`} data-test-id="modal-header">
               {title}
             </div>
         }

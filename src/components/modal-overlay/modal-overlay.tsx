@@ -20,6 +20,7 @@ const ModalOverlay: FC<ModalOverlayProps> = ({ closeModal, children} ) => {
     <div 
       className={modalOverlayStyles.back} 
       id="modal-overlay"
+      data-test-id="modal-overlay"
       ref={modalOverlayRef}
       onClick={onClickHandler} 
     >
