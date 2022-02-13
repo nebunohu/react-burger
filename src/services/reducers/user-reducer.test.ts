@@ -4,7 +4,7 @@ import * as types from '../actions/user-actions';
 describe('User reducer', () => {
   it('should return the initial state', () => {
     expect(
-      userReducer(undefined,{})
+      userReducer(undefined,{} as any)
     ).toEqual(initialState)
   })
 

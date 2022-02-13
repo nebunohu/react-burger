@@ -1,7 +1,8 @@
-import { stateReducer, initialState } from './index';
-import * as types from '../actions/burger-actions.ts';
+import { stateReducer, initialState, TBurgerState } from './index';
+import * as types from '../actions/burger-actions';
+import { DATA_TYPE } from '../../react-burger-env';
 
-const burger = {
+const burger: TBurgerState = {
   bun: null,
   ingredients: [],
   ingredientsCounts: [],
@@ -9,7 +10,7 @@ const burger = {
   totalPrice: 0
 }
 
-const ingredient = {
+const ingredient: DATA_TYPE = {
   "_id": "id",
   "name": "name",
   "type": "type",
@@ -27,7 +28,7 @@ const ingredient = {
 describe('Burger state reducer', () => {
   it('should return the initial state', () => {
     expect(
-      stateReducer(undefined,{})
+      stateReducer(undefined,{} as any)
     ).toEqual(initialState)
   })
 
@@ -164,7 +165,7 @@ describe('Burger state reducer', () => {
           orderPostRequestFailed: true,
           burger: {
             ...initialState.burger,
-            ingredients: [ingredient],
+            ingredients: [{index: 1, item: ingredient}],
             ingredientsCounts: [{count: 1, type: 'type', id: 'id'}],
           },
         },

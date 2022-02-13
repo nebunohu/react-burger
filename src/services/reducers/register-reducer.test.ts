@@ -5,7 +5,7 @@ import * as types from '../actions/register-actions';
 describe('Register reducer', () => {
   it('should return the initial state', () => {
     expect(
-      registerReducer(undefined,{})
+      registerReducer(undefined,{} as any)
     ).toEqual(initialState)
   })
 

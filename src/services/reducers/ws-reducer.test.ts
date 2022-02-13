@@ -1,10 +1,10 @@
 import { wsReducer, initialState } from './ws-reducer';
-import * as types from '../actions/ws-actions.ts';
+import * as types from '../actions/ws-actions';
 
 describe('Websocket reducer', () => {
   it('should return the initial state', () => {
     expect(
-      wsReducer(undefined,{})
+      wsReducer(undefined,{} as any)
     ).toEqual(initialState)
   })
 
@@ -16,7 +16,8 @@ describe('Websocket reducer', () => {
           wsConnected: false,
         },
         {
-          type: types.WS_CONNECTION_START
+          type: types.WS_CONNECTION_START,
+          payload: ''
         }
       )
     ).toEqual({
@@ -33,7 +34,8 @@ describe('Websocket reducer', () => {
           wsConnected: true,
         },
         {
-          type: types.WS_CONNECTION_CLOSE
+          type: types.WS_CONNECTION_CLOSE,
+          payload: ''
         }
       )
     ).toEqual({

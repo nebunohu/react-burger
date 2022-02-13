@@ -60,7 +60,8 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
   const wrapperClassName = `${constructorStyles.dropTarget} ${isHover ? 'readyToDrop' : ''}`
   return (
     <div 
-      className={`${constructorStyles.burgerConstructorWrapper} ml-10 mt-25`} 
+      className={`${constructorStyles.burgerConstructorWrapper} ml-10 mt-25`}
+      data-test-id="drop-target" 
       ref={dropTarget}
     >
       {burger.ingredients.length === 0 && !bunName &&
@@ -71,7 +72,10 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
       }
 
         {!!bunName && 
-          <div className={constructorStyles.bunConstructor+' mb-2 ml-8 mr-4'}>
+          <div 
+            className={constructorStyles.bunConstructor+' mb-2 ml-8 mr-4'}
+            data-test-id="droppedBun"  
+          >
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -108,7 +112,7 @@ const BurgerConstructor: FC<{openOrderModal: (() => void) | ((e: SyntheticEvent)
               </span>
             <CurrencyIcon type='primary' />
           </div>
-          {bunName && <div className={constructorStyles.buttonWrapper}>
+          {bunName && <div className={constructorStyles.buttonWrapper} data-test-id="create-order-button">
             <Button type="primary" size="medium" onClick={openOrderModal}>
               Оформить заказ
             </Button>

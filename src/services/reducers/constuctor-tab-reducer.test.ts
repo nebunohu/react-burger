@@ -4,7 +4,7 @@ import { constructorTabReducer, initialState } from './constuctor-tab-reducer';
 describe('Constructor tabs reducer', () => {
   it('should return the initial state', () => {
     expect(
-      constructorTabReducer(undefined,{})
+      constructorTabReducer(undefined,{} as any)
     ).toEqual(initialState)
 
   })

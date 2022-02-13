@@ -1,4 +1,5 @@
 import { API_URL } from '../../../src/utils/url';
+import '@4tw/cypress-drag-drop';
 
 const ingredients = {
   "success": true,
@@ -216,6 +217,44 @@ const ingredients = {
   ]
 }
 
+const orderResponse = {
+  success: true,
+  name: "Флюоресцентный бургер",
+  order: {
+    ingredients: [
+      {
+        _id: "60d3b41abdacab0026a733c7",
+        name: "Флюоресцентная булка R2-D3",
+        type: "bun",
+        proteins: 44,
+        fat: 26,
+        carbohydrates: 85,
+        calories: 643,
+        price: 988,
+        image: "https://code.s3.yandex.net/react/code/bun-01.png",
+        image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+        image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+        __v: 0,
+      },
+    ],
+    _id: "6208fc206d7cd8001b2d5d7c",
+    owner: {
+      name: "Николай",
+      email: "barashkov.nv@yandex.ru",
+      createdAt: "2021-12-15T13:20:06.762Z",
+      updatedAt: "2022-02-03T22:04:20.054Z",
+    },
+    status: "done",
+    name: "Флюоресцентный бургер",
+    createdAt: "2022-02-13T12:40:00.186Z",
+    updatedAt: "2022-02-13T12:40:00.420Z",
+    number: 9999,
+    price: 999,
+  },
+}
+
+
+
 describe('Service is available', () => {
   const modalHeaderContent = 'Детали ингредиента';
   
@@ -278,4 +317,89 @@ describe('Service is available', () => {
     cy.get('@modalOverlay').should('not.exist');
   });
   
+  it('should drag ingrediend and drop in drop area', () => {
+    cy.intercept({method: 'GET', url: `${API_URL}/ingredients`}, ingredients).as('getIngredients');
+    
+    cy.visit('/');
+    cy.wait('@getIngredients');
+
+    cy.get('[data-test-id="ingredient-item"]:first').as('dragItem');  
+    cy.get('[data-test-id="drop-target"]').as('dropTarget');  
+
+    cy.get('@dragItem').drag('@dropTarget');
+    cy.get('[data-test-id="droppedBun"]');
+  });
+
+  it('should open order modal', () => {
+    const modalString = 'идентификатор заказа'
+    cy.intercept({method: 'POST', url: `${API_URL}/orders`}, orderResponse).as('postOrder');
+    cy.intercept({method: 'GET', url: `${API_URL}/ingredients`}, ingredients).as('getIngredients');
+    
+    cy.login();
+    cy.visit('/');
+    cy.wait('@getIngredients');
+
+    cy.openOrderModal();
+
+    cy.wait('@postOrder');
+
+    cy.get('[data-test-id="modal-string"]').as('modalString');
+    cy.get('[data-test-id="order-number"]').as('orderNumber')
+    
+    cy.get('@orderNumber').contains(9999);
+    cy.get('@modalString').contains(modalString);
+  });
+
+  it('should close order modal by overlay click', () => {
+    cy.intercept({method: 'POST', url: `${API_URL}/orders`}, orderResponse).as('postOrder');
+    cy.intercept({method: 'GET', url: `${API_URL}/ingredients`}, ingredients).as('getIngredients');
+    
+    cy.login();
+    cy.visit('/');
+    cy.wait('@getIngredients');
+
+    cy.openOrderModal();
+
+    cy.wait('@postOrder');
+
+    cy.get('[data-test-id="modal-overlay"]').as('modalOverlay');
+    cy.get('@modalOverlay').click(0,0);
+    cy.get('@modalOverlay').should('not.exist');
+  });
+
+  it('should close order modal by close button click', () => {
+    cy.intercept({method: 'POST', url: `${API_URL}/orders`}, orderResponse).as('postOrder');
+    cy.intercept({method: 'GET', url: `${API_URL}/ingredients`}, ingredients).as('getIngredients');
+    
+    cy.login();
+    cy.visit('/');
+    cy.wait('@getIngredients');
+
+    cy.openOrderModal();
+
+    cy.wait('@postOrder');
+
+    cy.get('[data-test-id="modal-overlay"]').as('modalOverlay');
+    cy.get('[data-test-id="modal-close-button"]').click();
+    cy.get('@modalOverlay').should('not.exist');
+  });
+
+  it('should close order modal by "Esc" button click', () => {
+    cy.intercept({method: 'POST', url: `${API_URL}/orders`}, orderResponse).as('postOrder');
+    cy.intercept({method: 'GET', url: `${API_URL}/ingredients`}, ingredients).as('getIngredients');
+    
+    cy.login();
+    cy.visit('/');
+    cy.wait('@getIngredients');
+
+    cy.openOrderModal();
+
+    cy.wait('@postOrder');
+
+    cy.get('[data-test-id="modal-overlay"]').as('modalOverlay');
+    cy.get('@modalOverlay').trigger('keydown', { keyCode: 27});
+    cy.get('@modalOverlay').should('not.exist');
+  });
 })
+
+

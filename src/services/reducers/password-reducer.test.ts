@@ -5,7 +5,7 @@ import * as types from '../actions/password-actions';
 describe('Password reducer', () => {
   it('should return the initial state', () => {
     expect(
-      passwordReducer(undefined, {})
+      passwordReducer(undefined, {} as any)
     ).toEqual(initialState)
   })
 

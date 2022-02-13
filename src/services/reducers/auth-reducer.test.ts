@@ -4,7 +4,7 @@ import * as types from "../actions/auth-actions";
 describe('auth reducer', () => {
   it('should return the initial state', () => {
     expect(
-      authReducer(undefined, {})).toEqual(initialState)
+      authReducer(undefined, {} as any)).toEqual(initialState)
   })
 
   it('should handle SET_IS_AUTH', () => {
