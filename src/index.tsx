@@ -32,7 +32,7 @@ export const store = createStore(rootReducer, composedEnhancers);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router basename='/react-burger'>
         <App />
       </Router>
     </Provider>
