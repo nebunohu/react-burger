@@ -1,6 +1,7 @@
 import { AppDispatch, AppThunk } from "../../types";
 import { API_URL } from "../../utils/url";
 import { SET_IS_AUTH } from "./auth-actions";
+import { refreshToken } from "../../utils/token";
 
 export const SET_USER: "SET_USER" = "SET_USER";
 export const RESET_USER: 'RESET_USER' = 'RESET_USER';
@@ -83,7 +84,22 @@ export const getUser: AppThunk = (token) => async (dispatch: AppDispatch) => {
           dispatch({ type: SET_IS_AUTH });
         } else {
           
-          throw new Error(data.message);
+          if (data.message === 'jwt expired') {
+            if(await refreshToken()) {
+              const res = await fetch(`${API_URL}/auth/user`, {method: 'GET', mode: 'cors', headers});
+    
+              const data = await res.json();
+              if(data.success) {
+                //setBurger({...burger, name: data.name});
+                dispatch({type: GET_USER_REQUEST_SUCCESS});
+                dispatch({ type: SET_USER, user: data.user});
+                dispatch({ type: SET_IS_AUTH });
+              }
+            }
+          
+          } else {
+            throw new Error('Post order fetch error');
+          }
         }
       //} else {
       //  throw new Error('Get user failed')
