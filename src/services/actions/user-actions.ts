@@ -86,7 +86,7 @@ export type TUserActions = ISetUser |
           
           if (data.message === 'jwt expired' || data.message === 'invalid token') {
             if(await refreshToken()) {
-              const res = await fetch(`${API_URL}/auth/user`, {method: 'GET', mode: 'cors', headers});
+              const res = await fetch(`${API_URL}/auth/user`, {method: 'GET', mode: 'cors', headers: {...headers, "authorization": localStorage.getItem('accessToken') as string}});
     
               const data = await res.json();
               if(data.success) {
