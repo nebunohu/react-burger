@@ -42,7 +42,7 @@ const IngredientsItem: FC<TIngredientItemProps> = ({item}) => {
 
   return (
 
-    <div className={itemStyles.itemWrapper} ref={dragRef} onClick={clickHandler}>
+    <div className={itemStyles.itemWrapper} ref={dragRef} onClick={clickHandler} data-test-id="ingredient-item">
     {(count > 0) && (<div className={itemStyles.count+' text text_type_digits-default'}>{count}</div>)}
       <img src={item.image} alt='изображение' />
       <div className={itemStyles.price+' text text_type_digits-default mt-1 mb-1'}>

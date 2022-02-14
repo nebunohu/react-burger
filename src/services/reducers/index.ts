@@ -7,7 +7,6 @@ import { passwordReducer } from "./password-reducer";
 import { userReducer } from "./user-reducer";
 import { authReducer } from "./auth-reducer";
 import { registerReducer } from "./register-reducer";
-import orderReducer from "./order-reducer";
 import { wsReducer } from './ws-reducer';
 
 // Actions
@@ -63,7 +62,7 @@ export type TState = {
   orderPostRequestFailed: boolean;
 };
 
-const initialState: TState = {
+export const initialState: TState = {
   ingredients: [],
   burger: {
     bun: null,
@@ -131,7 +130,7 @@ function addIngredient(burger: TBurgerState, ingredient: DATA_TYPE) {
   return burgerState;
 }
 
-const stateReducer = (state = initialState, action: TBurgerActions): TState => {
+export const stateReducer = (state = initialState, action: TBurgerActions): TState => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       return {
@@ -277,7 +276,6 @@ const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   register: registerReducer,
-  order: orderReducer,
   ws: wsReducer
 });
 

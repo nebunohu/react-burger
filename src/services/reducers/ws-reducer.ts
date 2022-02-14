@@ -8,7 +8,7 @@ type TWsState = {
     totalToday: number;
 }
 
-const initialState:TWsState = {
+export const initialState:TWsState = {
     wsConnected: false,
     orders: [],
     total: 0,

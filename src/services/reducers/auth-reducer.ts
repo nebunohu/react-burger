@@ -22,7 +22,7 @@ export type TAuthState = {
   fromLoginRedirect: boolean;
 };
 
-const initialState: TAuthState ={
+export const initialState: TAuthState ={
   isAuth: false,
   accessToken: '',
 

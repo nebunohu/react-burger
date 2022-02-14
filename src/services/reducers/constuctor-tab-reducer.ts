@@ -10,7 +10,7 @@ export type TTabState = {
   tabs: Array<TTabElement> ;
 } ;
 
-const initialState: TTabState = {
+export const initialState: TTabState = {
   tabs: [
     {
       id: 'bun',
@@ -30,7 +30,7 @@ const initialState: TTabState = {
   ]
 }
 
-const constructorTabReducer = (state = initialState, action: TTabActions): TTabState => {
+export const constructorTabReducer = (state = initialState, action: TTabActions): TTabState => {
   switch(action.type) {
     case UPDATE_CURRENT_TAB: {
       const tempState = {...state};

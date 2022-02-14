@@ -4,6 +4,9 @@ import {
   GET_USER_REQUEST,
   GET_USER_REQUEST_SUCCESS,
   GET_USER_REQUEST_FAILED,
+  EDIT_USER_REQUEST,
+  EDIT_USER_REQUEST_SUCCESS,
+  EDIT_USER_REQUEST_FAILED,
   SET_IS_USER_LOADED,
   RESET_IS_USER_LOADED, 
   TUserActions
@@ -11,15 +14,23 @@ import {
 
  export type TUserState = {
   getUserRequest: boolean;
+  getUserRequestSuccess: boolean;
   getUserRequestFailed: boolean;
+  editUserRequest: boolean;
+  editUserRequestSuccess: boolean;
+  editUserRequestFailed: boolean;
   isUserLoaded: boolean;
   name: string;
   email: string;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   getUserRequest: false,
+  getUserRequestSuccess: false,
   getUserRequestFailed: false,
+  editUserRequest: false,
+  editUserRequestSuccess: false,
+  editUserRequestFailed: false,
   isUserLoaded: false,
   name: '',
   email: ''
@@ -64,6 +75,31 @@ export function userReducer(state = initialState, action: TUserActions): TUserSt
         ...state, 
         getUserRequest: false,
         getUserRequestFailed: true
+      }
+    }
+
+    case EDIT_USER_REQUEST: {
+      return {
+        ...state, 
+        editUserRequest: true,
+        editUserRequestSuccess: false,
+        editUserRequestFailed: false,
+      }
+    }
+
+    case EDIT_USER_REQUEST_SUCCESS: {
+      return {
+        ...state, 
+        editUserRequest: false,
+        editUserRequestSuccess: true,
+      }
+    }
+
+    case EDIT_USER_REQUEST_FAILED: {
+      return {
+        ...state, 
+        editUserRequest: false,
+        editUserRequestFailed: true
       }
     }
 

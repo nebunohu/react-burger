@@ -15,10 +15,10 @@ const OrderDetails: React.FC = () => {
   return (
     <>
       
-      <div className={orderDetailsStyles.number+' text text_type_digits-large mt-30 mb-8'}>
+      <div className={orderDetailsStyles.number+' text text_type_digits-large mt-30 mb-8'} data-test-id="order-number">
         {orderPostRequest ? (<span className={`${orderDetailsStyles.preloaderText} text text_type_main-large`}>Подождите...</span>) : order.number}
       </div>
-      <div className={`${orderDetailsStyles.title} text text_type_main-medium mb-15`}>
+      <div className={`${orderDetailsStyles.title} text text_type_main-medium mb-15`} data-test-id="modal-string">
         идентификатор заказа
       </div>
       <div className={orderDetailsStyles.done+' mb-15'}>

@@ -8,10 +8,12 @@ import {
 type TRegisterState = {
   registerUserRequest: boolean;
   registerUserRequestFailed: boolean;
+  registerUserRequestSuccess: boolean,
 };
 
-const initialState: TRegisterState ={
+export const initialState: TRegisterState ={
   registerUserRequest: false,
+  registerUserRequestSuccess: false,
   registerUserRequestFailed: false,
 };
 
@@ -28,6 +30,7 @@ export function registerReducer( state = initialState, action: TRegisterActions 
       return {
         ...state,
         registerUserRequest: false,
+        registerUserRequestSuccess: true,
         registerUserRequestFailed: false,
       };
     }
