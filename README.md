@@ -6,7 +6,7 @@
 * React
   * React-router
 * Redux
-  * Redux-thhunk
+  * Redux-thunk
 * Websocket
 
 Этот проект доступен по [ссылке](https://nebunohu.github.io/react-burger/)
