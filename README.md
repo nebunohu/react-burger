@@ -15,16 +15,14 @@
 ![Main page](https://github.com/nebunohu/react-burger/raw/master/screenshots/constructor.png)
 
 Для развертывания проекта локально необходимо введите в терминале команду:<br>
-`git clone https://github.com/nebunohu/react-burger.git`
-
+`git clone https://github.com/nebunohu/react-burger.git`<br>
+Далее для установки зависимостей введите:<br>
+`npm install`<br>
 Для запуска приложения на [http://localhost:3000](http://localhost:3000) введите в терминале команду:<br>
-`npm run start`
-
+`npm run start`<br>
 Для запуска unit тестов введите в терминале команду:<br>
-`npm run test`
-
+`npm run test`<br>
 Для запуска UI тестов введите в терминале команду:<br>
-`npm run cypress:open`
-
+`npm run cypress:open`<br>
 Для размещения приложения на Github Pages введите в терминале команду:<br>
 `npm run deploy`
